@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const {database} = require('../config/helpers');
 
-// Pagination
 /* GET ALL PRODUCTS */
 router.get('/', function(req, res) {
   let page = (req.query.page !== undefined && req.query.page !== 0) ? req.query.page : 1; // set the current page number
@@ -119,7 +118,7 @@ router.get('/category/:catName', (req,res) => {
                     products: prods
                 })
             } else {
-                res.json({message: `No products found from category ${cat_title} category   .`})
+                res.json({message: `No products found from category ${cat_title}.`})
             }
         }).catch(err => console.log(err));
 })
