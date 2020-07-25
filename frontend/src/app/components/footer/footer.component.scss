@@ -1,0 +1,69 @@
+h6 {
+    letter-spacing: var(--mainSpacing);
+    text-transform: uppercase;
+
+    &:hover {
+        cursor    : pointer;
+        transition: var(--hoverTransition);
+    }
+}
+
+.footer-content {
+    font-family: 'Oswald', sans-serif;
+}
+
+.footer-link {
+    font-family: sans-serif;
+
+    p {
+        margin-bottom: .5rem;
+    }
+
+    p:hover {
+        cursor    : pointer;
+        color     : white;
+        transition: var(--hoverTransition);
+    }
+}
+
+.btn-social {
+    position: relative;
+    width   : 2rem;
+    height  : 2rem;
+
+    border-radius: 50%;
+    background-color: white;
+
+    margin-left: .75rem;
+    opacity         : .5;
+
+    i {
+        position: absolute;
+
+        width: 100%;
+        height: 100%;
+
+        display        : flex;
+        justify-content: center;
+        align-items    : center;
+
+        margin: 0 auto;
+
+        color  : var(--bgColor);
+    }
+
+    &:hover {
+        opacity   : 1;
+        cursor    : pointer;
+        transition: var(--hoverTransition);
+    }
+}
+
+.col-md-8 p {
+    padding: 0 0.5rem;
+    &:hover {
+        color:white;
+        cursor    : pointer;
+        transition: var(--hoverTransition);
+    }
+}
