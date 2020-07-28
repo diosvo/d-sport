@@ -1,5 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
-@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Oswald&family=Source+Sans+Pro&display=swap');
 
 @import './assets/scss/fontsize';
 @import './assets/scss/variable';
+@import './assets/scss/animation';
+
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+}
