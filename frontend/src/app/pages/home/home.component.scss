@@ -7,24 +7,11 @@
     .content {
         padding: 0 17rem;
     }
-
-    .btn-joinus {
-        color  : white;
-        padding: 0.35rem 1.75rem;
-
-        background   : var(--bgColor);
-        border-radius: 3.5rem;
-        outline      : none;
-
-        &:hover {
-            opacity   : .9;
-            transition: var(--hoverTransition);
-        }
-    }
 }
 
 .next-season {
     color: white;
+
     .content {
         top : 1rem;
         left: 2rem;
@@ -34,18 +21,26 @@
             font-size  : 4rem;
         }
     }
+}
 
-    .btn-shop {
-        color  : black;
-        padding: 0.35rem 1.5rem;
+.content_bottom {
+    color : white;
 
-        background   : white;
-        border-radius: 3.5rem;
-        outline      : none;
+    left  : 2rem;
+    bottom: 2rem;
+}
 
-        &:hover {
-            opacity   : .8;
-            transition: var(--hoverTransition);
+
+.trending {
+    color: black;
+
+    .content {
+        top : 1rem;
+        left: 2rem;
+
+        .content--title {
+            font-family: Bangers, sans-serif;
+            font-size  : 4rem;
         }
     }
 }
