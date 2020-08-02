@@ -59,15 +59,15 @@ nav {
         position: relative;
 
         .quick-cart {
-            display    : none;
+            display: none;
 
-            position   : absolute;
-            top        : 3rem;
-            right      : -2rem;
-            width      : 20rem;
+            position: absolute;
+            top     : 3rem;
+            right   : -2rem;
+            width   : 20rem;
             height  : 12rem;
 
-            padding         : 0.5rem;
+            padding   : 0.5rem;
             margin-top: -.75rem;
 
             background-color: white;
@@ -75,6 +75,7 @@ nav {
 
             overflow-y: scroll;
             overflow-x: hidden;
+
             .cart--buttons div {
                 margin-top   : 0.5rem;
                 padding      : 0.65rem 2rem;
@@ -132,7 +133,6 @@ nav {
             transition: var(--hoverTransition);
         }
     }
-
 }
 
 #policy {
