@@ -1,0 +1,27 @@
+#login {
+    width : 270px;
+    margin: 0 auto;
+}
+
+form {
+    width: 100%;
+
+    .form-control {
+        border-radius: 0;
+        font-size    : 14px;
+    }
+}
+
+.btn-login {
+    width           : 100%;
+
+    background-color: var(--bgColor);
+    border          : none;
+
+    padding         : 0.35rem 0;
+    letter-spacing: var(--mainSpacing);
+}
+
+h6 {
+    font-weight: bold;
+}

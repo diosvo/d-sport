@@ -1,3 +1,19 @@
+#policy {
+    background-color: var(--policyColor);
+
+    .carousel-item {
+        p {
+            line-height: 1;
+            margin-bottom: 0;
+        }
+
+        a {
+            color          : grey;
+            text-decoration: underline;
+        }
+    }
+}
+
 .introduction {
     .title {
         font-size  : 3rem;
@@ -29,7 +45,6 @@
     left  : 2rem;
     bottom: 2rem;
 }
-
 
 .trending {
     color: black;
