@@ -1,4 +1,4 @@
-#login {
+#register {
     width : 280px;
     margin: 0 auto;
 }
@@ -7,23 +7,19 @@ form {
     width: 100%;
 
     .form-control {
-        border: 1px solid #e5e5e5;
+        border       : 1px solid #e5e5e5;
         border-radius: 2px;
         font-size    : 13px;
     }
 }
 
-.btn-login {
-    width           : 100%;
+.btn-register {
+    width: 100%;
 
     background-color: var(--bgColor);
     border          : none;
-    border-radius: 2px;
+    border-radius   : 2px;
 
-    padding         : 0.45rem 0;
+    padding       : 0.45rem 0;
     letter-spacing: var(--mainSpacing);
-}
-
-h6 {
-    font-weight: bold;
 }
