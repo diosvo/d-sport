@@ -19,15 +19,23 @@ router.get('/', function(req, res) {
   }
 
   database.table('products as p')
-      .join([{
-        table: 'categories as c',
-        on: 'c.id = p.category_id'
-      }])
+      .join([
+          {
+              table: 'categories as c',
+              on: 'c.id = p.category_id',
+          },
+          {
+              table: 'classify as cl',
+              on: 'cl.id = p.classify_id'
+          }
+      ])
       .withFields(['c.title as categories',
+      'cl.name as classify_Name',
       'p.title as name',
           'p.price',
           'p.quantity',
           'p.image',
+          'p.another_CatName',
           'p.id'
       ])
       .slice(startValue,endValue)

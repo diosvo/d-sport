@@ -15,7 +15,8 @@ import { RegisterComponent } from './pages/register/register.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'product/:id', component: ProductComponent },
+  { path: 'product', component: ProductComponent },
+  // { path: 'product/:id', component: ProductComponent },  
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'thankyou', component: ThankyouComponent },

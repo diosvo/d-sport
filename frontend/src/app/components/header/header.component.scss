@@ -3,9 +3,14 @@ header {
         padding: 0.5rem;
     }
 
-    p.account:hover {
+    .account:hover {
         cursor: pointer;
         color : #dddddd;
+        transition: var(--hoverTransition);
+    }
+
+    .account:focus {
+        outline: none;
     }
 
     #info i {
@@ -17,7 +22,7 @@ nav {
     position: sticky;
     top     : 0;
     left    : 0;
-    z-index : 1;
+    z-index : 10000;
 
     background-color: white;
     border-bottom   : 0.5px solid #dddddd;

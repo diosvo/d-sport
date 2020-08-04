@@ -62,6 +62,24 @@
         </div>
     </div>
 
+    <div id="products-carousel">
+        <p class="text-capitalize font-20 mt-5 mb-3">Latest and Greatest</p>
+        <owl-carousel-o [options]="customOptions">
+            <ng-container *ngFor="let p of products">
+                <ng-template carouselSlide class="px-1">
+                    <div class="img-container">
+                        <img [src]="p.image">
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="text-capitalize mb-0 mt-1" style="cursor: pointer;">{{p.name}}</p>
+                        <p class="mb-0 mt-1">{{p.price | currency: 'USD':'symbol-narrow':'.0'}}</p>
+                    </div>
+                    <p class="text-secondary font-15">{{p.another_CatName}}</p>
+                </ng-template>
+            </ng-container>
+        </owl-carousel-o>
+    </div>
+
     <div id="trending">
         <p class="text-capitalize font-20 mt-3">trending now</p>
         <div class="trending position-relative">
