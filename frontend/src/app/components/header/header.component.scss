@@ -1,11 +1,11 @@
 header {
     p {
-        padding: 0.5rem;
+        padding: 0.5rem 0;
     }
 
     .account:hover {
-        cursor: pointer;
-        color : #dddddd;
+        cursor    : pointer;
+        color     : #dddddd;
         transition: var(--hoverTransition);
     }
 
@@ -18,14 +18,14 @@ header {
     }
 }
 
-nav {
+#bg {
     position: sticky;
     top     : 0;
     left    : 0;
     z-index : 10000;
 
     background-color: white;
-    border-bottom   : 0.5px solid #dddddd;
+    border-bottom   : 0.5px solid #e5e5e5;
 
     #logo {
         width      : 100%;
@@ -157,4 +157,44 @@ nav {
 
 p {
     margin-bottom: 0;
+}
+
+/* Phone */
+#sm {
+    display: none;
+
+    position: sticky;
+    top     : 0;
+    left    : 0;
+    z-index : 10000;
+
+    background-color: white;
+    border-bottom   : 0.5px solid #e5e5e5;
+}
+
+@media only screen and (max-width: 768px) {
+    #bg {
+        display: none;
+    }
+
+    #sm {
+        display: block;
+
+        .cart-btn {
+            position: relative;
+
+            .cart--items--qty {
+                position: absolute;
+                top     : -0.3rem;
+                right   : -0.6rem;
+
+                border-radius   : 50%;
+                background-color: red;
+                color           : white;
+
+                font-size: 12px;
+                padding  : 0 0.4rem;
+            }
+        }
+    }
 }

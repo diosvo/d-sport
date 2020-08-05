@@ -7,13 +7,11 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
+
 export class HomeComponent implements OnInit {
-
-
   products: any[] = [];
 
   constructor(private productService: ProductService) { }
-
 
   ngOnInit() {
     this.productService.getHomeProducts().subscribe((prods: { count: Number, products: any[] }) => {
@@ -22,14 +20,15 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  customOptions: OwlOptions = {
+  proCustomOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
     touchDrag: true,
-    pullDrag: false,
+    pullDrag: true,
     dots: true,
     navSpeed: 700,
-    navText: [ '<i class="fas fa-long-arrow-alt-left"></i>', '<i class="fas fa-long-arrow-alt-right"></i>' ],
+    autoplay: true,
+    navText: ['<i class="fas fa-long-arrow-alt-left"></i>', '<i class="fas fa-long-arrow-alt-right"></i>'],
     responsive: {
       0: {
         items: 1
@@ -42,6 +41,30 @@ export class HomeComponent implements OnInit {
       },
       940: {
         items: 4
+      }
+    },
+    nav: true
+  }
+
+  bsCustomOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: false,
+    navSpeed: 700,
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 1
+      },
+      740: {
+        items: 2
+      },
+      940: {
+        items: 3
       }
     },
     nav: true

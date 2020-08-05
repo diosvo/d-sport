@@ -3,7 +3,7 @@
 
     .carousel-item {
         p {
-            line-height: 1;
+            line-height  : 1;
             margin-bottom: 0;
         }
 
@@ -14,7 +14,7 @@
     }
 }
 
-.introduction {
+#introduction {
     .title {
         font-size  : 3rem;
         font-family: Bangers, sans-serif;
@@ -25,7 +25,17 @@
     }
 }
 
-.next-season {
+#banner {
+    .banner-container {
+        display: flex;
+
+        .first-banner {
+            margin-right: 0.5rem;
+        }
+    }
+}
+
+#next-season {
     color: white;
 
     .content {
@@ -39,14 +49,7 @@
     }
 }
 
-.content_bottom {
-    color : white;
-
-    left  : 2rem;
-    bottom: 2rem;
-}
-
-.trending {
+#trending {
     color: black;
 
     .content {
@@ -56,6 +59,110 @@
         .content--title {
             font-family: Bangers, sans-serif;
             font-size  : 4rem;
+        }
+    }
+}
+
+#feature-footwear {
+    .ff-container {
+        display: flex;
+
+        .first-ff {
+            margin-right: 0.5rem;
+        }
+    }
+}
+
+.content_bottom {
+    color: white;
+
+    left  : 2rem;
+    bottom: 2rem;
+}
+
+/* NO DISPLAY FOR SMALL SIZE */
+#next-season-sm,
+#trending-sm,
+#athlete-sm {
+    display: none;
+}
+
+@media only screen and (max-width: 768px) {
+
+    /* NO DISPLAY FOR BIG SIZE */
+    #next-season,
+    #trending,
+    #athlete {
+        display: none;
+    }
+
+    /* DISPLAY */
+    #sm,
+    #next-season-sm,
+    #trending-sm,
+    #athlete-sm {
+        display: block;
+    }
+
+    #introduction {
+        .content {
+            padding: 0 1rem;
+        }
+    }
+
+    #banner {
+        margin-top: 4rem;
+
+        .banner-container {
+            display: block;
+
+            .first-banner {
+                margin-right : 0;
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        .content_bottom {
+            left  : 1rem;
+            bottom: 1rem;
+        }
+    }
+
+    #trending-sm {
+        color: white;
+
+        .content {
+            bottom: 1rem;
+            left  : 1rem;
+
+            .content--title {
+                font-family: Bangers, sans-serif;
+                font-size  : 2.5rem;
+            }
+        }
+    }
+
+    #feature-footwear {
+        .ff-container {
+            display: block;
+
+            .first-ff {
+                margin-right : 0;
+                margin-bottom: 0.5rem;
+            }
+
+            .content_bottom {
+                left  : 1rem;
+                bottom: 1rem;
+            }
+        }
+    }
+
+    #best-seller {
+
+        .owl-theme .owl-dots,
+        .owl-theme .owl-nav {
+            display: none !important;
         }
     }
 }

@@ -12,7 +12,8 @@
 </div>
 
 <section id="home" class="px-4">
-    <div class="introduction">
+    <!-- INTRODUCTION -->
+    <div id="introduction">
         <div>
             <img src="../../../assets/images/banner.jpg" alt="home banner" width=100%>
         </div>
@@ -22,49 +23,70 @@
                 alone.
                 Sport unites us. Strengthens us. Keeps us pushing ahead. No matter what happens we will always come back
                 stronger, together. You can’t stop sport. Because you can’t stop us.</p>
-            <button class="btn btn-joinus">Join Us</button>
+            <button class="btn btn-joinus" routerLink="/register">Join Us</button>
         </div>
     </div>
 
-    <div class="next-season position-relative">
-        <div class="image-container">
-            <img src="../../../assets/images/home-1.jpg" width=100%>
-        </div>
-        <div class="content position-absolute">
-            <div class="content--title">
-                <p class="mb-0">NEW FOR NEXT SEASON</p>
-            </div>
-            <div>
-                <p>Must have for first days, first practices and more.</p>
-            </div>
-            <button class="btn btn-shop__bgWhite">Shop</button>
-        </div>
-    </div>
-
-    <div class="d-flex my-2">
+    <!-- NEXT SEASON -->
+    <div id="next-season">
         <div class="position-relative">
-            <div class="mr-2" width=50%>
-                <img src="../../../assets/images/home-3.jpg" width=100%>
+            <div class="image-container">
+                <img src="../../../assets/images/home-1.jpg" width=100%>
             </div>
-            <div class="content_bottom position-absolute">
-                <p class="font-19 text-capitalize">all day, every day layers</p>
-                <button class="btn btn-shop__bgWhite">Shop</button>
-            </div>
-        </div>
-        <div class="position-relative">
-            <div width=50%>
-                <img src="../../../assets/images/home-7.jpg" width=100%>
-            </div>
-            <div class="content_bottom position-absolute">
-                <p class="font-19 text-capitalize">the latest running essentials</p>
+            <div class="content position-absolute">
+                <div class="content--title">
+                    <p class="mb-0">NEW FOR NEXT SEASON</p>
+                </div>
+                <div>
+                    <p>Must have for first days, first practices and more.</p>
+                </div>
                 <button class="btn btn-shop__bgWhite">Shop</button>
             </div>
         </div>
     </div>
 
+    <div id="next-season-sm">
+        <p class="text-capitalize font-20 mt-5 mb-3">everyday essentials</p>
+        <div>
+            <img src="../../../assets/images/home-14.png" width=100%>
+        </div>
+        <div class="font-30" style="font-family: Bangers, sans-serif">
+            <p class="mb-0">NEW FOR NEXT <br> SEASON</p>
+        </div>
+        <div>
+            <p>Must have for first days, first practices and more.</p>
+        </div>
+        <button class="btn btn-shop__bgBlack">Shop</button>
+    </div>
+
+    <!-- BANNER -->
+    <div id="banner">
+        <div class="banner-container my-2">
+            <div class="position-relative">
+                <div class="first-banner" width=50%>
+                    <img src="../../../assets/images/home-3.jpg" width=100%>
+                </div>
+                <div class="content_bottom position-absolute">
+                    <p class="font-19 text-capitalize">all day, every day layers</p>
+                    <button class="btn btn-shop__bgWhite">Shop</button>
+                </div>
+            </div>
+            <div class="position-relative">
+                <div width=50%>
+                    <img src="../../../assets/images/home-7.jpg" width=100%>
+                </div>
+                <div class="content_bottom position-absolute">
+                    <p class="font-19 text-capitalize">the latest running essentials</p>
+                    <button class="btn btn-shop__bgWhite">Shop</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CAROUSEL ITEMS -->
     <div id="products-carousel">
         <p class="text-capitalize font-20 mt-5 mb-3">Latest and Greatest</p>
-        <owl-carousel-o [options]="customOptions">
+        <owl-carousel-o [options]="proCustomOptions">
             <ng-container *ngFor="let p of products">
                 <ng-template carouselSlide class="px-1">
                     <div class="img-container">
@@ -80,6 +102,7 @@
         </owl-carousel-o>
     </div>
 
+    <!-- TRENDING -->
     <div id="trending">
         <p class="text-capitalize font-20 mt-3">trending now</p>
         <div class="trending position-relative">
@@ -99,11 +122,31 @@
         </div>
     </div>
 
+    <div id="trending-sm">
+        <p class="text-capitalize font-20 mt-3">trending now</p>
+        <div class="trending position-relative">
+            <div class="image-container">
+                <img src="../../../assets/images/home-5.jpg" width=100%>
+            </div>
+            <div class="content position-absolute">
+                <div class="content--title text-uppercase" style="line-height: 1;">
+                    <p class="mb-0">icon clash</p>
+                    <p class="mb-0">collection</p>
+                </div>
+                <div>
+                    <p class="mt-2 mb-4 font-15">Bold styles with the functionality to match.</p>
+                </div>
+                <button class="btn btn-shop__bgWhite">Shop</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FEATURE FOOTWEAR -->
     <div id="feature-footwear">
         <p class="text-capitalize font-20 mt-5">feature footwear</p>
-        <div class="d-flex my-2">
+        <div class="ff-container my-2">
             <div class="position-relative">
-                <div class="mr-2" width=50%>
+                <div class="first-ff" width=50%>
                     <img src="../../../assets/images/home-8.jpg" width=100%>
                 </div>
                 <div class="content_bottom position-absolute">
@@ -123,9 +166,30 @@
         </div>
     </div>
 
+    <!-- BEST SELLER -->
     <div id="best-seller">
         <p class="text-capitalize font-20 mt-5">best seller</p>
-        <div class="d-flex">
+        <owl-carousel-o [options]="bsCustomOptions">
+            <ng-template carouselSlide>
+                <div>
+                    <img src="../../../assets/images/home-10.jpg" width=100% style="height:486px">
+                    <p class="mt-2 font-18" style="cursor: pointer;">Men's</p>
+                </div>
+            </ng-template>  
+            <ng-template carouselSlide>
+                <div>
+                    <img src="../../../assets/images/home-11.jpg" width=100% style="height:486px">
+                    <p class="mt-2 font-18" style="cursor: pointer;">Women's</p>
+                </div>
+            </ng-template>  
+            <ng-template carouselSlide>
+                <div>
+                    <img src="../../../assets/images/home-12.jpg" width=100% style="height:486px">
+                    <p class="mt-2 font-18" style="cursor: pointer;">Accessories & Equipment</p>
+                </div>
+            </ng-template>  
+          </owl-carousel-o>
+<!--         <div class="d-flex">
             <div width=33%>
                 <img src="../../../assets/images/home-10.jpg" width=100%>
                 <p class="mt-2 font-18">Men's</p>
@@ -138,16 +202,26 @@
                 <img src="../../../assets/images/home-12.jpg" width=100%>
                 <p class="mt-2 font-18">Accessories & Equipment</p>
             </div>
-        </div>
+        </div> -->
     </div>
 
-    <div class="my-5">
+    <div id="athlete" class="my-5">
         <div width=100%>
             <img src="../../../assets/images/home-13.jpg" width=100%>
         </div>
         <div class="d-flex justify-content-center align-items-center">
-            <button class="btn btn-joinus mr-2">Join Us</button>
-            <button class="btn btn-joinus">Sign In</button>
+            <button class="btn btn-joinus mr-2" routerLink="/register">Join Us</button>
+            <button class="btn btn-joinus" routerLink="/login">Sign In</button>
+        </div>
+    </div>
+
+    <div id="athlete-sm" class="px-0" style="margin: 3rem 0 6rem;">
+        <div width=100%>
+            <img src="../../../assets/images/home-15.png" width=100%>
+        </div>
+        <div class="d-flex align-items-baseline ml-5 mt-3">
+            <button class="btn btn-joinus mr-2" routerLink="/register">Join Us</button>
+            <button class="btn btn-joinus" routerLink="/login">Sign In</button>
         </div>
     </div>
 </section>
