@@ -158,6 +158,7 @@ router.get('/classify/:classifyName', (req,res) => {
             'p.price',
             'p.quantity',
             'p.image',
+            'p.another_CatName',
             'p.description',
             'p.id'
         ])

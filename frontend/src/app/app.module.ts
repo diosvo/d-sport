@@ -25,6 +25,13 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 
+/* Classify Name */
+import { MenComponent } from './pages/classify/men/men.component';
+import { WomenComponent } from './pages/classify/women/women.component';
+import { KidsComponent } from './pages/classify/kids/kids.component';
+import { NewReleasesComponent } from './pages/classify/new-releases/new-releases.component';
+import { AccessoriesComponent } from './pages/classify/accessories/accessories.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +44,12 @@ import { RegisterComponent } from './components/register/register.component';
     ThankyouComponent,
     LoginComponent,
     ProfileComponent,
-    RegisterComponent
+    RegisterComponent,
+    MenComponent,
+    WomenComponent,
+    KidsComponent,
+    NewReleasesComponent,
+    AccessoriesComponent
   ],
   imports: [
     BrowserModule,
