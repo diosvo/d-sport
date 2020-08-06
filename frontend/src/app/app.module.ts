@@ -8,8 +8,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 /* Layouts */
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './layouts/header/header.component';
+import { FooterComponent } from './layouts/footer/footer.component';
 
 /* Pages */
 import { CartComponent } from './pages/cart/cart.component';
@@ -17,9 +17,13 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ProductComponent } from './pages/product/product.component';
 import { ThankyouComponent } from './pages/thankyou/thankyou.component';
-import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
-import { RegisterComponent } from './pages/register/register.component';
+
+
+
+/* Components */
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [

@@ -1,54 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Oswald&family=Source+Sans+Pro&display=swap');
 
-@import './assets/scss/fontsize';
-@import './assets/scss/variable';
-@import './assets/scss/animation';
+@import './assets/scss/main.scss';
 
 body {
     font-family: 'Source Sans Pro', sans-serif;
-}
-
-.btn-shop__bgWhite {
-    color  : black;
-    padding: 0.35rem 1.75rem;
-
-    background   : white;
-    border-radius: 3.5rem;
-    outline      : none;
-
-    &:hover {
-        opacity   : .9;
-        transition: var(--hoverTransition);
-    }
-}
-
-.btn-shop__bgBlack {
-    color  : white;
-    padding: 0.35rem 1.75rem;
-
-    background   : black;
-    border-radius: 3.5rem;
-    outline      : none;
-
-    &:hover {
-        color     : white;
-        background: rgba(0, 0, 0, .85);
-        transition: var(--hoverTransition);
-    }
-}
-
-.btn-joinus {
-    color  : white;
-    padding: 0.35rem 1.75rem;
-
-    background   : var(--bgColor);
-    border-radius: 3.5rem;
-    outline      : none;
-
-    &:hover {
-        color     : white;
-        background: rgba(0, 0, 0, .85);
-        transition: var(--hoverTransition);
-    }
 }

@@ -1,0 +1,43 @@
+.btn-shop__bgWhite {
+    color  : black;
+    padding: 0.35rem 1.75rem;
+
+    background   : white;
+    border-radius: 3.5rem;
+    outline      : none;
+
+    &:hover {
+        opacity   : .9;
+        transition: var(--hoverTransition);
+    }
+}
+
+.btn-shop__bgBlack {
+    color  : white;
+    padding: 0.35rem 1.75rem;
+
+    background   : black;
+    border-radius: 3.5rem;
+    outline      : none;
+
+    &:hover {
+        color     : white;
+        background: rgba(0, 0, 0, .85);
+        transition: var(--hoverTransition);
+    }
+}
+
+.btn-joinus {
+    color  : white;
+    padding: 0.35rem 1.75rem;
+
+    background   : var(--bgColor);
+    border-radius: 3.5rem;
+    outline      : none;
+
+    &:hover {
+        color     : white;
+        background: rgba(0, 0, 0, .85);
+        transition: var(--hoverTransition);
+    }
+}
