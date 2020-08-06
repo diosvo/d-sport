@@ -170,6 +170,17 @@ p {
 
     background-color: white;
     border-bottom   : 0.5px solid #e5e5e5;
+
+    button.navbar-toggler {
+        border-color: transparent;
+        &:focus {
+            outline      : none;
+        }
+    }
+
+    span.navbar-toggler-icon:hover {
+        color: black;
+    }
 }
 
 @media only screen and (max-width: 768px) {

@@ -99,17 +99,45 @@
     </div>
 </nav>
 
-<nav id="sm">
-    <div class="container d-flex justify-content-between align-items-baseline">
-        <div style="width:80px; margin-left: -1rem; cursor: pointer;">
+<div id="sm">
+    <nav class="navbar navbar-expand-lg navbar-light d-flex justify-content-between align-items-baseline">
+        <div style="width:80px; cursor: pointer;">
             <img src="./assets/images/logo.png" alt="logo" routerLink="/" width=100%>
         </div>
-        <div class="font-22 mt-3">
-            <span class="cart-btn mr-3" style="cursor: pointer;" routerLink="/cart">
+        <div class="font-22 mt-2">
+            <span class="cart-btn mr-1" style="cursor: pointer;" routerLink="/cart">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="cart--items--qty">0</span>
             </span>
-            <span style="cursor: pointer;"><i class="fas fa-bars"></i></span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
         </div>
-    </div>
-</nav>
+
+        <div class="collapse navbar-collapse" id="navbarNavDropdown" style="text-align:right">
+            <ul class="navbar-nav px-4" >
+                <li class="nav-item active d-flex align-items-baseline justify-content-end"
+                    style="border-bottom: 0.5px solid #e5e5e5;">
+                    <i class="far fa-user-circle mr-2"></i>
+                    <a class="nav-link" routerLink="/login">Your Account</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/new-releases">New Releases</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/men">Men</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/women">Women</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/kids">Kids</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/accessories">Accessories</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
