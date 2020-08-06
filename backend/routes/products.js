@@ -68,7 +68,6 @@ router.get('/:prodId', (req, res) => {
             'p.price',
             'p.quantity',
             'p.image',
-            'p.images',
             'p.description',
             'p.id'
         ])
@@ -112,7 +111,6 @@ router.get('/category/:catName', (req,res) => {
             'p.price',
             'p.quantity',
             'p.image',
-            'p.images',
             'p.description',
             'p.id'
         ])
@@ -127,6 +125,53 @@ router.get('/category/:catName', (req,res) => {
                 })
             } else {
                 res.json({message: `No products found from category ${cat_title}.`})
+            }
+        }).catch(err => console.log(err));
+})
+
+/* GET ALL PRODUCT FROM ONE PARTICULAR CLASSIFY */
+router.get('/classify/:classifyName', (req,res) => {
+    let page = (req.query.page !== undefined && req.query.page !== 0) ? req.query.page : 1; // set the current page number
+    const limit = (req.query.limit !== undefined && req.query.limit !== 0) ? req.query.limit : 12; // set the limit of items per page
+
+    let startValue;
+    let endValue;
+
+    if(page > 0) {
+        startValue = (page * limit) - limit; // 0,12,24,36,..
+        endValue  = page * limit;
+    } else {
+        startValue = 0;
+        endValue = 12;
+    }
+
+    // Fetch the classify name from the URL
+    const classify_name = req.params.classifyName;
+
+    database.table('products as p')
+        .join([{
+            table: 'classify as cl',
+            on: `cl.id = p.classify_id WHERE cl.name LIKE '%${classify_name}%'`
+        }])
+        .withFields(['cl.name as classifyName',
+            'p.title as name',
+            'p.price',
+            'p.quantity',
+            'p.image',
+            'p.description',
+            'p.id'
+        ])
+        .slice(startValue,endValue)
+        .sort({id: .1})
+        .getAll()
+        .then(prods => {
+            if (prods.length > 0) {
+                res.status(200).json({
+                    count: prods.length,
+                    products: prods
+                })
+            } else {
+                res.json({message: `No products found from classify ${classify_name}.`})
             }
         }).catch(err => console.log(err));
 })
