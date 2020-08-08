@@ -55,3 +55,21 @@
         transition: var(--hoverTransition);
     }
 }
+
+.btn-fav {
+    color  : black;
+    padding: 0.35rem 1.75rem;
+
+    background   : white;
+    border-radius: 3.5rem;
+    border: 0.75px solid #e5e5e5;
+    outline      : none;
+
+    &:hover {
+        cursor    : pointer;
+        opacity   : .9;
+
+        border: 0.75px solid grey;
+        transition: var(--hoverTransition);
+    }
+}

@@ -56,19 +56,23 @@ router.get('/', function(req, res) {
 /* GET SINGLE PRODUCT */
 router.get('/:prodId', (req, res) => {
     let  productId = req.params.prodId;
-    console.log(productId);
+    console.log('Product ID:', productId);
 
     database.table('products as p')
         .join([{
             table: 'categories as c',
             on: 'c.id = p.category_id'
         }])
-        .withFields(['c.title as categories',
-            'p.title as name',
+        .withFields(['c.title as categoryName',
+            'p.title as ProductName',
             'p.price',
             'p.quantity',
             'p.image',
+            'p.image_1',
+            'p.image_2',
+            'p.image_3',
             'p.description',
+            'p.another_CatName',
             'p.id'
         ])
         .filter({'p.id' : productId})

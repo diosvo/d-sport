@@ -1,0 +1,43 @@
+.product-images {
+    padding: 0;
+
+    div {
+        padding: 0.5rem;
+    }
+}
+
+.product-details {
+    padding: 0.5rem 0.75rem 0.5rem 3rem;
+}
+
+.form-control {
+    width : 17%;
+    height: calc(1.5em + .75rem + 2px);
+
+    padding  : .375rem .75rem;
+    font-size: 1rem;
+    border   : none;
+
+    &:focus {
+        box-shadow: none;
+    }
+}
+
+.freeship-txt {
+    padding   : 1rem 0;
+    border-top: 0.75px solid #e5e5e5;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.card-body {
+    padding: 0;
+}
+
+.card {
+    margin       : 0;
+    border       : none;
+    border-bottom: 0.75px solid #e5e5e5;
+}
