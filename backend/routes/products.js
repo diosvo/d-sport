@@ -153,8 +153,8 @@ router.get('/classify/:classifyName', (req,res) => {
             table: 'classify as cl',
             on: `cl.id = p.classify_id WHERE cl.name LIKE '%${classify_name}%'`
         }])
-        .withFields(['cl.name as classifyName',
-            'p.title as name',
+        .withFields(['cl.name as ClassifyName',
+            'p.title as ProductName',
             'p.price',
             'p.quantity',
             'p.image',
@@ -176,5 +176,48 @@ router.get('/classify/:classifyName', (req,res) => {
             }
         }).catch(err => console.log(err));
 })
+
+/* GET ALL PRODUCT FROM ONE PARTICULAR CATEGORY + CLASSIFY */
+router.get('/classify/:classifyID/category/:cateID', (req, res) => {
+
+    // Fetch
+    const classify_id = req.params.classifyID;
+    const cat_id = req.params.cateID;
+    console.log('classifyID:',classify_id,'- categoryID:', cat_id);
+
+    database.table('products as p')
+        .join([
+            {
+                table: 'categories as c',
+                on: `c.id = p.category_id`
+            },
+            {
+                table: 'classify as cl',
+                on: `cl.id = p.classify_id`
+            }
+        ])
+        .withFields(['cl.name as ClassifyName',
+            'c.title as CategoriesName',
+            'p.title as ProductName',
+            'p.price',
+            'p.quantity',
+            'p.image',
+            'p.another_CatName',
+            'p.description',
+            'p.id'
+        ])
+        .filter({'cl.id': classify_id, 'c.id': cat_id})
+        .getAll()
+        .then(prods => {
+            if (prods.length > 0) {
+                res.status(200).json({
+                    count: prods.length,
+                    products: prods
+                })
+            } else {
+                res.json({message: `No products found.`})
+            }
+        }).catch(err => console.log(err));
+});
 
 module.exports = router;
