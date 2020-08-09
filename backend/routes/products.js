@@ -64,7 +64,7 @@ router.get('/:prodId', (req, res) => {
             on: 'c.id = p.category_id'
         }])
         .withFields(['c.title as categoryName',
-            'p.title as ProductName',
+            'p.title as productName',
             'p.price',
             'p.quantity',
             'p.image',
