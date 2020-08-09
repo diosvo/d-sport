@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Router } from '@angular/router';
+import { ServerResponse, ProductModelServer } from 'src/app/models/product.model';
 
 @Component({
   selector: 'app-home',
@@ -10,13 +11,13 @@ import { Router } from '@angular/router';
 })
 
 export class HomeComponent implements OnInit {
-  products: any[] = [];
+  products: ProductModelServer[] = [];
 
   constructor(private productService: ProductService,
     private router: Router) { }
 
   ngOnInit() {
-    this.productService.getHomeProducts().subscribe((prods: { count: Number, products: any[] }) => {
+    this.productService.getHomeProducts().subscribe((prods: ServerResponse) => {
       this.products = prods.products
       console.log(this.products);
     })

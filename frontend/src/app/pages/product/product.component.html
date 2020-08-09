@@ -50,9 +50,12 @@
 
             <div class="text-center mb-4">
                 <div class="btn-shop__bgBlack py-3 font-17">Add to Cart</div>
+                <!-- <div class="btn-shop__bgBlack py-3 font-17" [class.disable]="p.quantity < 1" [class.btn-outline-danger]>
+                    {{p.quantity < 1 ? "OUT OF STOCK" : "Add to Cart"}}</div> -->
                 <div class="btn-fav py-3 mt-2">
                     <p class="mb-0">Favorites
-                        <span><i class="far fa-heart ml-2"></i></span></p>
+                        <span><i class="far fa-heart ml-2"></i></span>
+                    </p>
                 </div>
             </div>
 

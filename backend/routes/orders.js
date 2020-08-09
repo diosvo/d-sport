@@ -51,7 +51,14 @@ router.get('/:id', (req, res) => {
                 on: 'u.id = o.user_id'
             }
         ])
-        .withFields(['o.id', 'p.title as name', 'p.description', 'p.price', 'u.username'])
+        .withFields(['o.id',
+            'p.image',
+            'p.title as name',
+            'p.description',
+            'p.price',
+            'u.username',
+            'od.quantity'
+        ])
         .filter({'o.id': orderId})
         .getAll()
         .then(orders => {
@@ -75,7 +82,10 @@ router.post('/new', bodyParser.json(), (req, res) => {
             }).then(newOrderId => {
             if (newOrderId > 0) {
                 products.forEach(async (p) => {
-                    let data = await database.table('products').filter({id: p.id}).withFields(['quantity']).get();
+                    let data = await database.table('products')
+                        .filter({id: p.id})
+                        .withFields(['quantity']).get();
+
                     let inCart = parseInt(p.incart);
 
                     //  The number of  pieces ordered from the quantity column in database
