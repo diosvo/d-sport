@@ -31,6 +31,8 @@ import { WomenComponent } from './pages/classify/women/women.component';
 import { KidsComponent } from './pages/classify/kids/kids.component';
 import { NewReleasesComponent } from './pages/classify/new-releases/new-releases.component';
 import { AccessoriesComponent } from './pages/classify/accessories/accessories.component';
+import {NgxSpinnerModule} from "ngx-spinner";
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { AccessoriesComponent } from './pages/classify/accessories/accessories.c
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    CarouselModule
+    CarouselModule,
+    NgxSpinnerModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
