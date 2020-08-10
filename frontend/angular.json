@@ -56,7 +56,6 @@
             ],
             "scripts": [
               "src/assets/js/main.js",
-              "src/assets/js/nouislider.min.js",
               "src/assets/js/jquery.zoom.min.js"
             ]
           },
