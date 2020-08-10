@@ -41,13 +41,17 @@ export class ProductComponent implements OnInit, AfterViewInit {
   }
 
   addToCart(id: number) {
-    this.cartService.addProductToCart(id, this.quantityInput.nativeElement.value);
-    console.log('Add to cart successfully with Product ID:', id);
+    if (this.product.quantity >= 1) {
+      this.cartService.addProductToCart(id, this.quantityInput.nativeElement.value);
+      console.log('Add to cart successfully w/ ProductID:', id, 'x', this.quantityInput.nativeElement.value);
+    } else {
+      window.alert('This product is out of stock!')
+    }
   }
 
   Increase() {
     let value = parseInt(this.quantityInput.nativeElement.value);
-    if (value <= this.product.quantity) {
+    if (value < this.product.quantity) {
       value++;
     }
     this.quantityInput.nativeElement.value = value.toString();
