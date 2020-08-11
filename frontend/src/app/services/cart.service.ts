@@ -128,6 +128,8 @@ export class CartService {
           }
 
           this.cartDataClient.prodsData[index].inCart = this.cartDataServer.data[index].numInCart;
+          this.total();
+          this.cartDataClient.total = this.cartDataServer.total;
           localStorage.setItem('cart', JSON.stringify(this.cartDataClient));
 
           // TOAST NOTIFICATION
