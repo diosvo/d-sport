@@ -42,7 +42,7 @@ export class ProductComponent implements OnInit, AfterViewInit {
 
   addToCart(id: number) {
     if (this.product.quantity >= 1) {
-      this.cartService.addProductToCart(id, this.quantityInput.nativeElement.value);
+      this.cartService.addProductToCart(id, parseInt(this.quantityInput.nativeElement.value));
       console.log('Add to cart successfully w/ ProductID:', id, 'x', this.quantityInput.nativeElement.value);
     } else {
       window.alert('This product is out of stock!')
