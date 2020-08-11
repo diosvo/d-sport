@@ -14,16 +14,108 @@
     </div>
 
     <!-- INTRODUCTION -->
-    <div id="men-banner" class="position-relative text-light">
-        <div>
+    <div id="men-banner" class="position-relative text-light mb-5">
+        <div class="img-container-bg">
             <img src="../../../assets/images/men/men-1.png" alt="men banner" width=100%>
         </div>
-        <div class="banner-content position-absolute d-flex flex-column justify-content-center align-items-center py-4">
-            <h1 class="text-uppercase banner-title m-0" >zoom freak 2</h1>
-            <p class="content text-center mb-4">Speed, power and controls for every type of player.</p>
+        <div class="img-container-sm">
+            <img src="../../../assets/images/men/men-13.png" alt="men banner" width=100%>
+        </div>
+        <div class="banner-content position-absolute py-4">
+            <h1 class="text-uppercase banner-title m-0">zoom freak 2</h1>
+            <p class="mb-4">Speed, power and controls for every type of player.</p>
             <button class="btn btn-shop__bgWhite" routerLink="/men/shoes">Shop</button>
         </div>
     </div>
+
+    <!-- TRENDING FOOTWEAR -->
+    <div id="men-trending-footwear">
+        <p class="text-capitalize font-20 mt-5 mb-3">trending footwear</p>
+        <div class="position-relative">
+            <div class="image-container">
+                <img src="../../../assets/images/men/men-2.jpg" width=100%>
+            </div>
+            <div class="tf-content position-absolute">
+                <div>
+                    <p class="text-capitalize font-22">air vapormax 2020 flykit</p>
+                </div>
+                <button class="btn btn-shop__bgBlack" routerLink="/men/shoes">Shop</button>
+            </div>
+        </div>
+
+        <!-- CAROUSEL ITEMS -->
+        <div id="products-carousel" class="mt-3">
+            <owl-carousel-o [options]="proCustomOptions">
+                <ng-container *ngFor="let p of products">
+                    <ng-template carouselSlide class="px-1">
+                        <div class="img-container">
+                            <img [src]="p.image" style="cursor: pointer;" (click)="selectProduct(p.id)">
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p class="text-capitalize mb-0 mt-1" style="cursor: pointer;" (click)="selectProduct(p.id)">
+                                {{p.ProductName}}</p>
+                            <p class="mb-0 mt-1">{{p.price | currency: 'USD':'symbol-narrow':'.0'}}</p>
+                        </div>
+                        <p class="text-secondary font-15">{{p.another_CatName}}</p>
+                    </ng-template>
+                </ng-container>
+            </owl-carousel-o>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div id="whats-next">
+        <p class="text-capitalize font-20 mt-5">ready for what's next?</p>
+        <div class="wn-container my-2">
+            <div class="position-relative">
+                <div class="first-wn">
+                    <img src="../../../assets/images/men/men-7.jpg" width=100%>
+                </div>
+                <div class="wn-content_bottom position-absolute">
+                    <h1 class="wn-title text-uppercase m-0">you got this</h1>
+                    <p>Gear up your football</p>
+                    <button class="btn btn-shop__bgBlack">Shop</button>
+                </div>
+            </div>
+            <div class="position-relative">
+                <div>
+                    <img src="../../../assets/images/men/men-8.jpg" width=100%>
+                </div>
+                <div class="wn-content_bottom position-absolute" style="color: white">
+                    <h1 class="wn-title text-uppercase m-0">be bold.</h1>
+                    <h1 class="wn-title text-uppercase m-0">be you.</h1>
+                    <p>Express your styles...we got you</p>
+                    <button class="btn btn-shop__bgWhite">Shop</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MORE TO EXPLORE -->
+    <div id="best-seller">
+        <p class="font-20 mt-5">More to Explore</p>
+        <owl-carousel-o [options]="exploreCustomOptions">
+            <ng-template carouselSlide>
+                <div>
+                    <img src="../../../assets/images/men/men-10.jpg" width=100%>
+                    <p class="mt-2 font-18" style="cursor: pointer;" routerLink="/new-releases">New Releases</p>
+                </div>
+            </ng-template>
+            <ng-template carouselSlide>
+                <div>
+                    <img src="../../../assets/images/men/men-11.jpg" width=100%>
+                    <p class="mt-2 font-18" style="cursor: pointer;" routerLink="/men/accessories">Bags and Backpacks</p>
+                </div>
+            </ng-template>
+            <ng-template carouselSlide>
+                <div>
+                    <img src="../../../assets/images/men/men-12.jpg" width=100%>
+                    <p class="mt-2 font-18" style="cursor: pointer;" routerLink="/men/shoes">Shoes</p>
+                </div>
+            </ng-template>
+        </owl-carousel-o>
+    </div>
+
 </section>
 
 <app-nike-athletes></app-nike-athletes>
