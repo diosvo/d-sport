@@ -20,6 +20,12 @@ import { WomenComponent } from './pages/classify/women/women.component';
 import { KidsComponent } from './pages/classify/kids/kids.component';
 import { AccessoriesComponent } from './pages/classify/accessories/accessories.component';
 
+/* Classify: Men */
+import { MenShoesComponent } from './pages/classify/men/men-shoes/men-shoes.component';
+import { MenTopComponent } from './pages/classify/men/men-top/men-top.component';
+import { MenBottomComponent } from './pages/classify/men/men-bottom/men-bottom.component';
+import { MenAccessoriesComponent } from './pages/classify/men/men-accessories/men-accessories.component';
+
 const routes: Routes = [
   { path: '', component: HomeComponent },
 
@@ -41,6 +47,11 @@ const routes: Routes = [
   { path: 'kids', component: KidsComponent },
   { path: 'accessories', component: AccessoriesComponent },
 
+  /* Classify: Men */
+  { path: 'men/shoes', component: MenShoesComponent },
+  { path: 'men/top', component: MenTopComponent },
+  { path: 'men/bottom', component: MenBottomComponent },
+  { path: 'men/accessories', component: MenAccessoriesComponent },
 ];
 
 @NgModule({

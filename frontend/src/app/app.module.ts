@@ -3,6 +3,8 @@ import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CarouselModule} from 'ngx-owl-carousel-o';
+import {NgxSpinnerModule} from "ngx-spinner";
+import {ToastrModule} from "ngx-toastr";
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -10,6 +12,8 @@ import {AppComponent} from './app.component';
 /* Layouts */
 import {HeaderComponent} from './layouts/header/header.component';
 import {FooterComponent} from './layouts/footer/footer.component';
+import { NikeAthletesComponent } from './layouts/nike-athletes/nike-athletes.component';
+import { PromotionsComponent } from './layouts/promotions/promotions.component';
 
 /* Pages */
 import {CartComponent} from './pages/cart/cart.component';
@@ -30,14 +34,21 @@ import {WomenComponent} from './pages/classify/women/women.component';
 import {KidsComponent} from './pages/classify/kids/kids.component';
 import {NewReleasesComponent} from './pages/classify/new-releases/new-releases.component';
 import {AccessoriesComponent} from './pages/classify/accessories/accessories.component';
-import {NgxSpinnerModule} from "ngx-spinner";
-import {ToastrModule} from "ngx-toastr";
+
+/* Classify: Men */
+import { MenShoesComponent } from './pages/classify/men/men-shoes/men-shoes.component';
+import { MenTopComponent } from './pages/classify/men/men-top/men-top.component';
+import { MenBottomComponent } from './pages/classify/men/men-bottom/men-bottom.component';
+import { MenAccessoriesComponent } from './pages/classify/men/men-accessories/men-accessories.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    
     HeaderComponent,
     FooterComponent,
+    NikeAthletesComponent,
+    PromotionsComponent,
 
     CartComponent,
     CheckoutComponent,
@@ -53,7 +64,11 @@ import {ToastrModule} from "ngx-toastr";
     WomenComponent,
     KidsComponent,
     NewReleasesComponent,
-    AccessoriesComponent
+    AccessoriesComponent,
+    MenShoesComponent,
+    MenTopComponent,
+    MenBottomComponent,
+    MenAccessoriesComponent,
   ],
   imports: [
     BrowserModule,

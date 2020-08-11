@@ -1,3 +1,29 @@
-<div>
-    WHAT CHA DOIN' ?????
-</div>
+<app-promotions></app-promotions>
+
+<section id="men" class="container px-3">
+    <div id="inner-wrapper" class="py-2">
+        <div class="men-title">
+            <h3 class="py-3 mb-0">Men</h3>
+        </div>
+        <div class="inner-wrapper-nav d-flex font-17 py-2">
+            <p routerLink="/men/shoes" (click)=mShoes()>shoes</p>
+            <p routerLink="/men/top" (click)=mTop()>top</p>
+            <p routerLink="/men/bottom" (click)=mBottom()>bottom</p>
+            <p routerLink="/men/accessories" (click)=mAcc()>accessories</p>
+        </div>
+    </div>
+
+    <!-- INTRODUCTION -->
+    <div id="men-banner" class="position-relative text-light">
+        <div>
+            <img src="../../../assets/images/men/men-1.png" alt="men banner" width=100%>
+        </div>
+        <div class="banner-content position-absolute d-flex flex-column justify-content-center align-items-center py-4">
+            <h1 class="text-uppercase banner-title m-0" >zoom freak 2</h1>
+            <p class="content text-center mb-4">Speed, power and controls for every type of player.</p>
+            <button class="btn btn-shop__bgWhite" routerLink="/men/shoes">Shop</button>
+        </div>
+    </div>
+</section>
+
+<app-nike-athletes></app-nike-athletes>

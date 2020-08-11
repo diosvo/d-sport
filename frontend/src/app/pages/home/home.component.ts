@@ -3,7 +3,6 @@ import { ProductService } from '../../services/product.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Router } from '@angular/router';
 import { ServerResponse, ProductModelServer } from 'src/app/models/product.model';
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

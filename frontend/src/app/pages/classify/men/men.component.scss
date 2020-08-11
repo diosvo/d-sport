@@ -1,0 +1,52 @@
+#inner-wrapper {
+    display    : flex;
+    align-items: baseline;
+
+    .men-title {
+        margin-right: 20rem;
+    }
+
+    .inner-wrapper-nav p {
+        margin-bottom: 0;
+        padding      : 0 1rem;
+
+        text-transform: capitalize;
+
+        &:hover {
+            cursor : pointer;
+            opacity: .9;
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+#men-banner {
+    .banner-title {
+        font-size  : 5rem;
+        font-family: Bangers, sans-serif;
+    }
+
+    .banner-content {
+        left     : 50%;
+        top      : 80%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #inner-wrapper {
+        display: block;
+        padding: 1rem 0;
+
+        .men-title {
+            margin-right: 0;
+        }
+
+        .inner-wrapper-nav p:first-child {
+            padding-left: 0;
+        }
+    }
+}
