@@ -78,4 +78,13 @@ export class ProductService {
   getProductsFromCategory(catName: string): Observable<ProductModelServer[]> {
     return this.http.get<ProductModelServer[]>(this.SERVER_URL + '/products/category' + catName)
   }
+
+    /* Get products from ClassifyID + CategoryID */
+  getProdFromClassifyIdCategoryId(ClassId: Number, CateId: Number, numberOfResults = 12): Observable<ServerResponse> {
+    return this.http.get<ServerResponse>(this.SERVER_URL + '/products/classify/' + ClassId + '/category/' + CateId, {
+      params: {
+        limit: numberOfResults.toString()
+      }
+    })
+  }
 }

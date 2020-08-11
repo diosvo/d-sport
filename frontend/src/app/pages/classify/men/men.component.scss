@@ -1,0 +1,151 @@
+#inner-wrapper {
+    display    : flex;
+    align-items: baseline;
+
+    .men-title {
+        margin-right: 20rem;
+    }
+
+    .inner-wrapper-nav p {
+        margin-bottom: 0;
+        padding      : 0 1rem;
+
+        text-transform: capitalize;
+
+        &:hover {
+            cursor : pointer;
+            opacity: .9;
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+#men-banner {
+    .img-container-sm {
+        display: none;
+    }
+
+    .banner-title {
+        font-size  : 5rem;
+        font-family: Bangers, sans-serif;
+        line-height: 1;
+    }
+
+    .banner-content {
+        display        : flex;
+        flex-direction : column;
+        justify-content: center;
+        align-items    : center;
+
+        left     : 50%;
+        top      : 80%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+#men-trending-footwear {
+    .tf-content {
+        top      : 12%;
+        left     : 12%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+#whats-next {
+    .wn-container {
+        display        : flex;
+        justify-content: space-between;
+
+        .position-relative {
+            img {
+                height: 430px;
+            }
+        }
+
+        .first-wn {
+            margin-right: 0.5rem;
+        }
+
+        .wn-content_bottom {
+            color: black;
+
+            left: 2rem;
+            top : 1rem;
+
+            .wn-title {
+                font-size  : 3.5rem;
+                font-family: Bangers, sans-serif;
+                line-height: 1;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #inner-wrapper {
+        display: block;
+        padding: 1rem 0;
+
+        .men-title {
+            margin-right: 0;
+        }
+
+        .inner-wrapper-nav p:first-child {
+            padding-left: 0;
+        }
+    }
+
+    #men-banner {
+        .img-container-bg {
+            display: none;
+        }
+
+        .img-container-sm {
+            display: block;
+        }
+
+        .banner-title {
+            font-size: 3.5rem;
+        }
+
+        .banner-content {
+            display  : block;
+            width    : 80%;
+            transform: translate(-55%, -20%);
+        }
+    }
+
+    #men-trending-footwear {
+        .tf-content {
+            top : 25%;
+            left: 30%;
+        }
+    }
+
+    #whats-next {
+        .wn-container {
+            display: block;
+
+            .position-relative {
+                img {
+                    height: 350px;
+                }
+            }
+
+            .first-wn {
+                margin-right : 0;
+                margin-bottom: .75rem;
+            }
+
+            .wn-content_bottom {
+                .wn-title {
+                    font-size: 3rem;
+                }
+            }
+
+        }
+    }
+}

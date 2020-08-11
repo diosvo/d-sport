@@ -1,0 +1,16 @@
+#athlete-sm {
+    display: none;
+}
+
+@media only screen and (max-width: 768px) {
+
+    /* NO DISPLAY FOR BIG SIZE */
+    #athlete {
+        display: none;
+    }
+
+    /* DISPLAY */
+    #athlete-sm {
+        display: block;
+    }
+}
