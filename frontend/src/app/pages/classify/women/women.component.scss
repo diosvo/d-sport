@@ -1,0 +1,198 @@
+#inner-wrapper {
+    display    : flex;
+    align-items: center;
+    font-size  : 17px;
+
+    .men-title {
+        margin-right: 15rem;
+    }
+
+    .inner-wrapper-nav p {
+        margin-bottom: 0;
+        padding      : 0 1rem;
+
+        text-transform: capitalize;
+
+        &:hover {
+            cursor : pointer;
+            opacity: .9;
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+#wm-banner {
+    .banner-title {
+        font-size  : 5rem;
+        font-family: Bangers, sans-serif;
+        line-height: 1;
+    }
+
+    .banner-content {
+        position: absolute;
+        color   : black;
+        left    : 5%;
+        bottom  : 10%;
+    }
+}
+
+#wm-trending-clt {
+    .wn-container {
+        display        : flex;
+        justify-content: space-between;
+
+        .position-relative {
+            img {
+                height: 675px;
+            }
+        }
+
+        .first-wn {
+            margin-right: 1rem;
+        }
+
+        .wn-content_bottom {
+            left  : 2rem;
+            bottom: 3rem;
+        }
+    }
+}
+
+#wm-feature {
+    .ft-content {
+        position: absolute;
+        top     : 5%;
+        left    : 3%;
+
+        color: white;
+
+        .ft-title-bg p {
+            font-size  : 4rem;
+            font-family: Bangers, sans-serif;
+
+            margin-bottom: 0;
+            line-height  : 1;
+        }
+
+
+        .ft-title-sm {
+            display: none;
+
+            font-size  : 2.5rem;
+            font-family: Bangers, sans-serif;
+
+            margin-bottom: 0;
+            line-height  : 1;
+            padding-right: 3rem;
+        }
+    }
+}
+
+#ft-shoes{
+    .wn-container {
+        display        : flex;
+        justify-content: space-between;
+
+        .position-relative {
+            img {
+                height: 420px;
+            }
+        }
+
+        .first-wn {
+            margin-right: 1rem;
+        }
+
+        .wn-content_bottom {
+            left  : 2rem;
+            bottom: 1.5rem;
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #inner-wrapper {
+        display  : block;
+        padding  : 1rem 0;
+        font-size: 15px;
+
+        .men-title {
+            margin-right: 0;
+        }
+
+        .inner-wrapper-nav p:first-child {
+            padding-left: 0;
+        }
+    }
+
+    #wm-banner {
+        .banner-title {
+            font-size: 3rem;
+        }
+
+        .banner-content {
+            display : block;
+            position: unset;
+
+            margin-top: 1rem;
+        }
+    }
+
+    #wm-trending-clt {
+        .wn-container {
+            display: block;
+
+            .position-relative {
+                img {
+                    height: auto;
+                }
+            }
+
+            .first-wn {
+                margin-right : 0;
+                margin-bottom: .5rem;
+            }
+        }
+    }
+
+    #wm-feature {
+        .ft-content {
+            position: unset;
+
+            color: black;
+
+            .ft-title-sm {
+                display: block;
+            }
+
+            .ft-title-bg {
+                display: none;
+            }
+        }
+    }
+
+    #ft-shoes{
+        .wn-container {
+            display        : block;
+
+            .position-relative {
+                img {
+                    height: auto;
+                }
+            }
+    
+            .first-wn {
+                margin-right: 0;
+                margin-bottom: 0.5rem;
+            }
+
+            .wn-content_bottom {
+                left  : 2rem;
+                bottom: 1rem;
+            }
+        }
+    }
+}

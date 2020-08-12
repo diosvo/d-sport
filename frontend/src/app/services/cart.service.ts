@@ -1,14 +1,15 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {environment} from 'src/environments/environment';
-import {BehaviorSubject} from 'rxjs';
-import {Router, NavigationExtras} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { BehaviorSubject } from 'rxjs';
+import { Router, NavigationExtras } from '@angular/router';
 
-import {ProductService} from './product.service';
-import {OrderService} from './order.service';
-import {CartModelPublic, CartModelServer} from '../models/cart.model';
-import {ToastrService} from "ngx-toastr";
-import {NgxSpinnerService} from "ngx-spinner";
+import { ProductService } from './product.service';
+import { OrderService } from './order.service';
+import { CartModelPublic, CartModelServer } from '../models/cart.model';
+
+import { ToastrService } from "ngx-toastr";
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Injectable({
   providedIn: 'root'
@@ -45,11 +46,11 @@ export class CartService {
   cartData$ = new BehaviorSubject<CartModelServer>(this.cartDataServer)
 
   constructor(private http: HttpClient,
-              private productService: ProductService,
-              private orderService: OrderService,
-              private router: Router,
-              private toast: ToastrService,
-              private  spinner: NgxSpinnerService) {
+    private productService: ProductService,
+    private orderService: OrderService,
+    private router: Router,
+    private toast: ToastrService,
+    private spinner: NgxSpinnerService) {
 
     this.cartTotal$.next(this.cartDataServer.total);
     this.cartData$.next(this.cartDataServer);
@@ -85,7 +86,7 @@ export class CartService {
             this.cartDataClient.total = this.cartDataServer.total;
             localStorage.setItem('cart', JSON.stringify(this.cartDataClient))
           }
-          this.cartData$.next({...this.cartDataServer});
+          this.cartData$.next({ ...this.cartDataServer });
         })
       });
     }
@@ -105,7 +106,7 @@ export class CartService {
 
         this.cartDataClient.total = this.cartDataServer.total;
         localStorage.setItem('cart', JSON.stringify(this.cartDataClient));
-        this.cartData$.next({...this.cartDataServer});
+        this.cartData$.next({ ...this.cartDataServer });
 
         // DISPLAY A TOAST NOTIFICATION
         this.toast.success(`${prod.title} added to the cart`, 'Product Added', {
@@ -122,7 +123,11 @@ export class CartService {
         // a. If the item is already in the cart => index is positive value
         if (index !== -1) {
           if (quantity !== undefined && quantity <= prod?.quantity) {
-            this.cartDataServer.data[index].numInCart < prod?.quantity ? this.cartDataServer.data[index].numInCart++ : prod?.quantity;
+            if (this.cartDataServer.data[index].numInCart < prod?.quantity) {
+              this.cartDataServer.data[index].numInCart += quantity
+            } else {
+              prod?.quantity;
+            }
           } else {
             this.cartDataServer.data[index].numInCart = this.cartDataServer.data[index].numInCart < prod?.quantity ? quantity : prod?.quantity;
           }
@@ -146,12 +151,12 @@ export class CartService {
         else {
           this.cartDataServer.data.push({
             product: prod,
-            numInCart: 1
+            numInCart: quantity
           });
 
           this.cartDataClient.prodsData.push({
             id: prod.id,
-            inCart: 1
+            inCart: quantity
           });
           localStorage.setItem('cart', JSON.stringify(this.cartDataClient))
 
@@ -168,7 +173,7 @@ export class CartService {
           this.total();
           this.cartDataClient.total = this.cartDataServer.total;
           localStorage.setItem('cart', JSON.stringify(this.cartDataClient))
-          this.cartData$.next({...this.cartDataServer});
+          this.cartData$.next({ ...this.cartDataServer });
         }
       }
     })
@@ -184,15 +189,15 @@ export class CartService {
       this.total()
       this.cartDataClient.total = this.cartDataServer.total;
       localStorage.setItem('cart', JSON.stringify(this.cartDataClient))
-      this.cartData$.next({...this.cartDataServer});
+      this.cartData$.next({ ...this.cartDataServer });
     } else {
       data.numInCart--;
 
       if (data.numInCart < 1) {
         this.deleteProductFromCart(index)
-        this.cartData$.next({...this.cartDataServer});
+        this.cartData$.next({ ...this.cartDataServer });
       } else {
-        this.cartData$.next({...this.cartDataServer});
+        this.cartData$.next({ ...this.cartDataServer });
         this.cartDataClient.prodsData[index].inCart = data.numInCart;
 
         this.total();
@@ -211,7 +216,7 @@ export class CartService {
 
       if (this.cartDataClient.total === 0) {
         this.cartDataClient = {
-          total: 0, prodsData: [{id: 0, inCart: 0}]
+          total: 0, prodsData: [{ id: 0, inCart: 0 }]
         }
         localStorage.setItem('cart', JSON.stringify(this.cartDataClient))
       } else {
@@ -220,11 +225,11 @@ export class CartService {
 
       if (this.cartDataServer.total === 0) {
         this.cartDataServer = {
-          total: 0, data: [{numInCart: 0, product: undefined}]
+          total: 0, data: [{ numInCart: 0, product: undefined }]
         }
-        this.cartData$.next({...this.cartDataServer});
+        this.cartData$.next({ ...this.cartDataServer });
       } else {
-        this.cartData$.next({...this.cartDataServer});
+        this.cartData$.next({ ...this.cartDataServer });
       }
     } else {
       // If the user click cancel button
@@ -236,8 +241,8 @@ export class CartService {
     let Total = 0;
 
     this.cartDataServer.data.forEach(p => {
-      const {numInCart} = p;
-      const {price} = p.product;
+      const { numInCart } = p;
+      const { price } = p.product;
 
       Total += numInCart * price;
     });
@@ -256,7 +261,7 @@ export class CartService {
       ]
     }
 
-    this.cartData$.next({...this.cartDataServer});
+    this.cartData$.next({ ...this.cartDataServer });
   }
 
   checkoutFromCart(userId: number) {
@@ -284,7 +289,7 @@ export class CartService {
                 this.spinner.hide();
               }, 1000);
               this.router.navigate(['/thankyou'], navigationExtras).then(p => {
-                this.cartDataClient = {total: 0, prodsData: [{inCart: 0, id: 0}]};
+                this.cartDataClient = { total: 0, prodsData: [{ inCart: 0, id: 0 }] };
                 this.cartTotal$.next(0);
                 localStorage.setItem('cart', JSON.stringify(this.cartDataClient));
               });
