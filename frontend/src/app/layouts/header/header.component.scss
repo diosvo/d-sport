@@ -30,6 +30,7 @@ header {
     #logo {
         width      : 100%;
         margin-left: -1.5rem;
+
         img {
             width: 100%;
 
@@ -55,6 +56,10 @@ header {
             &:hover {
                 cursor       : pointer;
                 border-bottom: 2px solid black;
+            }
+
+            &:focus {
+                outline: none;
             }
         }
     }
@@ -172,8 +177,9 @@ p {
 
     button.navbar-toggler {
         border-color: transparent;
+
         &:focus {
-            outline      : none;
+            outline: none;
         }
     }
 

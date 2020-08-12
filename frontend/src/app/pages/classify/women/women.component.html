@@ -1,1 +1,132 @@
-<p>women works!</p>
+<app-promotions></app-promotions>
+
+<section id="women" class="container px-3">
+    <div id="inner-wrapper" class="py-2">
+        <div class="men-title">
+            <h3 class="py-2 mb-0">Women</h3>
+        </div>
+        <div class="inner-wrapper-nav d-flex py-2">
+            <p routerLink="/women/shoes">shoes</p>
+            <p routerLink="/women/top">top</p>
+            <p routerLink="/women/bottom">bottom</p>
+            <p routerLink="/women/shoes-u100">shoes $100 & under</p>
+            <p routerLink="/women/accessories">accessories</p>
+        </div>
+    </div>
+
+    <!-- BANNER -->
+    <div id="wm-banner" class="position-relative text-light mb-5">
+        <div class="img-container">
+            <img src="../../../assets/images/women/wm-1.jpg" alt="women banner" width=100%>
+        </div>
+        <div class="banner-content">
+            <h1 class="text-uppercase banner-title m-0 pr-3">be bold. be you.</h1>
+            <p class="mb-4">New looks that let you express your style..we got you.</p>
+            <button class="btn btn-shop__bgBlack" routerLink="/women/shoes">Shop</button>
+        </div>
+    </div>
+
+    <!-- TRENDING COLLECTION -->
+    <div id="wm-trending-clt">
+        <p class="text-capitalize font-20 mt-5">trending collection</p>
+        <div class="wn-container my-2">
+            <div class="position-relative">
+                <div class="first-wn">
+                    <img src="../../../assets/images/women/wm-3.jpg" width=100%>
+                </div>
+                <div class="wn-content_bottom position-absolute" style="color: black">
+                    <p class="text-capitalize font-20">The new icon clash collection</p>
+                    <button class="btn btn-shop__bgBlack" routerLink="/women/top">Shop</button>
+                </div>
+            </div>
+            <div class="position-relative">
+                <div>
+                    <img src="../../../assets/images/women/wm-2.jpg" width=100%>
+                </div>
+                <div class="wn-content_bottom position-absolute" style="color: white">
+                    <p class="text-capitalize font-20">nike yoga collection</p>
+                    <button class="btn btn-shop__bgWhite" routerLink="/women/bottom">Shop</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FEATURED -->
+    <div id="wm-feature">
+        <p class="text-capitalize font-20 mt-5 mb-3">feature</p>
+        <div class="position-relative">
+            <div class="image-container">
+                <img src="../../../assets/images/women/wm-4.jpg" width=100%>
+            </div>
+            <div class="ft-content">
+                <div class="ft-title-bg">
+                    <p>style to fuel
+                        <br>your
+                        <br>creativity</p>
+                </div>
+                <div class="ft-title-sm mt-2">
+                    <p class="mb-1">style to fuel your creativity</p>
+                </div>
+                <div>
+                    <p>Pick from a rising photographer and activist</p>
+                </div>
+                <div>
+                    <button class="btn btn-shop__bgBlack mr-2" routerLink="/women/shoes">Shop</button>
+                    <button class="btn btn-shop__bgBlack" routerLink="/women/shoes">Explore</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FEATURED SHOES -->
+    <div id="ft-shoes">
+        <p class="text-capitalize font-20 mt-5">trending collection</p>
+        <div class="wn-container my-2">
+            <div class="position-relative" style="color: black">
+                <div class="first-wn">
+                    <img src="../../../assets/images/women/wm-5.jpg" width=100%>
+                </div>
+                <div class="wn-content_bottom position-absolute">
+                    <p class="text-capitalize font-20">Nike basketball's Air Zoom BB NXT</p>
+                    <button class="btn btn-shop__bgBlack" routerLink="/women/shoes">Shop</button>
+                </div>
+            </div>
+            <div class="position-relative">
+                <div>
+                    <img src="../../../assets/images/women/wm-6.jpg" width=100%>
+                </div>
+                <div class="wn-content_bottom position-absolute">
+                    <p class="text-capitalize font-20">the new vapormax 2020</p>
+                    <button class="btn btn-shop__bgBlack" routerLink="/women/shoes">Shop</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MORE TO EXPLORE -->
+    <div id="products-carousel" class="mt-3">
+        <p class="text-capitalize font-20 mt-5">More to Explore</p>
+        <owl-carousel-o [options]="exploreCustomOptions">
+            <ng-template carouselSlide>
+                <div>
+                    <img src="../../../assets/images/women/wm-7.jpg" width=100%>
+                    <p class="mt-2 font-20" style="cursor: pointer;" routerLink="women/top">Bras</p>
+                </div>
+            </ng-template>
+            <ng-template carouselSlide>
+                <div>
+                    <img src="../../../assets/images/women/wm-8.jpg" width=100%>
+                    <p class="mt-2 font-20" style="cursor: pointer;" routerLink="/women/bottom">Shorts</p>
+                </div>
+            </ng-template>
+            <ng-template carouselSlide>
+                <div>
+                    <img src="../../../assets/images/women/wm-10.jpg" width=100%>
+                    <p class="mt-2 font-20" style="cursor: pointer;" routerLink="/women/bottom">Leggings</p>
+                </div>
+            </ng-template>
+        </owl-carousel-o>
+    </div>
+</section>
+
+<app-nike-athletes></app-nike-athletes>

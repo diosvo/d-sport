@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ProductService } from 'src/app/services/product.service';
+import { Component, Injectable, OnInit } from '@angular/core';
+import { OwlOptions } from 'ngx-owl-carousel-o';
+
+@Injectable({
+  providedIn: 'root'
+})
 
 @Component({
   selector: 'app-women',
@@ -7,15 +11,35 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./women.component.scss']
 })
 export class WomenComponent implements OnInit {
-  products: any[] = [];
 
-  constructor(private productService: ProductService) { }
-
-  ngOnInit(): void {
-    this.productService.getWomenProducts().subscribe((prods: { count: Number, products: any[] }) => {
-      this.products = prods.products
-      console.log(this.products);
-    })
+  constructor() {
   }
 
+  ngOnInit(): void {
+
+  }
+
+  exploreCustomOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: false,
+    navSpeed: 700,
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 1
+      },
+      740: {
+        items: 2
+      },
+      940: {
+        items: 3
+      }
+    },
+    nav: true
+  }
 }

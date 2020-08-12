@@ -20,11 +20,18 @@ import { WomenComponent } from './pages/classify/women/women.component';
 import { KidsComponent } from './pages/classify/kids/kids.component';
 import { AccessoriesComponent } from './pages/classify/accessories/accessories.component';
 
-/* Classify: Men */
+/* for: Men */
 import { MenShoesComponent } from './pages/classify/men/men-shoes/men-shoes.component';
 import { MenTopComponent } from './pages/classify/men/men-top/men-top.component';
 import { MenBottomComponent } from './pages/classify/men/men-bottom/men-bottom.component';
 import { MenAccessoriesComponent } from './pages/classify/men/men-accessories/men-accessories.component';
+
+/* for: Women */
+import { WmShoesComponent } from './pages/classify/women/wm-shoes/wm-shoes.component';
+import { WmTopComponent } from './pages/classify/women/wm-top/wm-top.component';
+import { WmBottomComponent } from './pages/classify/women/wm-bottom/wm-bottom.component';
+import { WmShoesU100Component } from './pages/classify/women/wm-shoes-u100/wm-shoes-u100.component';
+import { WmAccessoriesComponent } from './pages/classify/women/wm-accessories/wm-accessories.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -42,16 +49,35 @@ const routes: Routes = [
 
   /* By Classify Name */
   { path: 'new-releases', component: NewReleasesComponent },
+
+  // Men
   { path: 'men', component: MenComponent },
+  {
+    path: 'men',
+    children: [
+      { path: '', redirectTo: 'men', pathMatch: 'full' },
+      { path: 'shoes', component: MenShoesComponent },
+      { path: 'top', component: MenTopComponent },
+      { path: 'bottom', component: MenBottomComponent },
+      { path: 'accessories', component: MenAccessoriesComponent },
+    ]
+  },
+
+  // Women
   { path: 'women', component: WomenComponent },
+  {
+    path: 'women',
+    children: [
+      { path: '', redirectTo: 'women', pathMatch: 'full' },
+      { path: 'shoes', component: WmShoesComponent },
+      { path: 'top', component: WmTopComponent },
+      { path: 'bottom', component: WmBottomComponent },
+      { path: 'shoes-u100', component: WmShoesU100Component },
+      { path: 'accessories', component: WmAccessoriesComponent },
+    ]
+  },
   { path: 'kids', component: KidsComponent },
   { path: 'accessories', component: AccessoriesComponent },
-
-  /* Classify: Men */
-  { path: 'men/shoes', component: MenShoesComponent },
-  { path: 'men/top', component: MenTopComponent },
-  { path: 'men/bottom', component: MenBottomComponent },
-  { path: 'men/accessories', component: MenAccessoriesComponent },
 ];
 
 @NgModule({
