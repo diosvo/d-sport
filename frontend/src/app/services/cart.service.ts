@@ -110,12 +110,12 @@ export class CartService {
 
         // DISPLAY A TOAST NOTIFICATION
         this.toast.success(`${prod.title} added to the cart`, 'Product Added', {
-          timeOut: 1500,
+          timeOut: 2000,
           progressBar: true,
           progressAnimation: 'increasing',
           positionClass: 'toast-top-right',
           closeButton: true
-        })
+        });
       } else {
         /* === 2. If the cart has some items === */
         const index = this.cartDataServer.data.findIndex(p => p.product.id === prod.id) // -1 or positive value
@@ -139,7 +139,7 @@ export class CartService {
 
           // TOAST NOTIFICATION
           this.toast.info(`${prod.title} quantity updated to the cart`, 'Product Updated', {
-            timeOut: 1500,
+            timeOut: 2000,
             progressBar: true,
             progressAnimation: 'increasing',
             positionClass: 'toast-top-right',
@@ -162,7 +162,7 @@ export class CartService {
 
           // TOAST NOTIFICATION
           this.toast.success(`${prod.title} added to the cart`, 'Product Added', {
-            timeOut: 1500,
+            timeOut: 2000,
             progressBar: true,
             progressAnimation: 'increasing',
             positionClass: 'toast-top-right',
