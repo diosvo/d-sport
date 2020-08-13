@@ -1,5 +1,5 @@
 .cart-item {
-    border-bottom   : 0.75px solid #e5e5e5;
+    border-bottom: 0.75px solid #e5e5e5;
 }
 
 .product-details p {
@@ -13,26 +13,49 @@
     padding: 0 0.25rem;
 
     &:hover {
-        cursor : pointer;
-        opacity: 0.8;
+        cursor    : pointer;
+        opacity   : 0.8;
         transition: var(--hoverTransition);
     }
 }
 
 .total {
     border-top   : 0.75px solid #e5e5e5;
-    border-bottom   : 0.75px solid #e5e5e5;
+    border-bottom: 0.75px solid #e5e5e5;
 }
 
-.form-control {
-    width : 17%;
-    height: calc(1.5em + .75rem + 2px);
+input {
+    width     : 3rem;
+    padding   : .2rem .3rem;
 
-    padding  : .375rem .75rem;
-    font-size: 1rem;
-    border   : none;
+    border: 0.25px solid #e5e5e5;
 
     &:focus {
         box-shadow: none;
     }
+}
+
+.qty-up,
+.qty-down {
+    padding  : .21rem 0.5rem;
+    font-size: 1rem;
+
+    background-color: #f6f6f6;
+
+    &:hover {
+        cursor: pointer;
+
+        background-color: #dddddd;
+        transition      : var(--hoverTransition);
+    }
+}
+
+.qty-up {
+    border-top-right-radius   : .3rem;
+    border-bottom-right-radius: .3rem;
+}
+
+.qty-down {
+    border-top-left-radius   : .3rem;
+    border-bottom-left-radius: .3rem;
 }

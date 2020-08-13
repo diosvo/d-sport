@@ -1,136 +1,62 @@
 <section id="cart-page" class="container py-5">
-    <div class="row">
+    <!-- The cart is empty -->
+    <div class="text-center" style="margin: 0 auto;" *ngIf="cartData.data[0].numInCart === 0">
+        <h1 style="font-family: Bangers, sans-serif">cart</h1>
+        <div>
+            <img src="../../../assets/images/empty-cart.jpg" alt="empty cart" width=25%>
+        </div>
+        <p class="mb-0">There are no items in your cart.</p>
+    </div>
+
+    <!-- The cart is has some items -->
+    <div class="row" *ngIf="cartData.data[0].numInCart !== 0">
         <div class="col-md-8">
             <p class="font-21 mb-0">Cart</p>
 
-            <div class="cart-item py-2">
-                <div class="row">
+            <div *ngFor="let c of cartData.data; let i = index">
+                <div class="cart-item py-2">
+                    <div class="row">
 
-                    <div class="col-md-3 py-3">
-                        <img src="../../../assets/images/home-9.jpg" width=100%>
-                    </div>
+                        <div class="col-md-3 py-3">
+                            <img [src]="c.product?.image" alt="pro-img" width=100%>
+                        </div>
 
-                    <div class="col-md-7 py-3 product-details d-flex flex-column">
-                        <div class="mb-auto">
-                            <p class="text-capitalize font-17" style="cursor: pointer">Product Name</p>
-                            <div class="text-secondary font-14">
-                                <p>Another Category Name</p>
-                                <div class="d-flex align-items-baseline">
-                                    <p class="mr-2">Quantity: </p>
-                                    <select class="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                        <option>6</option>
-                                        <option>7</option>
-                                        <option>8</option>
-                                        <option>9</option>
-                                        <option>10</option>
-                                    </select>
+                        <div class="col-md-7 py-3 product-details d-flex flex-column">
+                            <div class="mb-auto">
+                                <p class="text-capitalize font-17" style="cursor: pointer" (click)="selectProduct(c.product?.id)">{{c.product?.title}}</p>
+                                <div class="text-secondary font-14">
+                                    <p>{{c.product?.another_CatName}}</p>
+                                    <div class="d-flex align-items-baseline mt-2">
+                                        <p class="mr-2">Quantity: </p>
+                                        <div>
+                                            <span id="decrease" class="qty-down" (click)=ChangeQty(i,false)>-</span>
+                                            <label>
+                                              <input type="number"
+                                              class="text-right"
+                                                     [max]="c.product.quantity"
+                                                     readonly
+                                                     [value]="c.numInCart"/>
+                                            </label>
+                                            <span id="increase" class="qty-up"  (click)=ChangeQty(i,true)>+</span>
+                                          </div>
+                                    </div>
                                 </div>
+                            </div>
+
+                            <div class="text-secondary font-14 cart-funcs d-flex">
+                                <span class="mr-2">Move to Favorites</span>
+                                <span (click)="cartService.deleteProductFromCart(i)">Remove</span>
                             </div>
                         </div>
 
-                        <div class="text-secondary font-14 cart-funcs d-flex">
-                            <span class="mr-2">Move to Favorites</span>
-                            <span>Remove</span>
+                        <div class="col-md-2 py-3">
+                            <p class="text-center">{{c.product?.price | currency:'USD' : 'symbol-narrow':'.2'}}</p>
                         </div>
-                    </div>
 
-                    <div class="col-md-2 py-3">
-                        <p class="text-center">$120.00</p>
                     </div>
-
                 </div>
             </div>
 
-            <div class="cart-item py-2">
-                <div class="row">
-
-                    <div class="col-md-3 py-3">
-                        <img src="../../../assets/images/home-9.jpg" width=100%>
-                    </div>
-
-                    <div class="col-md-7 py-3 product-details d-flex flex-column">
-                        <div class="mb-auto">
-                            <p class="text-capitalize font-17" style="cursor: pointer">Product Name</p>
-                            <div class="text-secondary font-14">
-                                <p>Another Category Name</p>
-                                <div class="d-flex align-items-baseline">
-                                    <p class="mr-2">Quantity: </p>
-                                    <select class="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                        <option>6</option>
-                                        <option>7</option>
-                                        <option>8</option>
-                                        <option>9</option>
-                                        <option>10</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="text-secondary font-14 cart-funcs d-flex">
-                            <span class="mr-2">Move to Favorites</span>
-                            <span>Remove</span>
-                        </div>
-                    </div>
-
-                    <div class="col-md-2 py-3">
-                        <p class="text-center">$120.00</p>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="cart-item py-2">
-                <div class="row">
-
-                    <div class="col-md-3 py-3">
-                        <img src="../../../assets/images/home-9.jpg" width=100%>
-                    </div>
-
-                    <div class="col-md-7 py-3 product-details d-flex flex-column">
-                        <div class="mb-auto">
-                            <p class="text-capitalize font-17" style="cursor: pointer">Product Name</p>
-                            <div class="text-secondary font-14">
-                                <p>Another Category Name</p>
-                                <div class="d-flex align-items-baseline">
-                                    <p class="mr-2">Quantity: </p>
-                                    <select class="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                        <option>6</option>
-                                        <option>7</option>
-                                        <option>8</option>
-                                        <option>9</option>
-                                        <option>10</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="text-secondary font-14 cart-funcs d-flex">
-                            <span class="mr-2">Move to Favorites</span>
-                            <span>Remove</span>
-                        </div>
-                    </div>
-
-                    <div class="col-md-2 py-3">
-                        <p class="text-center">$120.00</p>
-                    </div>
-
-                </div>
-            </div>
         </div>
 
         <div class="col-md-4">
@@ -138,7 +64,7 @@
             <div class="py-3">
                 <div class="d-flex justify-content-between">
                     <p>Subtotal</p>
-                    <p>$120.00</p>
+                    <p>{{cartTotal| currency:'USD' : 'symbol-narrow':'.2'}}</p>
                 </div>
                 <div class="d-flex justify-content-between">
                     <p>Estimated Shipping & Handling</p>
@@ -146,7 +72,7 @@
                 </div>
                 <div class="total d-flex justify-content-between pt-3">
                     <p>Total</p>
-                    <p class="font-weight-bold">$120.00</p>
+                    <p class="font-weight-bold">{{cartTotal | currency:'USD' : 'symbol-narrow':'.2'}}</p>
                 </div>
             </div>
             <div class="cart-btn text-center py-2 mt-2" width=100%>
