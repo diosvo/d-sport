@@ -52,6 +52,10 @@
                     <div class="cart-transparent"></div>
 
                     <div>
+                        <div class="no-items scale-up-ver-bottom" *ngIf="cartData.data[0].numInCart === 0">
+                            <p>Your cart is currently empty.</p>
+                        </div>
+
                         <div class="quick-cart scale-up-ver-bottom container" *ngIf="cartData.data[0].numInCart !== 0">
                             <div *ngFor="let c of cartData.data; let i=index">
                                 <div class="row mb-1">
@@ -79,7 +83,6 @@
                                 <div class="checkout" routerLink="/checkout">Checkout</div>
                             </div>
                         </div>
-
                     </div>
                 </div>
 
@@ -90,13 +93,14 @@
 
 <div id="sm">
     <nav class="navbar navbar-expand-lg navbar-light d-flex justify-content-between align-items-baseline">
-        <div style="width:80px; cursor: pointer; margin-left: -1.5rem;  ">
+        <div id="logo" style="width:80px; cursor: pointer; margin-left: -1.5rem;  ">
             <img src="./assets/images/logo.png" alt="logo" routerLink="/" width=100%>
         </div>
-        <div class="font-22 mt-2" style="margin-right: -1rem;">
+        <div class="font-22" style="margin-right: -1rem; width: 90px;">
             <span class="cart-btn mr-1" style="cursor: pointer;" routerLink="/cart">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="cart--items--qty">0</span>
+                    <span><img src="../../../assets/images/shopping-bag-2.png" alt="shopping bag" width=25%></span>
+                    <span
+                        class="cart--items--qty">{{cartData.data[0].numInCart !== 0 ? cartData.data.length : 0}}</span>
             </span>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
