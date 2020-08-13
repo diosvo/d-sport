@@ -1,8 +1,9 @@
-import {Component, OnInit, AfterViewInit, ViewChild, Directive, Input} from '@angular/core';
-import {ProductService} from 'src/app/services/product.service';
-import {ActivatedRoute, ParamMap} from '@angular/router';
-import {CartService} from 'src/app/services/cart.service';
-import {map} from 'rxjs/operators';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { ProductService } from 'src/app/services/product.service';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { CartService } from 'src/app/services/cart.service';
+import { map } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 declare let $: any;
 
@@ -21,8 +22,9 @@ export class ProductComponent implements OnInit, AfterViewInit {
   @ViewChild('quantity') quantityInput;
 
   constructor(private productService: ProductService,
-              private cartService: CartService,
-              private route: ActivatedRoute) {
+    private cartService: CartService,
+    private route: ActivatedRoute,
+    private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -33,19 +35,28 @@ export class ProductComponent implements OnInit, AfterViewInit {
           return param.params.id;
         })
       ).subscribe(prodId => {
-      this.id = prodId;
-      this.productService.getSingleProduct(this.id).subscribe(prod => {
-        this.product = prod;
-      })
-    });
+        this.id = prodId;
+        this.productService.getSingleProduct(this.id).subscribe(prod => {
+          this.product = prod;
+        })
+      });
   }
+
+  oos() {
+    this.toastr.error('Sorry, this product is currently out of stock!', '', {
+      timeOut: 2000,
+      positionClass: 'toast-top-full-width',
+      closeButton: true
+    })
+  }
+
 
   addToCart(id: number) {
     if (this.product.quantity >= 1) {
       this.cartService.addProductToCart(id, parseInt(this.quantityInput.nativeElement.value));
       console.log('Add to cart successfully w/ ProductID:', id, 'x', this.quantityInput.nativeElement.value);
     } else {
-      window.alert('This product is out of stock!')
+      this.oos();
     }
   }
 

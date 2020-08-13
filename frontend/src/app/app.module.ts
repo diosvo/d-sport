@@ -1,7 +1,8 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+
 import {CarouselModule} from 'ngx-owl-carousel-o';
 import {NgxSpinnerModule} from "ngx-spinner";
 import {ToastrModule} from "ngx-toastr";
@@ -94,12 +95,11 @@ import { WmAccessoriesComponent } from './pages/classify/women/wm-accessories/wm
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    NoopAnimationsModule,
     CarouselModule,
     NgxSpinnerModule,
+    BrowserAnimationsModule,
     ToastrModule.forRoot()
   ],
   providers: [],
