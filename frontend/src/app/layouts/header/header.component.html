@@ -41,59 +41,48 @@
                     <p routerLink="/accessories">accessories</p>
                 </div>
             </div>
-            <div class="col-md-1 cart-btn text-right px-1">
+            <div class="col-md-1 text-right px-1 cart-btn">
                 <span class="nav-icon" routerLink="/cart">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="cart--items--qty">0</span>
+                    <span><img src="../../../assets/images/shopping-bag.png" alt="shopping bag" width=35%></span>
+                    <span
+                        class="cart--items--qty">{{cartData.data[0].numInCart !== 0 ? cartData.data.length : 0}}</span>
                 </span>
-                <div class="quick-cart scale-up-ver-bottom container">
-                    <div class="row mb-1">
-                        <div class="qc-img col-md-4">
-                            <img src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,b_rgb:f5f5f5/azmy5hcezyqcotqwnrqt/hayward-2-backpack-f2CmBL.jpg"
-                                alt="" width=100%>
-                        </div>
-                        <div class="col-md-8 text-left">
-                            <p class="font-15">Balo Nike - Black</p>
-                            <div class="font-13">
-                                <p class="product-category text-secondary">Accessories</p>
-                                <p class="text-secondary">No Size</p>
-                                <p>$50</p>
+
+                <div class="qc-view">
+                    <div class="cart-transparent"></div>
+
+                    <div>
+                        <div class="quick-cart scale-up-ver-bottom container" *ngIf="cartData.data[0].numInCart !== 0">
+                            <div *ngFor="let c of cartData.data; let i=index">
+                                <div class="row mb-1">
+                                    <div class="qc-img col-md-4">
+                                        <img [src]="c.product?.image" alt="pro-img" width=100%>
+                                    </div>
+                                    <div class="col-md-6 text-left p-0">
+                                        <p class="font-15">{{c.product?.title}}</p>
+                                        <div class="font-13">
+                                            <p class="product-category text-secondary">
+                                                {{c.product?.another_CatName}}
+                                            </p>
+                                            <p>{{c.product?.price | currency:'USD' : 'symbol-narrow':'.0'}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 px-1 text-center">
+                                        <span (click)="cartService.deleteProductFromCart(i)"><img src="../../../assets/images/remove-icon.png" alt="remove" width=25%></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="cart--buttons d-flex justify-content-around align-items-baseline">
+                                <div class="viewcart" routerLink="/cart">View
+                                    Checkout ({{cartData.data[0].numInCart !== 0 ? cartData.data.length : 0}})</div>
+                                <div class="checkout" routerLink="/checkout">Checkout</div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mb-1">
-                        <div class="qc-img col-md-4">
-                            <img src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,b_rgb:f5f5f5/azmy5hcezyqcotqwnrqt/hayward-2-backpack-f2CmBL.jpg"
-                                alt="" width=100%>
-                        </div>
-                        <div class="col-md-8 text-left">
-                            <p class="font-15">Balo Nike - Black</p>
-                            <div class="font-13">
-                                <p class="product-category text-secondary">Accessories</p>
-                                <p class="text-secondary">No Size</p>
-                                <p>$50</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-1">
-                        <div class="qc-img col-md-4">
-                            <img src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,b_rgb:f5f5f5/azmy5hcezyqcotqwnrqt/hayward-2-backpack-f2CmBL.jpg"
-                                alt="" width=100%>
-                        </div>
-                        <div class="col-md-8 text-left">
-                            <p class="font-15">Balo Nike - Black</p>
-                            <div class="font-13">
-                                <p class="product-category text-secondary">Accessories</p>
-                                <p class="text-secondary">No Size</p>
-                                <p>$50</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="cart--buttons d-flex justify-content-around align-items-baseline">
-                        <div class="viewcart">View Cart (1) </div>
-                        <div class="checkout">Checkout</div>
+
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -116,7 +105,7 @@
         </div>
 
         <div class="collapse navbar-collapse" id="navbarNavDropdown" style="text-align:right">
-            <ul class="navbar-nav px-4" >
+            <ul class="navbar-nav px-4">
                 <li class="nav-item active d-flex align-items-baseline justify-content-end"
                     style="border-bottom: 0.5px solid #e5e5e5;">
                     <i class="far fa-user-circle mr-2"></i>
