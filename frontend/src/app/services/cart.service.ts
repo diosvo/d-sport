@@ -264,6 +264,14 @@ export class CartService {
     this.cartData$.next({ ...this.cartDataServer });
   }
 
+  cartSubTotal(index): number {
+    let subTotal = 0;
+    const p = this.cartDataServer.data[index];
+
+    subTotal = p.product.price * p.numInCart;
+    return subTotal;
+  }
+
   checkoutFromCart(userId: number) {
     this.http.post(`${this.SERVER_URL}/orders/payment`, null).subscribe((res: { success: boolean }) => {
       console.clear();
