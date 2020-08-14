@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { CartService } from 'src/app/services/cart.service';
-import { OrderService } from 'src/app/services/order.service';
-import { Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { CartModelServer } from 'src/app/models/cart.model';
+import {Component, OnInit} from '@angular/core';
+import {CartService} from 'src/app/services/cart.service';
+import {OrderService} from 'src/app/services/order.service';
+import {Router} from '@angular/router';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {CartModelServer} from 'src/app/models/cart.model';
 
 @Component({
   selector: 'app-checkout',
@@ -16,13 +16,16 @@ export class CheckoutComponent implements OnInit {
   cartData: CartModelServer;
 
   constructor(private cartService: CartService,
-    private orderService: OrderService,
-    private router: Router,
-    private spinner: NgxSpinnerService) { }
+              private spinner: NgxSpinnerService) {
+  }
 
   ngOnInit(): void {
     this.cartService.cartData$.subscribe(data => this.cartData = data);
     this.cartService.cartTotal$.subscribe(total => this.cartTotal = total);
   }
 
+  checkOut() {
+    this.spinner.show();
+    this.cartService.checkoutFromCart(1);
+  }
 }

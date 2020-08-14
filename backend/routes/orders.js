@@ -86,7 +86,7 @@ router.post('/new', bodyParser.json(), (req, res) => {
                         .filter({id: p.id})
                         .withFields(['quantity']).get();
 
-                    let inCart = parseInt(p.incart);
+                    let inCart = parseInt(p.inCart);
 
                     //  The number of  pieces ordered from the quantity column in database
                     if (data.quantity > 0) {

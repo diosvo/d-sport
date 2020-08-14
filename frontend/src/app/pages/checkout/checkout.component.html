@@ -1,93 +1,101 @@
+<ngx-spinner
+  bdColor = "rgba(9,9,9,0.8)"
+  size = "large"
+  color = "#ffffff"
+  type = "ball-atom"
+  [fullScreen] = "true">
+  <p style="color: white"> Booking order.. </p></ngx-spinner>
+
 <section id="checkout" class="my-5">
-    <!-- The cart is empty -->
-    <div class="text-center" style="margin: 0 auto;" *ngIf="cartData.data[0].numInCart === 0">
-        <h1 style="font-family: Bangers, sans-serif">checkout</h1>
-        <div>
-            <img src="../../../assets/images/empty-cart.jpg" alt="empty cart" width=25%>
-        </div>
-        <p class="mb-0">There are no items in your cart.</p>
+  <!-- The cart is empty -->
+  <div class="text-center" style="margin: 0 auto;" *ngIf="cartData.data[0].numInCart === 0">
+    <h1 style="font-family: Bangers, sans-serif">checkout</h1>
+    <div>
+      <img src="../../../assets/images/empty-cart.jpg" alt="empty cart" width=25%>
+    </div>
+    <p class="mb-0">There are no items in your cart.</p>
+  </div>
+
+  <!-- The cart is has some items -->
+  <div class="container" *ngIf="cartData.data[0].numInCart !== 0">
+    <div class="mb-5" style="font-family: 'Oswald', sans-serif; letter-spacing: var(--mainSpacing)">
+      <h1 class="text-uppercase text-center font-30 font-weight-bold">checkout</h1>
     </div>
 
-    <!-- The cart is has some items -->
-    <div class="container" *ngIf="cartData.data[0].numInCart !== 0">
-        <div class="mb-5" style="font-family: 'Oswald', sans-serif; letter-spacing: var(--mainSpacing)">
-            <h1 class="text-uppercase text-center font-30 font-weight-bold">checkout</h1>
+    <div class="row d-flex justify-content-around px-2">
+      <!-- Shipping Info -->
+      <div id="shipping-info" class="col-md-7">
+        <div class="checkout-title">
+          <p class="mb-0 text-uppercase font-weight-bold font-15">shipping address</p>
         </div>
 
-        <div class="row d-flex justify-content-around px-2">
-            <!-- Shipping Info -->
-            <div id="shipping-info" class="col-md-7">
-                <div class="checkout-title">
-                    <p class="mb-0 text-uppercase font-weight-bold font-15">shipping address</p>
-                </div>
-
-                <div class="shipping-details">
-                    <form id="name" class="px-1 form-inline mb-4">
-                        <div>
-                            <input type="text" class="form-control" placeholder="First Name">
-                            <input type="text" class="form-control" placeholder="Last Name">
-                        </div>
-                    </form>
-
-                    <form id="address" class="px-1 mb-4">
-                        <div width=100%>
-                            <input type="text" class="form-control" placeholder="Address">
-                        </div>
-                    </form>
-
-                    <form id="country" class="px-1 form-inline mb-4">
-                        <div>
-                            <input type="text" class="form-control" placeholder="City">
-                            <input type="text" class="form-control" placeholder="Country">
-                            <input type="number" class="form-control" placeholder="Postal Code">
-                        </div>
-                    </form>
-
-                    <form id="name" class="px-1 form-inline mb-4">
-                        <div>
-                            <input type="email" class="form-control" placeholder="Email">
-                            <input type="number" class="form-control" placeholder="Phone Number" max=10 min=0>
-                        </div>
-                    </form>
-
-                    <div class="px-1 form-group">
-                        <textarea class="form-control" rows="2" placeholder="Order Notes"></textarea>
-                    </div>
-                </div>
+        <div class="shipping-details">
+          <form id="name" class="px-1 form-inline mb-4">
+            <div>
+              <input type="text" class="form-control" placeholder="First Name">
+              <input type="text" class="form-control" placeholder="Last Name">
             </div>
+          </form>
 
-            <!-- Cart -->
-            <div id="cart-resume" class="col-md-4">
-                <div class="checkout-title" style="background-color: #e5e5e5">
-                    <p class="mb-0 text-uppercase font-weight-bold text-dark">in your cart</p>
-                </div>
-
-                <div class="cart-details" *ngFor="let c of cartData.data; let i = index">
-                    <div>
-                        <div class="d-flex justify-content-between">
-                            <p>
-                                <span>{{c.numInCart}}</span>
-                                <span class="mx-2">x</span>
-                                <span>{{c.product?.title}}</span>
-                            </p>
-                            <p>{{(c.product?.price * c.numInCart) | currency:'USD' : 'symbol-narrow':'.2'}}</p>
-                        </div>
-                    </div>
-
-                    <div class="d-flex justify-content-between">
-                        <p>Shipping </p>
-                        <p>$0.00</p>
-                    </div>
-                    <div id="cart-total" class="d-flex justify-content-between">
-                        <p>Total </p>
-                        <p style="color: orangered">{{cartTotal| currency:'USD' : 'symbol-narrow':'.2'}}</p>
-                    </div>
-
-                    <div class="btn-shop__bgBlack py-3 font-17 text-center mt-4">Checkout</div>
-
-                </div>
-
+          <form id="address" class="px-1 mb-4">
+            <div width=100%>
+              <input type="text" class="form-control" placeholder="Address">
             </div>
+          </form>
+
+          <form id="country" class="px-1 form-inline mb-4">
+            <div>
+              <input type="text" class="form-control" placeholder="City">
+              <input type="text" class="form-control" placeholder="Country">
+              <input type="number" class="form-control" placeholder="Postal Code">
+            </div>
+          </form>
+
+          <form id="info" class="px-1 form-inline mb-4">
+            <div>
+              <input type="email" class="form-control" placeholder="Email">
+              <input type="number" class="form-control" placeholder="Phone Number" max=10 min=0>
+            </div>
+          </form>
+
+          <div class="px-1 form-group">
+            <textarea class="form-control" rows="2" placeholder="Order Notes"></textarea>
+          </div>
         </div>
+      </div>
+
+      <!-- Cart -->
+      <div id="cart-resume" class="col-md-4">
+        <div class="checkout-title" style="background-color: #e5e5e5">
+          <p class="mb-0 text-uppercase font-weight-bold text-dark">in your cart</p>
+        </div>
+
+        <div class="cart-details" *ngFor="let c of cartData.data; let i = index">
+          <div>
+            <div class="d-flex justify-content-between">
+              <p>
+                <span>{{c.numInCart}}</span>
+                <span class="mx-2">x</span>
+                <span>{{c.product?.title}}</span>
+              </p>
+              <p>{{(c.product?.price * c.numInCart) | currency:'USD' : 'symbol-narrow':'.2'}}</p>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between">
+            <p>Shipping </p>
+            <p>$0.00</p>
+          </div>
+          <div id="cart-total" class="d-flex justify-content-between">
+            <p>Total </p>
+            <p style="color: orangered">{{cartTotal| currency:'USD' : 'symbol-narrow':'.2'}}</p>
+          </div>
+
+          <div class="btn-shop__bgBlack py-3 font-17 text-center mt-4" (click)="checkOut()">Checkout</div>
+
+        </div>
+
+      </div>
     </div>
+  </div>
 </section>

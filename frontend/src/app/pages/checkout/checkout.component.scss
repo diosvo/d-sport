@@ -15,7 +15,7 @@
         padding: 2rem 1rem;
         border : 0.5px solid #e5e5e5;
 
-        #name input {
+        #name input, #info input {
             width: 285px;
 
             &:first-child {
@@ -86,7 +86,7 @@
 
     #shipping-info {
         .shipping-details {
-            #name input {
+            #name input, #info input {
                 width: 398px;
 
                 &:first-child {
