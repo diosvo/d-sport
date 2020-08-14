@@ -273,12 +273,12 @@ export class CartService {
   }
 
   checkoutFromCart(userId: number) {
-    this.http.post(`${this.SERVER_URL}/orders/payment`, null).subscribe((res: { success: boolean }) => {
+    this.http.post(this.SERVER_URL + '/orders/payment', null).subscribe((res: { success: boolean }) => {
       console.clear();
 
       if (res.success) {
         this.resetServerData();
-        this.http.post(`${this.SERVER_URL}/orders/new`, {
+        this.http.post(this.SERVER_URL + '/orders/new', {
           userId: userId,
           products: this.cartDataClient.prodsData
         }).subscribe((data: OrderResponse) => {
@@ -296,6 +296,7 @@ export class CartService {
               setTimeout(() => {
                 this.spinner.hide();
               }, 1000);
+
               this.router.navigate(['/thankyou'], navigationExtras).then(p => {
                 this.cartDataClient = { total: 0, prodsData: [{ inCart: 0, id: 0 }] };
                 this.cartTotal$.next(0);
