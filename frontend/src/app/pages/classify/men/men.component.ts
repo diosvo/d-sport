@@ -29,13 +29,6 @@ export class MenComponent implements OnInit {
     return this.router.navigate(['/product', id]).then();
   }
 
-  mAcc() {
-    this.productService.getProdFromClassifyIdCategoryId(1, 4).subscribe((prods: ServerResponse) => {
-      this.products = prods.products
-      console.log(this.products);
-    })
-  }
-
   proCustomOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,

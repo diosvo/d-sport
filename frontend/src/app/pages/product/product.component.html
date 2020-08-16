@@ -2,19 +2,19 @@
   <div class="row py-5">
     <!-- Product Images -->
     <div class="col-md-4 prod-img-container" *ngIf="product">
-      <ng-container>
+      <ng-container *ngIf="product?.image">
         <img [src]="product?.image" width=100% alt="image-1" id="zoomImg">
       </ng-container>
-      <ng-container>
+      <ng-container *ngIf="product?.image_1">
         <img [src]="product?.image_1" width=100% alt="image-2">
       </ng-container>
     </div>
 
     <div class="col-md-4 prod-img-container" *ngIf="product">
-      <ng-container>
+      <ng-container *ngIf="product?.image_2">
         <img [src]="product?.image_2" width=100% alt="image-3">
       </ng-container>
-      <ng-container>
+      <ng-container *ngIf="product?.image_3">
         <img [src]="product?.image_3" width=100% alt="image-4">
       </ng-container>
     </div>
