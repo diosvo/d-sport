@@ -1,0 +1,28 @@
+.product-list {
+    display              : grid;
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    grid-column-gap      : 1.5rem;
+    grid-row-gap         : 1.5rem;
+
+    max-width: 1170px;
+
+    margin: 0 auto;
+
+    .product-img-container {
+        img.product-img {
+            display   : block;
+            width     : 100%;
+            min-height: 12rem;
+            transition: var(--mainTransition);
+        }
+
+        &:hover img.product-img {
+            cursor: pointer;
+            opacity: 0.9;
+        }
+
+        .product-name:hover {
+            cursor: pointer;
+        }
+    }
+}
