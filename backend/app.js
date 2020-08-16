@@ -56,7 +56,7 @@ io.sockets.on('connection', (socket) => {
 
 const program = async () => {
     const connection = mysql.createConnection({
-        host:  'localhost',
+        host: 'localhost',
         user: 'diosvo',
         password: '12121999',
         database: 'd.sport'
@@ -83,7 +83,7 @@ const program = async () => {
                     let index = data.findIndex(p => p.id === newData.id);
 
                     // If product is present
-                    if(index > -1) {
+                    if (index > -1) {
                         data = data.filter(p => p.id !== newData.id);
                         io.sockets.emit('update', {prods: [...data], type: "DELETE"});
                     } else {
@@ -96,7 +96,7 @@ const program = async () => {
                     let index2 = data.findIndex(p => p.id === newData.id);
 
                     // If product is present
-                    if(index2 > -1) {
+                    if (index2 > -1) {
                         data[index2] = newData;
                         io.sockets.emit('update', {prods: [...data], type: "DELETE"});
                     } else {
@@ -106,7 +106,7 @@ const program = async () => {
 
                 case "INSERT":
                     database.table('products')
-                        .withFields(['id', 'title', 'description', 'price', 'quantity', 'another_CatName'])
+                        .withFields(['id', 'title', 'description', 'image', 'price', 'quantity', 'another_CatName', 'image_1', 'image_2', 'image_3', 'category_id', 'classify_id'])
                         .sort({id: -1})
                         .getAll()
                         .then(prods => {
@@ -128,6 +128,6 @@ const program = async () => {
 
 program().then();
 
-server.listen(2609, () =>{
+server.listen(2609, () => {
     console.log('Server running on port 2609')
 })

@@ -1,39 +1,40 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
-import {CarouselModule} from 'ngx-owl-carousel-o';
-import {NgxSpinnerModule} from "ngx-spinner";
-import {ToastrModule} from "ngx-toastr";
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { ToastrModule } from "ngx-toastr";
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 
 /* Layouts */
-import {HeaderComponent} from './layouts/header/header.component';
-import {FooterComponent} from './layouts/footer/footer.component';
+import { HeaderComponent } from './layouts/header/header.component';
+import { FooterComponent } from './layouts/footer/footer.component';
 import { NikeAthletesComponent } from './layouts/nike-athletes/nike-athletes.component';
 import { PromotionsComponent } from './layouts/promotions/promotions.component';
 
 /* Pages */
-import {CartComponent} from './pages/cart/cart.component';
-import {CheckoutComponent} from './pages/checkout/checkout.component';
-import {HomeComponent} from './pages/home/home.component';
-import {ProductComponent} from './pages/product/product.component';
-import {ThankyouComponent} from './pages/thankyou/thankyou.component';
-import {ProfileComponent} from './pages/profile/profile.component';
+import { CartComponent } from './pages/cart/cart.component';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { HomeComponent } from './pages/home/home.component';
+import { ProductComponent } from './pages/product/product.component';
+import { ThankyouComponent } from './pages/thankyou/thankyou.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 /* Components */
-import {LoginComponent} from './components/login/login.component';
-import {RegisterComponent} from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 /* Classify Name */
-import {MenComponent} from './pages/classify/men/men.component';
-import {WomenComponent} from './pages/classify/women/women.component';
-import {KidsComponent} from './pages/classify/kids/kids.component';
-import {NewReleasesComponent} from './pages/classify/new-releases/new-releases.component';
-import {AccessoriesComponent} from './pages/classify/accessories/accessories.component';
+import { MenComponent } from './pages/classify/men/men.component';
+import { WomenComponent } from './pages/classify/women/women.component';
+import { KidsComponent } from './pages/classify/kids/kids.component';
+import { NewReleasesComponent } from './pages/classify/new-releases/new-releases.component';
+import { AccessoriesComponent } from './pages/classify/accessories/accessories.component';
 
 /* for: Men */
 import { MenShoesComponent } from './pages/classify/men/men-shoes/men-shoes.component';
@@ -47,6 +48,8 @@ import { WmTopComponent } from './pages/classify/women/wm-top/wm-top.component';
 import { WmBottomComponent } from './pages/classify/women/wm-bottom/wm-bottom.component';
 import { WmShoesU100Component } from './pages/classify/women/wm-shoes-u100/wm-shoes-u100.component';
 import { WmAccessoriesComponent } from './pages/classify/women/wm-accessories/wm-accessories.component';
+
+const config: SocketIoConfig = { url: 'http://localhost:2609', options: {} };
 
 @NgModule({
   declarations: [
@@ -97,7 +100,8 @@ import { WmAccessoriesComponent } from './pages/classify/women/wm-accessories/wm
     CarouselModule,
     NgxSpinnerModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    SocketIoModule.forRoot(config)
   ],
   providers: [],
   bootstrap: [AppComponent]
