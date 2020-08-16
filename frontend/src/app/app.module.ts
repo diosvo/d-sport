@@ -48,8 +48,6 @@ import { WmBottomComponent } from './pages/classify/women/wm-bottom/wm-bottom.co
 import { WmShoesU100Component } from './pages/classify/women/wm-shoes-u100/wm-shoes-u100.component';
 import { WmAccessoriesComponent } from './pages/classify/women/wm-accessories/wm-accessories.component';
 
-/* Classify: Women */
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -91,7 +89,6 @@ import { WmAccessoriesComponent } from './pages/classify/women/wm-accessories/wm
     WmBottomComponent,
     WmShoesU100Component,
     WmAccessoriesComponent,
-
   ],
   imports: [
     BrowserModule,
