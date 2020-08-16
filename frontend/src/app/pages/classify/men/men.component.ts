@@ -29,20 +29,6 @@ export class MenComponent implements OnInit {
     return this.router.navigate(['/product', id]).then();
   }
 
-  mTop() {
-    this.productService.getProdFromClassifyIdCategoryId(1, 2).subscribe((prods: ServerResponse) => {
-      this.products = prods.products
-      console.log(this.products);
-    })
-  }
-
-  mBottom() {
-    this.productService.getProdFromClassifyIdCategoryId(1, 3).subscribe((prods: ServerResponse) => {
-      this.products = prods.products
-      console.log(this.products);
-    })
-  }
-
   mAcc() {
     this.productService.getProdFromClassifyIdCategoryId(1, 4).subscribe((prods: ServerResponse) => {
       this.products = prods.products
