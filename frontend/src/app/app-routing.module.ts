@@ -14,7 +14,6 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 
 /* By Classify Name */
-import { NewReleasesComponent } from './pages/classify/new-releases/new-releases.component';
 import { MenComponent } from './pages/classify/men/men.component';
 import { WomenComponent } from './pages/classify/women/women.component';
 import { KidsComponent } from './pages/classify/kids/kids.component';
@@ -46,9 +45,6 @@ const routes: Routes = [
   /* Components */
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-
-  /* By Classify Name */
-  { path: 'new-releases', component: NewReleasesComponent },
 
   // Men
   { path: 'men', component: MenComponent },

@@ -33,7 +33,6 @@ import { RegisterComponent } from './components/register/register.component';
 import { MenComponent } from './pages/classify/men/men.component';
 import { WomenComponent } from './pages/classify/women/women.component';
 import { KidsComponent } from './pages/classify/kids/kids.component';
-import { NewReleasesComponent } from './pages/classify/new-releases/new-releases.component';
 import { AccessoriesComponent } from './pages/classify/accessories/accessories.component';
 
 /* for: Men */
@@ -77,7 +76,6 @@ const config: SocketIoConfig = { url: 'http://localhost:2609', options: {} };
     MenComponent,
     WomenComponent,
     KidsComponent,
-    NewReleasesComponent,
     AccessoriesComponent,
 
     // Men

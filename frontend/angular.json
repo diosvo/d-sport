@@ -55,10 +55,7 @@
               "src/styles.scss",
               "node_modules/ngx-toastr/toastr.css"
             ],
-            "scripts": [
-              "src/assets/js/main.js",
-              "src/assets/js/jquery.zoom.min.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
