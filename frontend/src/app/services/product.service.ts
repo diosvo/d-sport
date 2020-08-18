@@ -33,15 +33,6 @@ export class ProductService {
     })
   }
 
-  /* Get products for Women page */
-  getWomenProducts(numberOfResults = 12): Observable<ServerResponse> {
-    return this.http.get<ServerResponse>(this.SERVER_URL + '/products/classify/women', {
-      params: {
-        limit: numberOfResults.toString()
-      }
-    })
-  }
-
   /* Get products for Kids page */
   getKidsProducts(numberOfResults = 12): Observable<ServerResponse> {
     return this.http.get<ServerResponse>(this.SERVER_URL + '/products/classify/kids', {
@@ -62,7 +53,7 @@ export class ProductService {
 
   /* Get products for Accessories page */
   getAccessoriesProducts(numberOfResults = 12): Observable<ServerResponse> {
-    return this.http.get<ServerResponse>(this.SERVER_URL + '/products/classify/accessories', {
+    return this.http.get<ServerResponse>(this.SERVER_URL + '/products/category/accessories', {
       params: {
         limit: numberOfResults.toString()
       }
@@ -79,7 +70,7 @@ export class ProductService {
     return this.http.get<ProductModelServer[]>(this.SERVER_URL + '/products/category' + catName)
   }
 
-    /* Get products from ClassifyID + CategoryID */
+  /* Get products from ClassifyID + CategoryID */
   getProdFromClassifyIdCategoryId(ClassId: Number, CateId: Number, numberOfResults = 12): Observable<ServerResponse> {
     return this.http.get<ServerResponse>(this.SERVER_URL + '/products/classify/' + ClassId + '/category/' + CateId, {
       params: {
