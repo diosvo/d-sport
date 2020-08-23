@@ -1,6 +1,9 @@
 #inner-wrapper {
     display    : flex;
     align-items: center;
+    font-size  : 17px;
+
+    background-color: white;
 
     .men-title {
         margin-right: 20rem;
@@ -88,6 +91,8 @@
     #inner-wrapper {
         display: block;
         padding: 1rem 0;
+
+        top: 70px;
 
         .men-title {
             margin-right: 0;

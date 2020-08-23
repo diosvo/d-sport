@@ -3,7 +3,9 @@
     align-items: center;
     font-size  : 17px;
 
-    .men-title {
+    background-color: white;
+
+    .wm-title {
         margin-right: 15rem;
     }
 
@@ -91,7 +93,7 @@
     }
 }
 
-#ft-shoes{
+#ft-shoes {
     .wn-container {
         display        : flex;
         justify-content: space-between;
@@ -119,7 +121,9 @@
         padding  : 1rem 0;
         font-size: 15px;
 
-        .men-title {
+        top: 70px;
+
+        .wm-title {
             margin-right: 0;
         }
 
@@ -174,18 +178,18 @@
         }
     }
 
-    #ft-shoes{
+    #ft-shoes {
         .wn-container {
-            display        : block;
+            display: block;
 
             .position-relative {
                 img {
                     height: auto;
                 }
             }
-    
+
             .first-wn {
-                margin-right: 0;
+                margin-right : 0;
                 margin-bottom: 0.5rem;
             }
 

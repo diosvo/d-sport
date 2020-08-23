@@ -1,4 +1,4 @@
-<header>
+<!-- <header>
     <div id="info" style="background-color: var(--bgColor);">
         <div class="font-12 text-light d-flex justify-content-between container">
             <div class="d-flex">
@@ -24,26 +24,48 @@
             </div>
         </div>
     </div>
-</header>
+</header> -->
 
-<nav id="bg">
-    <div class="container">
-        <div class="row d-flex justify-content-center align-items-baseline">
-            <div id="logo" class="col-md-1 py-0 px-1">
+<div id="info" class="text-right px-4 py-2">
+    <div class="d-flex justify-content-end">
+        <p class="text-capitalize font-13 text-secondary">
+            <span class="account" routerLink="/register">register</span>
+            <span class="ml-2 account pl-2" style="border-left: 0.5px solid #e5e5e5;" routerLink="/login"> sign
+                in</span>
+        </p>
+    </div>
+</div>
+
+<header>
+    <div class="px-4 py-1">
+        <div class="d-flex justify-content-between align-items-center">
+            <nav>
+                <div id="menu-bar">
+                    <div id="menu" (click)="onClickMenu()">
+                        <div id="bar-1" class="bar"></div>
+                        <div id="bar-2" class="bar"></div>
+                        <div id="bar-3" class="bar"></div>
+                    </div>
+                    <div class="nav font-18 font-weight-bold text-uppercase" id="nav">
+                        <p routerLink="/">home</p>
+                        <p routerLink="/men">men</p>
+                        <p routerLink="/women">women</p>
+                        <p routerLink="/kids">kids</p>
+                        <p routerLink="/accessories">accessories</p>
+                        <p routerLink="/about.dsport">about us</p>
+                    </div>
+                </div>
+                <div id="menu-bg" class="menu-bg"></div>
+            </nav>
+
+            <div id="logo">
                 <img src="./assets/images/logo.png" alt="logo" routerLink="/" width=100%>
             </div>
-            <div class="col-md-10 p-0">
-                <div id="navbar" class="d-flex justify-content-center align-items-baseline text-uppercase font-14">
-                    <p routerLink="/new-releases">new releases</p>
-                    <p routerLink="/men">men</p>
-                    <p routerLink="/women">women</p>
-                    <p routerLink="/kids">kids</p>
-                    <p routerLink="/accessories">accessories</p>
-                </div>
-            </div>
-            <div class="col-md-1 text-right px-1 cart-btn">
+
+            <div id="cart-btn" class="text-right">
                 <span class="nav-icon" routerLink="/cart">
-                    <span><img src="../../../assets/images/shopping-bag.png" alt="shopping bag" width=35%></span>
+                    <div style="width: 35px; float: right;"><img src="../../../assets/images/shopping-bag.png"
+                            alt="shopping bag" width=100%></div>
                     <span
                         class="cart--items--qty">{{cartData.data[0].numInCart !== 0 ? cartData.data.length : 0}}</span>
                 </span>
@@ -72,7 +94,9 @@
                                         </div>
                                     </div>
                                     <div class="col-md-2 px-1 text-center">
-                                        <span (click)="cartService.deleteProductFromCart(i)"><img src="../../../assets/images/remove-icon.png" alt="remove" width=25%></span>
+                                        <span (click)="cartService.deleteProductFromCart(i)"><img
+                                                src="../../../assets/images/remove-icon.png" alt="remove"
+                                                width=25%></span>
                                     </div>
                                 </div>
                             </div>
@@ -85,52 +109,8 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-</nav>
 
-<div id="sm">
-    <nav class="navbar navbar-expand-lg navbar-light d-flex justify-content-between align-items-baseline">
-        <div id="logo" style="width:80px; cursor: pointer; margin-left: -1.5rem;  ">
-            <img src="./assets/images/logo.png" alt="logo" routerLink="/" width=100%>
-        </div>
-        <div class="font-22" style="margin-right: -1rem; width: 90px;">
-            <span class="cart-btn mr-1" style="cursor: pointer;" routerLink="/cart">
-                    <span><img src="../../../assets/images/shopping-bag-2.png" alt="shopping bag" width=25%></span>
-                    <span
-                        class="cart--items--qty">{{cartData.data[0].numInCart !== 0 ? cartData.data.length : 0}}</span>
-            </span>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-
-        <div class="collapse navbar-collapse" id="navbarNavDropdown" style="text-align:right">
-            <ul class="navbar-nav px-4">
-                <li class="nav-item active d-flex align-items-baseline justify-content-end"
-                    style="border-bottom: 0.5px solid #e5e5e5;">
-                    <i class="far fa-user-circle mr-2"></i>
-                    <a class="nav-link" routerLink="/login">Your Account</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/new-releases">New Releases</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/men">Men</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/women">Women</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/kids">Kids</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/accessories">Accessories</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</div>
+</header>
