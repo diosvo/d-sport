@@ -16,10 +16,15 @@ form {
 .btn-register {
     width: 100%;
 
-    background-color: var(--bgColor);
-    border          : none;
-    border-radius   : 2px;
+    background   : linear-gradient(to right, #ff4b1f, #ff9068);
+    border       : none;
+    border-radius: 2px;
 
     padding       : 0.45rem 0;
     letter-spacing: var(--mainSpacing);
+}
+
+.disable {
+    background: red;
+    opacity: .7;
 }
