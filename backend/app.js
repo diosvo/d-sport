@@ -16,11 +16,13 @@ app.use((req, res, next) => {
 const productsRoute = require('./routes/products');
 const ordersRoute = require('./routes/orders');
 const usersRoute = require('./routes/users');
+const authRoute = require('./routes/auth');
 
 /* Use Routes */
 app.use('/api/products', productsRoute);
 app.use('/api/orders', ordersRoute);
 app.use('/api/users', usersRoute);
+app.use('/api/auth', authRoute);
 
 app.use(logger('dev'));
 app.use(express.json());

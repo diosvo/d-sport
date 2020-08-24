@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ValidationService } from 'src/app/services/validation.service';
+import { Router } from '@angular/router';
+
+import { UserService } from 'src/app/services/user.service';
+import { ValidationService } from 'src/app/validators/validation.service';
 
 @Component({
   selector: 'app-register',
@@ -8,13 +11,15 @@ import { ValidationService } from 'src/app/services/validation.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  registrationMessage: string;
+
   registerForm = this.fb.group(
     {
-      email: ["", [Validators.required], [this.validation.validateEmailNotTaken.bind(this.validation)]],
+      email: ["", [Validators.required], [this.validation.emailValidate()]],
       password: ["", [Validators.required]],
       cfpassword: ["", [Validators.required]],
-      fname: [""],
-      lname: [""],
+      firstname: [""],
+      lastname: [""],
       dob: [""],
     },
     {
@@ -22,13 +27,23 @@ export class RegisterComponent implements OnInit {
     }
   );
 
-  constructor(private fb: FormBuilder, private validation: ValidationService) { }
-
-  ngOnInit(): void {
-  }
+  constructor(private fb: FormBuilder,
+    private validation: ValidationService,
+    private userService: UserService,
+    private router: Router) { }
 
   onSubmit() {
+    if (this.registerForm.invalid) {
+      return;
+    }
+
+    // @ts-ignore
+    this.userService.registerUser({ ...this.registerForm.value }).subscribe((response: { message: string }) => {
+      this.registrationMessage = response.message;
+    });
     console.log(this.registerForm.value);
+    this.router.navigate(['/login']).then();
+    this.registerForm.reset();
   }
 
   get email() {
@@ -41,5 +56,8 @@ export class RegisterComponent implements OnInit {
 
   get cfpassword() {
     return this.registerForm.get('cfpassword')
+  }
+
+  ngOnInit(): void {
   }
 }

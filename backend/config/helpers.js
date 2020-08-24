@@ -1,12 +1,13 @@
 /* CONNECT TO DATABASE */
 let Mysqli = require('mysqli');
+require('dotenv').config()
 
 let conn = new Mysqli({
-    Host: 'localhost:8080',
+    Host: process.env.DB_HOST,
     post: 3306,
-    user: 'diosvo',
-    password: '12121999',
-    db: 'd.sport'
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    db: process.env.DATABASE,
 });
 
 let db = conn.emit(false,'');
