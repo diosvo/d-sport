@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ValidationService } from 'src/app/services/validation.service';
+import { FormBuilder, Validators, NgForm } from '@angular/forms';
+import { ValidationService } from 'src/app/validators/validation.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -8,6 +9,8 @@ import { ValidationService } from 'src/app/services/validation.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  loginMessage: string;
+
   loginForm = this.fb.group(
     {
       email: ["", [Validators.required]],
@@ -17,14 +20,16 @@ export class LoginComponent implements OnInit {
       validator: this.validation.passwordMatchValidator("password", "cfpassword")
     }
   );
-  
-  constructor(private fb: FormBuilder, private validation: ValidationService) { }
+
+  constructor(private fb: FormBuilder, private validation: ValidationService, private userService: UserService) { }
 
   ngOnInit(): void {
   }
 
   onSubmit() {
-    console.log(this.loginForm.value);
+    console.log(this.loginForm.value)
+    this.loginForm.reset();
+    this.userService.loginUser(this.loginForm.value);
   }
 
   get email() {

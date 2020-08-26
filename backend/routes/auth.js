@@ -3,6 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const {database} = require('../config/helpers');
 const bcrypt = require('bcryptjs');
+const helper = require('../config/helpers')
 const bodyParser = require('body-parser');
 
 require('dotenv').config()
@@ -21,53 +22,35 @@ router.post('/register', bodyParser.json(), (req, res) => {
         .insert({
             email: email,
             password: hashPw,
-            fname: firstname || null,
-            lname: lastname || null,
+            firstname: firstname || null,
+            lastname: lastname || null,
             dob: dob || null
         }).catch(err => console.log(err));
 
-    console.log(req.body);
+    console.log(req.body, '- Register Successfully');
 
     setTimeout(() => {
         res.status(200).json(req.body)
     }, 3000)
 })
 
-router.post('/login', bodyParser.json(), async (req, res) => {
-    try {
-        const {email, password} = req.body;
+router.post('/login', bodyParser.json(), helper.isPasswordAndUserMatch, (req, res) => {
 
-        if (!email || !password) {
-            return res.status(400).json('Email or password is wrong.')
-        } else {
-            await database.query(`SELECT * FROM users WHERE  email LIKE '%${email}%'`, async (err, res) => {
-                if (!res || !(await bcrypt.compare(password, res[0].password))) {
-                    res.status(401).json('Email or password is incorrect');
-                } else {
-                    const id = res[0].id;
+    const secret = "1SBz93MsqTs7KgwARcB0I0ihpILIjk3w";
+    let token = jwt.sign({state: 'true', email: req.body.email, password: req.body.password}, secret, {
+        algorithm: 'HS512',
+        expiresIn: '4h'
+    })
 
-                    const privateKey = fs.readFileSync('private.key');
-                    const token = jwt.sign({id},
-                        privateKey,
-                        {algorithm: 'RS256'},
-                        {expiresIn: process.env.JWT_EXPIRES_IN});
-
-                    const cookieOptions = {
-                        expires: new Date(
-                            Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60
-                        ),
-                        httpOnly: true
-                    }
-                    res.cookie('jwt', token, cookieOptions);
-                    res.status(200).json('Login successfully').redirect("/");
-
-                    console.log('The token is' + token);
-                }
-            })
-        }
-    } catch (e) {
-        console.log(e);
-    }
+    res.status(200).json({
+        token: token,
+        auth: true,
+        email: req.email,
+        firstname: req.firstname,
+        lastname: req.lastname,
+        password: req.password,
+        dob: req.dob
+    })
 })
 
 module.exports = router;

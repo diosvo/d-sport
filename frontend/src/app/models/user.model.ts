@@ -1,12 +1,8 @@
 export interface UserModelServer {
-    id: number
     email: string
     password: string
     firstname: string
     lastname: string
-    dob: Date
+    dob: Date,
+    auth: boolean
 }
-
-export interface ServerResponse {
-    users: UserModelServer[];
-} 

@@ -25,13 +25,13 @@
             </div>
         </div>
 
-
         <p class="font-12 text-secondary text-center px-1">
             By logging in, you agree to D's <u>Privacy Policy</u> and <u>Terms of Use</u>.
         </p>
 
-        <button class="btn-login text-uppercase text-light font-11" style="font-family: Oswald, sans-serif">sign
-            in</button>
+        <button class="btn-login text-uppercase text-light font-11" style="font-family: Oswald, sans-serif"
+            type="submit" [disabled]="loginForm.invalid" [class.disable]="loginForm.invalid">login
+        </button>
     </form>
     <div class="font-12 mt-3 mb-4">
         <p>
