@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ProfileGuard } from './guard/profile.guard';
 
 /* Pages */
 import { HomeComponent } from './pages/home/home.component';
@@ -38,9 +39,9 @@ const routes: Routes = [
   /* Pages */
   { path: 'product/:id', component: ProductComponent },
   { path: 'cart', component: CartComponent },
-  { path: 'checkout', component: CheckoutComponent },
+  { path: 'checkout', component: CheckoutComponent, canActivate: [ProfileGuard] },
   { path: 'thankyou', component: ThankyouComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [ProfileGuard] },
 
   /* Components */
   { path: 'login', component: LoginComponent },

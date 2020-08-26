@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, AbstractControl, AsyncValidatorFn } from '@angular/forms';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { timer, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class ValidationService {
+  private SERVER_URL = environment.SERVER_URL
+
   constructor(private http: HttpClient) { }
 
   /* PASSWORD */
@@ -36,18 +40,24 @@ export class ValidationService {
   }
 
   /* EMAIL */
-  validateEmailNotTaken(control: AbstractControl) {
-    return this.checkEmailNotTaken(control.value).pipe(
-      map(res => {
-        return res ? null : { emailTaken: true };
-      })
-    );
+  searchEmail(email) {
+    return timer(2000)
+      .pipe(
+        switchMap(() => this.http.get(this.SERVER_URL + '/users/validate/' + email)),
+      );
   }
 
-  checkEmailNotTaken(email: string) {
-    return this.http.get('http://localhost:2609/api/users/validate/' + email).pipe(
-      map((user: any[]) => Object.values(user).filter(user => user.email === email)
-      ),
-      map(users => !users.length));
+  emailValidate(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<{ [key: string]: any } | null> => {
+      return this.searchEmail(control.value)
+        .pipe(
+          map((res: { message: string, status: boolean }) => {
+            if (res.status) {
+              return { emailTaken: true };
+            }
+            return null;
+          })
+        );
+    };
   }
 }
