@@ -9,6 +9,12 @@ const cors = require('cors');
 app.use(cors());
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-access-token, x-refresh-token");
+    res.header(
+        'Access-Control-Expose-Headers',
+        'x-access-token, x-refresh-token'
+    );
     next();
 });
 
@@ -16,11 +22,13 @@ app.use((req, res, next) => {
 const productsRoute = require('./routes/products');
 const ordersRoute = require('./routes/orders');
 const usersRoute = require('./routes/users');
+const authRoute = require('./routes/auth');
 
 /* Use Routes */
 app.use('/api/products', productsRoute);
 app.use('/api/orders', ordersRoute);
 app.use('/api/users', usersRoute);
+app.use('/api/auth', authRoute);
 
 app.use(logger('dev'));
 app.use(express.json());

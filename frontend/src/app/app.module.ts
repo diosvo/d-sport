@@ -49,6 +49,12 @@ import { WmBottomComponent } from './pages/classify/women/wm-bottom/wm-bottom.co
 import { WmShoesU100Component } from './pages/classify/women/wm-shoes-u100/wm-shoes-u100.component';
 import { WmAccessoriesComponent } from './pages/classify/women/wm-accessories/wm-accessories.component';
 
+/* for: Kids */
+import { KAccessoriesComponent } from './pages/classify/kids/k-accessories/k-accessories.component';
+import { KTopComponent } from './pages/classify/kids/k-top/k-top.component';
+import { KBottomComponent } from './pages/classify/kids/k-bottom/k-bottom.component';
+import { KShoesComponent } from './pages/classify/kids/k-shoes/k-shoes.component';
+
 const config: SocketIoConfig = { url: 'http://localhost:2609', options: {} };
 
 @NgModule({
@@ -91,6 +97,12 @@ const config: SocketIoConfig = { url: 'http://localhost:2609', options: {} };
     WmBottomComponent,
     WmShoesU100Component,
     WmAccessoriesComponent,
+
+    // Kids
+    KAccessoriesComponent,
+    KTopComponent,
+    KBottomComponent,
+    KShoesComponent,
   ],
   imports: [
     BrowserModule,

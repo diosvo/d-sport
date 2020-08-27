@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ProfileGuard } from './guard/profile.guard';
 
 /* Pages */
 import { HomeComponent } from './pages/home/home.component';
@@ -32,15 +33,21 @@ import { WmBottomComponent } from './pages/classify/women/wm-bottom/wm-bottom.co
 import { WmShoesU100Component } from './pages/classify/women/wm-shoes-u100/wm-shoes-u100.component';
 import { WmAccessoriesComponent } from './pages/classify/women/wm-accessories/wm-accessories.component';
 
+/* for: Women */
+import { KShoesComponent } from './pages/classify/kids/k-shoes/k-shoes.component';
+import { KTopComponent } from './pages/classify/kids/k-top/k-top.component';
+import { KBottomComponent } from './pages/classify/kids/k-bottom/k-bottom.component';
+import { KAccessoriesComponent } from './pages/classify/kids/k-accessories/k-accessories.component';
+
 const routes: Routes = [
   { path: '', component: HomeComponent },
 
   /* Pages */
   { path: 'product/:id', component: ProductComponent },
   { path: 'cart', component: CartComponent },
-  { path: 'checkout', component: CheckoutComponent },
+  { path: 'checkout', component: CheckoutComponent, canActivate: [ProfileGuard] },
   { path: 'thankyou', component: ThankyouComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [ProfileGuard] },
 
   /* Components */
   { path: 'login', component: LoginComponent },
@@ -72,7 +79,19 @@ const routes: Routes = [
       { path: 'accessories', component: WmAccessoriesComponent },
     ]
   },
+
+  // Kids
   { path: 'kids', component: KidsComponent },
+  {
+    path: 'kids',
+    children: [
+      { path: '', redirectTo: 'kids', pathMatch: 'full' },
+      { path: 'shoes', component: KShoesComponent },
+      { path: 'top', component: KTopComponent },
+      { path: 'bottom', component: KBottomComponent },
+      { path: 'accessories', component: KAccessoriesComponent },
+    ]
+  },
   { path: 'accessories', component: AccessoriesComponent },
 ];
 

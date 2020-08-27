@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
+import { UserModelServer } from 'src/app/models/user.model';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
@@ -6,10 +10,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+  myUser: any;
 
-  constructor() { }
 
-  ngOnInit(): void {
+  constructor(
+    private userService: UserService,
+    private router: Router) {
   }
 
+  ngOnInit(): void {
+    this.userService.userData$
+      .pipe(
+        map((user: UserModelServer) => {
+          return user;
+        })
+      )
+      .subscribe((data: UserModelServer) => {
+        this.myUser = data;
+      });
+    console.log(this.myUser)
+  }
+
+  logout() {
+    this.userService.logout();
+  }
 }
