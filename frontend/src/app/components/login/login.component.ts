@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, NgForm } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ValidationService } from 'src/app/validators/validation.service';
 import { UserService } from 'src/app/services/user.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -21,15 +22,31 @@ export class LoginComponent implements OnInit {
     }
   );
 
-  constructor(private fb: FormBuilder, private validation: ValidationService, private userService: UserService) { }
+  constructor(private fb: FormBuilder,
+    private validation: ValidationService,
+    private userService: UserService,
+    private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.userService.authState$.subscribe(authState => {
+      if (authState) {
+        this.router.navigateByUrl(this.route.snapshot.queryParams['returnUrl'] || '/profile');
+      } else {
+        this.router.navigateByUrl('/login');
+      }
+    })
   }
 
   onSubmit() {
+    if(this.loginForm.invalid) {
+      return
+    }
+
+    this.userService.loginUser(this.email.value, this.password.value);
     console.log(this.loginForm.value)
+
     this.loginForm.reset();
-    this.userService.loginUser(this.loginForm.value);
   }
 
   get email() {

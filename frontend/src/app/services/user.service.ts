@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { UserModelServer } from '../models/user.model';
 import { environment } from 'src/environments/environment';
-import { catchError } from 'rxjs/internal/operators/catchError';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -30,15 +29,17 @@ export class UserService {
     });
   }
 
-  loginUser(formData) {
-    const {email, password} = formData;
-
-    this.http.post<UserModelServer>(`${this.SERVER_URL}/auth/login`, { email, password })
+  loginUser(email: string, password: string) {
+    this.http.post(`${this.SERVER_URL}/auth/login`, { email, password })
       .subscribe((data: UserModelServer) => {
         this.auth = data.auth;
         this.authState$.next(this.auth);
         this.userData$.next(data);
-      }
-      )
+      })
+  }
+
+  logout() {
+    this.auth = false;
+    this.authState$.next(this.auth);
   }
 }

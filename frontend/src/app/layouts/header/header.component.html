@@ -16,8 +16,8 @@
                         <p routerLink="/kids">kids</p>
                         <p routerLink="/accessories">accessories</p>
                         <p routerLink="/about.dsport">about us</p>
-                        <p routerLink="/register">register</p>
-                        <p routerLink="/login">login</p>
+                        <p routerLink="/register">{{authState === false ? 'register' : ''}}</p>
+                        <p routerLink="/login">{{authState === false ? 'login' : 'my account'}}</p>
                     </div>
                 </div>
                 <div id="menu-bg" class="menu-bg"></div>

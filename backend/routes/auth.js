@@ -34,7 +34,7 @@ router.post('/register', bodyParser.json(), (req, res) => {
     }, 3000)
 })
 
-router.post('/login', bodyParser.json(), helper.isPasswordAndUserMatch, (req, res) => {
+router.post('/login', bodyParser.json(), helper.isPasswordAndUserMatch, async (req, res) => {
 
     const secret = "1SBz93MsqTs7KgwARcB0I0ihpILIjk3w";
     let token = jwt.sign({state: 'true', email: req.body.email, password: req.body.password}, secret, {

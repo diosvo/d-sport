@@ -18,7 +18,7 @@ router.get('/', function (req, res) {
 router.get('/:userId', (req, res) => {
     let userId = req.params.userId;
     database.table('users').filter({id: userId})
-        .withFields(['username', 'email', 'fname', 'lname', 'age', 'role', 'id'])
+        .withFields(['email', 'firstname', 'lastname', 'password', 'dob', 'id'])
         .get().then(user => {
         if (user) {
             res.json({user});
