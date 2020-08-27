@@ -5,4 +5,5 @@ export interface UserModelServer {
     lastname: string
     dob: Date,
     auth: boolean
+    token: string
 }

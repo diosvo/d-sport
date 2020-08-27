@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { UserModelServer } from 'src/app/models/user.model';
 import { map } from 'rxjs/operators';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,10 +13,9 @@ import { map } from 'rxjs/operators';
 export class ProfileComponent implements OnInit {
   myUser: any;
 
-
   constructor(
     private userService: UserService,
-    private router: Router) {
+    private token: TokenStorageService) {
   }
 
   ngOnInit(): void {
@@ -27,6 +27,7 @@ export class ProfileComponent implements OnInit {
       )
       .subscribe((data: UserModelServer) => {
         this.myUser = data;
+        this.myUser = this.token.getUser();
       });
     console.log(this.myUser)
   }

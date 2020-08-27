@@ -1,1 +1,4 @@
-<p>profile works!</p>
+<div *ngIf="myUser">
+    <p>Email:{{myUser.email}}</p>
+    <p>Token: {{myUser.token}}</p>
+</div>

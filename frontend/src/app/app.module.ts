@@ -11,6 +11,7 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AuthInterceptor } from './auth/interceptor';
 
 /* Layouts */
 import { HeaderComponent } from './layouts/header/header.component';
@@ -116,7 +117,7 @@ const config: SocketIoConfig = { url: 'http://localhost:2609', options: {} };
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [],
+  providers: [AuthInterceptor],
   bootstrap: [AppComponent]
 })
 export class AppModule {
