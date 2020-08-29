@@ -9,6 +9,7 @@ import { CartComponent } from './pages/cart/cart.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { ThankyouComponent } from './pages/thankyou/thankyou.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { AboutusComponent } from './pages/aboutus/aboutus.component';
 
 /* Components */
 import { LoginComponent } from './components/login/login.component';
@@ -45,9 +46,10 @@ const routes: Routes = [
   /* Pages */
   { path: 'product/:id', component: ProductComponent },
   { path: 'cart', component: CartComponent },
-  { path: 'checkout', component: CheckoutComponent, canActivate: [ProfileGuard] },
+  { path: 'checkout', component: CheckoutComponent},
   { path: 'thankyou', component: ThankyouComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [ProfileGuard] },
+  { path: 'about.d', component: AboutusComponent},
 
   /* Components */
   { path: 'login', component: LoginComponent },

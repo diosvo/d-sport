@@ -11,6 +11,7 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AuthInterceptor } from './auth/interceptor';
 
 /* Layouts */
 import { HeaderComponent } from './layouts/header/header.component';
@@ -25,6 +26,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProductComponent } from './pages/product/product.component';
 import { ThankyouComponent } from './pages/thankyou/thankyou.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { AboutusComponent } from './pages/aboutus/aboutus.component';
 
 /* Components */
 import { LoginComponent } from './components/login/login.component';
@@ -73,6 +75,7 @@ const config: SocketIoConfig = { url: 'http://localhost:2609', options: {} };
     HomeComponent,
     ProductComponent,
     ThankyouComponent,
+    AboutusComponent,
 
     // User functions
     LoginComponent,
@@ -116,7 +119,7 @@ const config: SocketIoConfig = { url: 'http://localhost:2609', options: {} };
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [],
+  providers: [AuthInterceptor],
   bootstrap: [AppComponent]
 })
 export class AppModule {
