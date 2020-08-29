@@ -25,6 +25,7 @@ module.exports = {
         if (user) {
             const match = await bcrypt.compare(myPlaintextPassword, user.password);
             if (match) {
+                req.id = user.id
                 req.email = user.email
                 req.firstname = user.firstname
                 req.lastname = user.lastname

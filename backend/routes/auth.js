@@ -45,6 +45,7 @@ router.post('/login', bodyParser.json(), helper.isPasswordAndUserMatch, async (r
     res.status(200).json({
         token: token,
         auth: true,
+        id: req.id,
         email: req.email,
         firstname: req.firstname,
         lastname: req.lastname,

@@ -27,7 +27,10 @@ export class UserService {
       firstname: firstname || null,
       lastname: lastname || null,
       dob: dob || null
-    });
+    }).subscribe((data: UserModelServer) => {
+      this.tokenStorageService.saveToken(data.token)
+      this.tokenStorageService.saveUser(data)
+    })
   }
 
   loginUser(email: string, password: string) {

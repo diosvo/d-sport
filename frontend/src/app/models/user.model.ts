@@ -1,4 +1,5 @@
 export interface UserModelServer {
+    id: number
     email: string
     password: string
     firstname: string

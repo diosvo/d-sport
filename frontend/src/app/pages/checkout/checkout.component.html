@@ -1,10 +1,6 @@
-<ngx-spinner
-  bdColor = "rgba(9,9,9,0.8)"
-  size = "large"
-  color = "#ffffff"
-  type = "ball-atom"
-  [fullScreen] = "true">
-  <p style="color: white"> Booking order.. </p></ngx-spinner>
+<ngx-spinner bdColor="rgba(9,9,9,0.8)" size="large" color="#ffffff" type="ball-atom" [fullScreen]="true">
+  <p style="color: white"> Booking order.. </p>
+</ngx-spinner>
 
 <section id="checkout" class="my-5">
   <!-- The cart is empty -->
@@ -70,13 +66,13 @@
           <p class="mb-0 text-uppercase font-weight-bold text-dark">in your cart</p>
         </div>
 
-        <div class="cart-details" *ngFor="let c of cartData.data; let i = index">
-          <div>
+        <div class="cart-details">
+          <div *ngFor="let c of cartData.data; let i = index">
             <div class="d-flex justify-content-between">
               <p>
                 <span>{{c.numInCart}}</span>
                 <span class="mx-2">x</span>
-                <span>{{c.product?.title}}</span>
+                <span (click)="selectProduct(c.product?.id)" style="cursor: pointer;">{{c.product?.title}}</span>
               </p>
               <p>{{(c.product?.price * c.numInCart) | currency:'USD' : 'symbol-narrow':'.2'}}</p>
             </div>
