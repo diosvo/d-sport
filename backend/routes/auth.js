@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 var bcrypt = require('bcryptjs');
-const { database } = require('../config/helpers');
 const bodyParser = require('body-parser');
 const createError = require('http-errors');
+const { database } = require('../config/helpers');
 const { signAccessToken, signRefreshToken, verifyRefreshToken } = require('../config/jwt');
 const { authSchema } = require('../config/validation_schema');
 
@@ -80,14 +80,14 @@ router.post('/login', bodyParser.json(), async (req, res, next) => {
         // Refresh token
         const refreshToken = await signRefreshToken(user.id)
 
-        res.status(200).json({
-            token: accessToken,
-            auth: true,
-            id: user.id,
-            email: result.email,
-        })
+        // res.status(200).json({
+        //     token: accessToken,
+        //     auth: true,
+        //     id: user.id,
+        //     email: result.email,
+        // })
 
-        // res.send({ accessToken, refreshToken }) // Gotcha
+        res.send({ accessToken, refreshToken }) // Gotcha
     } catch (error) {
         if (error.isJoi === true) return next(createError.BadRequest('Invalid email/ password'))
         next(error)

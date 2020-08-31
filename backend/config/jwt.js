@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const client = require('./redis');
 require('dotenv').config()
 
 module.exports = {
@@ -51,18 +52,41 @@ module.exports = {
                     console.log(err.message);
                     reject(createError.InternalServerError())
                 }
-                resolve(token)
+
+                /// Redis- TTL
+                client.SET(userID, token, 'EX', 365 * 24 * 60 * 60, (err, reply) => {
+                    if (err) {
+                        console.log(err.message);
+                        reject(createError.InternalServerError())
+                        return
+                    }
+                    resolve(token)
+                })
             })
         })
     },
 
     verifyRefreshToken: (refreshToken) => {
         return new Promise((resolve, reject) => {
-            jwt.verify(refreshToken, process.env.REFRESH_TOKEN, (err, payload) => {
-                if(err) return reject(createError.Unauthorized())
-                const userID = payload.aud
-                resolve(userID)
-            })
+            jwt.verify(
+                refreshToken,
+                process.env.REFRESH_TOKEN,
+                (err, payload) => {
+                    if (err) return reject(createError.Unauthorized())
+                    const userID = payload.aud
+                    console.log('UserID :', userID);
+
+                    client.GET(userID, (err, result) => {
+                        if (err) {
+                            console.log(err.message);
+                            reject(createError.InternalServerError())
+                            return
+                        } else {
+                            if (refreshToken === result) return resolve(userID)
+                            reject(createError.Unauthorized())
+                        }
+                    })
+                })
         })
     }
 }
