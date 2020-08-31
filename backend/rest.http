@@ -1,21 +1,36 @@
 @baseUrl = http://localhost:2609
 
 GET {{baseUrl}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTg4OTQ0MjMsImV4cCI6MTU5ODg5ODAyMywiYXVkIjpbNzddfQ.fm3uyPVVEtziSDhVkwoxJEzi3xLxWMyBWxtyhZ6C-oA
 
 ### Login route
 POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "vtmn1212@gmail.com",
+    "password": "123456"
+}
 
 ### Register route
 POST {{baseUrl}}/api/auth/register
 Content-Type: application/json
 
 {
-    "email": "nhung9@ou.edu.vn",
-    "password": "123456"
+    "email": "vtmn1212@gmail.com",
+    "password": "123456",
+    "firstname": "Nhung",
+    "lastname": "Vo",
+    "dob": "12/12/1999"
 }
 
 ### Refresh token route
 POST {{baseUrl}}/api/auth/refresh-token
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTg4OTQ0MjMsImV4cCI6MTYzMDQ1MjAyMywiYXVkIjpbNzddfQ.rOzIdq-mkmsMjy4ecp7t_59lbGQBBIOUDh1YjqE33mo"
+}
 
 ### Logout route
 DELETE {{baseUrl}}/api/auth/logout

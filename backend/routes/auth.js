@@ -1,97 +1,112 @@
 const express = require('express');
 const router = express.Router();
-const jwt = require('jsonwebtoken');
+var bcrypt = require('bcryptjs');
 const { database } = require('../config/helpers');
-const bcrypt = require('bcryptjs');
-const helper = require('../config/helpers')
 const bodyParser = require('body-parser');
 const createError = require('http-errors');
-const { signAccessToken } = require('../config/jwt');
+const { signAccessToken, signRefreshToken, verifyRefreshToken } = require('../config/jwt');
+const { authSchema } = require('../config/validation_schema');
 
 require('dotenv').config()
 
 router.post('/register', bodyParser.json(), async (req, res, next) => {
     try {
-        const { email, password, lastname, firstname, dob } = req.body;
+        const result = await authSchema.validateAsync(req.body)
 
         // Email is already registered
-        if (!email || !password) throw createError.BadRequest()
-
-        const doesExit = await database.table('users').filter({ email: email }).get();
-        if (doesExit) throw createError.Conflict(`${email} is already registered`)
+        const doesExit = await database.table('users').filter({ email: result.email }).get();
+        if (doesExit) throw createError.Conflict(`${result.email} is already registered`)
 
         // Hash password
         const salt = bcrypt.genSaltSync(10);
 
-        let hashPw = bcrypt.hashSync(password, salt, (err, res) => {
-            req.body.password = res;
+        let hashPw = bcrypt.hashSync(result.password, salt, (err, res) => {
+            result.password = res;
         });
 
         // Access token
-        const accessToken = await signAccessToken(email)
+        const accessToken = await signAccessToken(result.id)
+
+        // Refresh token
+        const refreshToken = await signRefreshToken(result.id)
 
         // Insert into database table 'users'
         await database.table('users')
             .insert({
-                email: email,
+                email: result.email,
                 password: hashPw,
-                firstname: firstname || null,
-                lastname: lastname || null,
-                dob: dob || null,
+                firstname: result.firstname || null,
+                lastname: result.lastname || null,
+                dob: result.dob || null,
                 token: accessToken
             }).catch(err => console.log(err));
 
         res.status(200).json({
             token: accessToken,
             auth: true,
-            email: email,
+            id: user.id,
+            email: result.email,
             password: hashPw,
-            firstname: firstname || null,
-            lastname: lastname || null,
-            dob: dob || null,
+            firstname: result.firstname || null,
+            lastname: result.lastname || null,
+            dob: result.dob || null,
         })
 
     } catch (error) {
+        if (error.isJoi === true) error.status = 422
         next(error)
     }
 })
 
 router.post('/login', bodyParser.json(), async (req, res, next) => {
+    try {
+        const result = await authSchema.validateAsync(req.body)
+        const user = await database.table('users').filter({ email: result.email }).get();
 
-    /* return new Promise((resolve, reject) => {
-        jwt.sign({
-            id: req.id,
-            state: 'true',
-            email: req.body.email,
-            password: req.body.password
-        }, process.env.ACCESS_TOKEN, {
-            algorithm: 'HS512',
-            expiresIn: process.env.JWT_EXPIRES_IN
-        }, (err, token) => {
-            if (!err) {
-                resolve(token)
-                res.status(200).json({
-                    token: token,
-                    auth: true,
-                    id: req.id,
-                    email: req.email,
-                    firstname: req.firstname,
-                    lastname: req.lastname,
-                    password: req.password,
-                    dob: req.dob,
-                    expiresAt: process.env.JWT_EXPIRES_IN
-                })
-            } else {
-                reject()
-            }
+        // Check email
+        if (!user) throw createError.NotFound('User not registered')
+
+        // Compare password
+        try {
+            const isMatch = await bcrypt.compare(result.password, user.password);
+            if (!isMatch) throw createError.Unauthorized('Email/ password is not valid')
+        } catch (error) {
+            throw error
+        }
+
+        // Access token
+        const accessToken = await signAccessToken(user.id)
+
+        // Refresh token
+        const refreshToken = await signRefreshToken(user.id)
+
+        res.status(200).json({
+            token: accessToken,
+            auth: true,
+            id: user.id,
+            email: result.email,
         })
-    }) */
 
-    res.send('login route')
+        // res.send({ accessToken, refreshToken }) // Gotcha
+    } catch (error) {
+        if (error.isJoi === true) return next(createError.BadRequest('Invalid email/ password'))
+        next(error)
+    }
 })
 
-router.post('/refresh-token', async (req, res, next) => {
-    res.send('refresh token route')
+router.post('/refresh-token', bodyParser.json(), async (req, res, next) => {
+    try {
+        const { refreshToken } = req.body
+        if (!refreshToken) throw createError.BadRequest()
+
+        const userID = await verifyRefreshToken(refreshToken)
+        const accessToken = await signAccessToken(userID)
+        const refToken = await signRefreshToken(userID)
+
+        res.send({ accessToken: accessToken, refreshToken: refToken })
+    } catch (err) {
+        next(err)
+    }
 })
 
 router.delete('/logout', async (req, res, next) => {

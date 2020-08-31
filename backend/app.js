@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const app = express();
 const createError = require('http-errors');
+const { verifyAccessToken } = require('./config/jwt')
 
 /* Middleware */
 const cors = require('cors');
@@ -20,7 +21,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('/', async (req, res, next) => {
+app.get('/', verifyAccessToken, async (req, res, next) => {
     res.send('Hi. Im Dios V')
 })
 

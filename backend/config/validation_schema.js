@@ -1,0 +1,13 @@
+const joi = require('@hapi/joi')
+
+const authSchema = joi.object({
+    email: joi.string().email().lowercase().required(),
+    password: joi.string().min(6).required(),
+    lastname: joi.string(),
+    firstname: joi.string(),
+    dob: joi.date()
+})
+
+module.exports = {
+    authSchema
+}
