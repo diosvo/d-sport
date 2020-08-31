@@ -6,6 +6,8 @@ const logger = require('morgan');
 const app = express();
 const createError = require('http-errors');
 const { verifyAccessToken } = require('./config/jwt')
+const compression = require('compression')
+require('./config/redis')
 
 /* Middleware */
 const cors = require('cors');
@@ -43,6 +45,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(morgan('dev'));
+app.use(compression({
+    level: 6,
+    threshold: 100 * 1000,
+    filter: (req, res) => {
+        if (req.header['x-no-compression']) {
+            return false
+        }
+        return compression.filter(req, res)
+    }
+}));
 
 app.use(async (req, res, next) => {
     next(createError.NotFound());
