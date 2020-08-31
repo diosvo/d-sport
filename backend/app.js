@@ -1,8 +1,11 @@
 const express = require('express');
+const morgan = require('morgan');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const app = express();
+const createError = require('http-errors');
+const { verifyAccessToken } = require('./config/jwt')
 
 /* Middleware */
 const cors = require('cors');
@@ -18,6 +21,10 @@ app.use((req, res, next) => {
     next();
 });
 
+app.get('/', verifyAccessToken, async (req, res, next) => {
+    res.send('Hi. Im Dios V')
+})
+
 /* Import Routes */
 const productsRoute = require('./routes/products');
 const ordersRoute = require('./routes/orders');
@@ -32,9 +39,24 @@ app.use('/api/auth', authRoute);
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(morgan('dev'));
+
+app.use(async (req, res, next) => {
+    next(createError.NotFound());
+})
+
+app.use(async (err, req, res, next) => {
+    res.status(err.status || 500)
+    res.send({
+        error: {
+            status: err.status || 500,
+            message: err.message
+        }
+    })
+})
 
 /* Realtime Database */
 const mysql = require('mysql');
@@ -43,7 +65,7 @@ const MySQLEvents = require('@rodrigogs/mysql-events');
 const server = http.createServer(app);
 const socketIO = require('socket.io');
 const io = socketIO.listen(server);
-const {database} = require('./config/helpers');
+const { database } = require('./config/helpers');
 
 // Define some array variables
 let data = Array(0);
@@ -53,11 +75,11 @@ let currentData = Array(0);
 io.sockets.on('connection', (socket) => {
     database.table('products')
         .withFields(['id', 'title', 'description', 'price', 'quantity', 'another_CatName'])
-        .sort({id: -1})
+        .sort({ id: -1 })
         .getAll()
         .then(prods => {
             data = prods;
-            io.sockets.emit('initial', {prods: [...data]})
+            io.sockets.emit('initial', { prods: [...data] })
         })
         .catch(err => res.json(err));
 })
@@ -93,7 +115,7 @@ const program = async () => {
                     // If product is present
                     if (index > -1) {
                         data = data.filter(p => p.id !== newData.id);
-                        io.sockets.emit('update', {prods: [...data], type: "DELETE"});
+                        io.sockets.emit('update', { prods: [...data], type: "DELETE" });
                     } else {
                         return;
                     }
@@ -106,7 +128,7 @@ const program = async () => {
                     // If product is present
                     if (index2 > -1) {
                         data[index2] = newData;
-                        io.sockets.emit('update', {prods: [...data], type: "DELETE"});
+                        io.sockets.emit('update', { prods: [...data], type: "DELETE" });
                     } else {
                         return;
                     }
@@ -115,11 +137,11 @@ const program = async () => {
                 case "INSERT":
                     database.table('products')
                         .withFields(['id', 'title', 'description', 'image', 'price', 'quantity', 'another_CatName', 'image_1', 'image_2', 'image_3', 'category_id', 'classify_id'])
-                        .sort({id: -1})
+                        .sort({ id: -1 })
                         .getAll()
                         .then(prods => {
                             data = prods;
-                            io.sockets.emit('initial', {prods: [...data]})
+                            io.sockets.emit('initial', { prods: [...data] })
                         })
                         .catch(err => res.json(err));
                     break;

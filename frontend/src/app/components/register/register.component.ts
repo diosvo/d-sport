@@ -38,9 +38,7 @@ export class RegisterComponent implements OnInit {
     }
 
     // @ts-ignore
-    this.userService.registerUser({ ...this.registerForm.value }).subscribe((response: { message: string }) => {
-      this.registrationMessage = response.message;
-    });
+    this.userService.registerUser(this.registerForm.value)
     
     console.log(this.registerForm.value);
     this.router.navigate(['/login']).then();

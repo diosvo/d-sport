@@ -2,7 +2,7 @@
     <div class="px-3 py-1">
         <div class="d-flex justify-content-between align-items-center">
             <!-- NAVIGATION -->
-            <nav>
+            <nav id="navbar">
                 <div id="menu-bar">
                     <div id="menu" (click)="onClickMenu()">
                         <div id="bar-1" class="bar"></div>
@@ -52,7 +52,7 @@
                                         <img [src]="c.product?.image" alt="pro-img" width=100%>
                                     </div>
                                     <div class="col-md-6 text-left p-0">
-                                        <p class="font-15">{{c.product?.title}}</p>
+                                        <p class="font-15" (click)="selectProduct(c.product?.id)">{{c.product?.title}}</p>
                                         <div class="font-13">
                                             <p class="product-category text-secondary">
                                                 {{c.product?.another_CatName}}

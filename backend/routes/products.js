@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 const {database} = require('../config/helpers');
 
 /* === 1. SINGLE PRODUCT === */

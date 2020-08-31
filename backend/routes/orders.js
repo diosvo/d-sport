@@ -56,7 +56,8 @@ router.get('/:id', (req, res) => {
             'p.title as name',
             'p.description',
             'p.price',
-            'u.username',
+            'u.id',
+            'u.email',
             'od.quantity'
         ])
         .filter({'o.id': orderId})
