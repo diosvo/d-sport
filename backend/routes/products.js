@@ -1,6 +1,24 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 const {database} = require('../config/helpers');
+
+// The request has a valid JWT access token
+let authenticate = (req, res, next) => {
+    let token = req.header('x-access-token');
+
+    // Verify the JWT
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        if (err) {
+            // jwt is invalid - * DO NOT AUTHENTICATE *
+            res.status(401).send(err);
+        } else {
+            // jwt is valid
+            req.id = decoded.id;
+            next();
+        }
+    });
+}
 
 /* === 1. SINGLE PRODUCT === */
 

@@ -1,0 +1,21 @@
+@baseUrl = http://localhost:2609
+
+GET {{baseUrl}}
+
+### Login route
+POST {{baseUrl}}/api/auth/login
+
+### Register route
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+    "email": "nhung9@ou.edu.vn",
+    "password": "123456"
+}
+
+### Refresh token route
+POST {{baseUrl}}/api/auth/refresh-token
+
+### Logout route
+DELETE {{baseUrl}}/api/auth/logout

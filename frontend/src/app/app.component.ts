@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { TokenStorageService } from './services/token-storage.service';
+
+declare var $: any
 
 @Component({
   selector: 'app-root',
@@ -9,12 +11,12 @@ export class AppComponent implements OnInit {
   isLoggedIn = false
   email: string
 
-  constructor(private tokenStorageService: TokenStorageService) {}
+  constructor(private tokenStorageService: TokenStorageService) { }
 
   ngOnInit() {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
 
-    if(this.isLoggedIn) {
+    if (this.isLoggedIn) {
       const user = this.tokenStorageService.getUser()
       this.email = user.email
     }
@@ -24,4 +26,13 @@ export class AppComponent implements OnInit {
     this.tokenStorageService.signout()
     window.location.reload();
   }
+
+/*   clickOutside() {
+    window.addEventListener('click', () => {
+      var hide = document.getElementById('navbar')
+      if (event.target != hide && (<HTMLElement>event.target).parentElement != hide) {
+        hide.style.display = 'none'
+      }
+    })
+  } */
 }

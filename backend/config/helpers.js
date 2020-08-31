@@ -2,6 +2,8 @@
 let Mysqli = require('mysqli');
 require('dotenv').config()
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 
 let conn = new Mysqli({
     Host: process.env.DB_HOST,
@@ -11,7 +13,7 @@ let conn = new Mysqli({
     db: process.env.DATABASE,
 });
 
-let db = conn.emit(false,'');
+let db = conn.emit(false, '');
 
 module.exports = {
     database: db,
@@ -20,7 +22,7 @@ module.exports = {
         const myPlaintextPassword = req.body.password;
         const myEmail = req.body.email;
 
-        const user = await db.table('users').filter({$or:[{ email : myEmail }]}).get();
+        const user = await db.table('users').filter({$or: [{email: myEmail}]}).get();
 
         if (user) {
             const match = await bcrypt.compare(myPlaintextPassword, user.password);
