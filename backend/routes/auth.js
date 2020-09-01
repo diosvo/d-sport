@@ -6,6 +6,7 @@ const createError = require('http-errors');
 const { database } = require('../config/helpers');
 const { signAccessToken, signRefreshToken, verifyRefreshToken } = require('../config/jwt');
 const { authSchema } = require('../config/validation_schema');
+const client = require('../config/redis')
 
 require('dotenv').config()
 
@@ -109,8 +110,23 @@ router.post('/refresh-token', bodyParser.json(), async (req, res, next) => {
     }
 })
 
-router.delete('/logout', async (req, res, next) => {
-    res.send('logout route')
+router.delete('/logout', bodyParser.json(), async (req, res, next) => {
+    try {
+        const { refreshToken } = req.body
+        if (!refreshToken) throw createError.BadRequest()
+        const userID = await verifyRefreshToken(refreshToken)
+        
+        client.DEL(userID, (err) => {
+            if(err) {
+                console.log(err.message);
+                throw createError.InternalServerError()
+            }
+            console.log('Logout');
+            res.status(204)
+        })
+    } catch (error) {
+        next(error)
+    }
 })
 
 module.exports = router;
