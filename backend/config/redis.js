@@ -9,7 +9,7 @@ client.on('connect', () => {
 })
 
 client.on('ready', () => {
-    console.log('Connected to redis and ready to use');
+    console.log('Ready to use');
 })
 
 client.on('error', (err) => {
