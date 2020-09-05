@@ -75,6 +75,8 @@ router.post('/login', bodyParser.json(), async (req, res, next) => {
             accessToken, refreshToken,
             auth: true,
             id: user.id,
+            lastname: user.lastname,
+            firstname: user.firstname,
             email: result.email,
         })
     } catch (error) {

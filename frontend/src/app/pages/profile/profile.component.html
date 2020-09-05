@@ -1,8 +1,20 @@
-<div *ngIf="myUser">
-    <p>ID:{{myUser.id}}</p>
-    <p>Email:{{myUser.email}}</p>
-    <p>Token: {{myUser.accessToken}}</p>
-    <p>Token: {{myUser.refreshToken}}</p>
-    <button class="btn btn-primary" (click)="logout()">LOGOUT</button>
-</div>
+<main class="profile d-flex flex-column position-relative my-5">
+    <div class="profile-bg position-absolute"></div>
 
+    <section class="container d-flex" width=100%>
+        <aside class="profile-image position-relative">
+            <img src="../../../assets/images/logo.png" alt="logo-profile" width=30%>
+        </aside>
+        <section class="profile-info">
+            <h1 class="first-name"> {{myUser.firstname}}</h1>
+            <h1 class="second-name"> {{myUser.lastname}}</h1>
+            <h2>D-member</h2>
+            <p>
+                Discount 10% on your birthday.
+            </p>
+        </section>
+        <div class="btn-logout">
+            <button class="btn logout" (click)="logout()">logout</button>
+        </div>
+    </section>
+</main>
