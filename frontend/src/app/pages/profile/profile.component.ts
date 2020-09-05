@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { UserModelServer } from 'src/app/models/user.model';
 import { map } from 'rxjs/operators';
@@ -27,12 +26,12 @@ export class ProfileComponent implements OnInit {
       )
       .subscribe((data: UserModelServer) => {
         this.myUser = data;
-        this.myUser = this.token.getUser();
       });
     console.log(this.myUser)
   }
 
   logout() {
     this.userService.logout();
+    this.token.removeTokens()
   }
 }

@@ -9,8 +9,7 @@ header {
     z-index : 10000;
 
     background-color: white;
-    border-bottom   : .5px solid #e5e5e5;
-    border-top   : .5px solid #e5e5e5;
+    border-bottom   : .75px solid #e5e5e5;
 }
 
 /* LOGO */
@@ -30,6 +29,7 @@ header {
 
 /* NAV-BAR */
 #menu-bar {
+    margin-top: -.35rem;
     z-index: 2;
 
     #menu {

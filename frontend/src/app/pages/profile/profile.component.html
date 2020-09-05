@@ -1,5 +1,8 @@
 <div *ngIf="myUser">
     <p>ID:{{myUser.id}}</p>
     <p>Email:{{myUser.email}}</p>
-    <p>Token: {{myUser.token}}</p>
+    <p>Token: {{myUser.accessToken}}</p>
+    <p>Token: {{myUser.refreshToken}}</p>
+    <button class="btn btn-primary" (click)="logout()">LOGOUT</button>
 </div>
+
