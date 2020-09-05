@@ -16,11 +16,11 @@ export class UserService {
   userData$ = new BehaviorSubject<UserModelServer | object>(null);
   loginMessage$ = new BehaviorSubject<string>(null);
 
-  constructor(private http: HttpClient,private tokenStorageService: TokenStorageService) { }
+  constructor(private http: HttpClient, private tokenStorageService: TokenStorageService, private token: TokenStorageService) { }
 
   registerUser(formData: any) {
     const { firstname, lastname, email, password, dob, cfpassword } = formData;
-    
+
     return this.http.post(`${this.SERVER_URL}/auth/register`, {
       email,
       password,
@@ -28,25 +28,27 @@ export class UserService {
       lastname: lastname || null,
       dob: dob || null
     }).subscribe((data: UserModelServer) => {
-      this.tokenStorageService.saveToken(data.token)
-      this.tokenStorageService.saveUser(data)
+      this.tokenStorageService.setSession(data.id, data.accessToken, data.refreshToken)
     })
   }
 
   loginUser(email: string, password: string) {
-    this.http.post(`${this.SERVER_URL}/auth/login`, { email, password })
+    this.http.post<UserModelServer>(`${this.SERVER_URL}/auth/login`, { email, password })
       .subscribe((data: UserModelServer) => {
         this.auth = data.auth;
         this.authState$.next(this.auth);
         this.userData$.next(data);
 
-        this.tokenStorageService.saveToken(data.token)
-        this.tokenStorageService.saveUser(data)
+        this.tokenStorageService.setSession(data.id, data.accessToken, data.refreshToken)
       })
   }
 
   logout() {
     this.auth = false;
     this.authState$.next(this.auth);
+
+    return this.http.post<any>(`${this.SERVER_URL}/logout`, {
+      'refreshToken': this.tokenStorageService.getRefreshToken()
+    })
   }
 }

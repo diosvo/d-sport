@@ -39,19 +39,9 @@ router.post('/register', bodyParser.json(), async (req, res, next) => {
                 firstname: result.firstname || null,
                 lastname: result.lastname || null,
                 dob: result.dob || null,
-                token: accessToken
             }).catch(err => console.log(err));
 
-        res.status(200).json({
-            token: accessToken,
-            auth: true,
-            id: user.id,
-            email: result.email,
-            password: hashPw,
-            firstname: result.firstname || null,
-            lastname: result.lastname || null,
-            dob: result.dob || null,
-        })
+        res.send("Register Successfully")
 
     } catch (error) {
         if (error.isJoi === true) error.status = 422
@@ -81,14 +71,12 @@ router.post('/login', bodyParser.json(), async (req, res, next) => {
         // Refresh token
         const refreshToken = await signRefreshToken(user.id)
 
-        // res.status(200).json({
-        //     token: accessToken,
-        //     auth: true,
-        //     id: user.id,
-        //     email: result.email,
-        // })
-
-        res.send({ accessToken, refreshToken }) // Gotcha
+        res.send({
+            accessToken, refreshToken,
+            auth: true,
+            id: user.id,
+            email: result.email,
+        })
     } catch (error) {
         if (error.isJoi === true) return next(createError.BadRequest('Invalid email/ password'))
         next(error)
@@ -114,16 +102,6 @@ router.delete('/logout', bodyParser.json(), async (req, res, next) => {
     try {
         const { refreshToken } = req.body
         if (!refreshToken) throw createError.BadRequest()
-        const userID = await verifyRefreshToken(refreshToken)
-        
-        client.DEL(userID, (err) => {
-            if(err) {
-                console.log(err.message);
-                throw createError.InternalServerError()
-            }
-            console.log('Logout');
-            res.status(204)
-        })
     } catch (error) {
         next(error)
     }

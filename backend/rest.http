@@ -1,13 +1,13 @@
 @baseUrl = http://localhost:2609
 
 GET {{baseUrl}}
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTg5MzU1NzYsImV4cCI6MTU5ODkzOTE3NiwiYXVkIjpbNzddfQ.hYIKo9TwvQ0F6kgty74WyLk_0_jtZeSUYo-WG4UqMu0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTkyMjczMzIsImV4cCI6MTU5OTIzMDkzMiwiYXVkIjpbNzddfQ.T-Qawfgfxjo5H9H3OWICjpa3Cwhj_wJ_PqKEIUL7OGA
 ### Login route
 POST {{baseUrl}}/api/auth/login
 Content-Type: application/json
 
 {
-    "email": "vtmn1212@gmail.com",
+    "email": "1751010102nhung@ou.edu.vn",
     "password": "123456"
 }
 
@@ -16,7 +16,7 @@ POST {{baseUrl}}/api/auth/register
 Content-Type: application/json
 
 {
-    "email": "vtmn1212@gmail.com",
+    "email": "diosvo@gmail.com",
     "password": "123456",
     "firstname": "Nhung",
     "lastname": "Vo",
@@ -28,7 +28,7 @@ POST {{baseUrl}}/api/auth/refresh-token
 Content-Type: application/json
 
 {
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTg5MDQxMDAsImV4cCI6MTYzMDQ2MTcwMCwiYXVkIjpbNzddfQ.K2BIvOxeQiUlwXpmNmckv73un1lGWaNDU3TsJK5MlcQ"
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTkyODg3MTksImV4cCI6MTU5OTI5MjMxOSwiYXVkIjpbODRdfQ.ppGYuPzL2V72haUHqj2uZ7f62ZqZ2Av5tcZqvKP2vj0"
 }
 
 ### Logout route

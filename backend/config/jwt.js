@@ -52,41 +52,18 @@ module.exports = {
                     console.log(err.message);
                     reject(createError.InternalServerError())
                 }
-
-                /// Redis- TTL
-                client.SET(userID, token, 'EX', 365 * 24 * 60 * 60, (err, reply) => {
-                    if (err) {
-                        console.log(err.message);
-                        reject(createError.InternalServerError())
-                        return
-                    }
-                    resolve(token)
-                })
+                resolve(token)
             })
         })
     },
 
     verifyRefreshToken: (refreshToken) => {
         return new Promise((resolve, reject) => {
-            jwt.verify(
-                refreshToken,
-                process.env.REFRESH_TOKEN,
-                (err, payload) => {
-                    if (err) return reject(createError.Unauthorized())
-                    const userID = payload.aud
-                    console.log('UserID :', userID);
-
-                    client.GET(userID, (err, result) => {
-                        if (err) {
-                            console.log(err.message);
-                            reject(createError.InternalServerError())
-                            return
-                        } else {
-                            if (refreshToken === result) return resolve(userID)
-                            reject(createError.Unauthorized())
-                        }
-                    })
-                })
+            jwt.verify(refreshToken, process.env.REFRESH_TOKEN, (err, payload) => {
+                if (err) return reject(createError.Unauthorized())
+                const userID = payload.aud
+                resolve(userID)
+            })
         })
     }
 }

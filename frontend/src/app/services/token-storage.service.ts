@@ -1,34 +1,41 @@
 import { Injectable } from '@angular/core';
-
-const TOKEN_KEY = 'auth-token'
-const USER_KEY = 'auth-user'
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TokenStorageService {
 
-  constructor() { }
+export class TokenStorageService {
+  private SERVER_URL = environment.SERVER_URL;
+
+  constructor(private http: HttpClient) { }
 
   signout() {
     window.sessionStorage.clear()
   }
 
-  public saveToken(token: string) {
-    window.sessionStorage.removeItem(TOKEN_KEY)
-    window.sessionStorage.setItem(TOKEN_KEY, token)
+  public setSession(userId: number, accessToken: string, refreshToken: string) {
+    localStorage.setItem('user-id', JSON.stringify(userId));
+    localStorage.setItem('x-access-token', accessToken);
+    localStorage.setItem('x-refresh-token', refreshToken);
   }
 
-  public getToken() {
-    return sessionStorage.getItem(TOKEN_KEY)
+  getAccessToken() {
+    return localStorage.getItem('x-access-token');
   }
 
-  public saveUser(user) {
-    window.sessionStorage.removeItem(USER_KEY)
-    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+  getRefreshToken() {
+    return localStorage.getItem('x-refresh-token');
   }
 
-  public getUser() {
-    return JSON.parse(sessionStorage.getItem(USER_KEY))
+  refreshToken() {
+    return this.http.post<any>(`${this.SERVER_URL}/refresh-token`, {
+      'refreshToken': this.getRefreshToken()
+    })
+  }
+
+  removeTokens() {
+    window.localStorage.clear();
   }
 }
