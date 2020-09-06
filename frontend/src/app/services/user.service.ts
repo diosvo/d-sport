@@ -16,7 +16,8 @@ export class UserService {
   userData$ = new BehaviorSubject<UserModelServer | object>(null);
   loginMessage$ = new BehaviorSubject<string>(null);
 
-  constructor(private http: HttpClient, private tokenStorageService: TokenStorageService, private token: TokenStorageService) { }
+  constructor(private http: HttpClient,
+    private tokenStorageService: TokenStorageService) { }
 
   registerUser(formData: any) {
     const { firstname, lastname, email, password, dob, cfpassword } = formData;

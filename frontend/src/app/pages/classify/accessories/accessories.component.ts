@@ -8,7 +8,6 @@ import { ProductModelServer, ServerResponse } from 'src/app/models/product.model
 @Component({
   selector: 'app-accessories',
   templateUrl: './accessories.component.html',
-  styleUrls: ['./accessories.component.scss']
 })
 
 export class AccessoriesComponent implements OnInit {

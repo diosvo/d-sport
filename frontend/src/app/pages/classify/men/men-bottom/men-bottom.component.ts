@@ -7,7 +7,6 @@ import { ProductModelServer, ServerResponse } from 'src/app/models/product.model
 @Component({
   selector: 'app-men-bottom',
   templateUrl: './men-bottom.component.html',
-  styleUrls: ['./men-bottom.component.scss']
 })
 export class MenBottomComponent implements OnInit {
   products: ProductModelServer[] = [];

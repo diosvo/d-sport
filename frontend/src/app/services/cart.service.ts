@@ -56,14 +56,6 @@ export class CartService {
     private spinner: NgxSpinnerService,
     private userService: UserService) {
 
-    if (this.userService.auth == true) {
-      this.userService.userData$
-        .pipe(
-          map((user: UserModelServer) => {
-            return user;
-          })
-        )
-
       this.cartTotal$.next(this.cartDataServer.total);
       this.cartData$.next(this.cartDataServer);
 
@@ -103,7 +95,6 @@ export class CartService {
         });
       }
     }
-  }
 
   addProductToCart(id: number, quantity?: number) {
     this.productService.getSingleProduct(id).subscribe(prod => {

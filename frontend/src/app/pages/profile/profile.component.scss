@@ -53,6 +53,10 @@ main.profile {
   img {
     margin: 1rem;
   }
+
+  p {
+    margin: 1rem 2.5rem;
+  }
 }
 
 .profile-info {
@@ -131,8 +135,15 @@ main.profile {
     }
   }
 
-  .profile-image img {
-    margin: 1.25rem 0;
+  .profile-image {
+    p {
+      font-size: 14px;
+      margin: 2rem 1.25rem;
+    }
+
+    img {
+      margin: 1.25rem 0;
+    }
   }
 
   .btn-logout {

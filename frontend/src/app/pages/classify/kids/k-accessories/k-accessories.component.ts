@@ -7,7 +7,6 @@ import { ProductModelServer, ServerResponse } from 'src/app/models/product.model
 @Component({
   selector: 'app-k-accessories',
   templateUrl: './k-accessories.component.html',
-  styleUrls: ['./k-accessories.component.scss']
 })
 
 export class KAccessoriesComponent implements OnInit {

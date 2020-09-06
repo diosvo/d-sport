@@ -7,7 +7,6 @@ import { ProductModelServer, ServerResponse } from 'src/app/models/product.model
 @Component({
   selector: 'app-wm-bottom',
   templateUrl: './wm-bottom.component.html',
-  styleUrls: ['./wm-bottom.component.scss']
 })
 export class WmBottomComponent implements OnInit {
   products: ProductModelServer[] = [];
