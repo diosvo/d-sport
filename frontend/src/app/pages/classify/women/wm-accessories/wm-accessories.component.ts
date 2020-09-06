@@ -6,7 +6,6 @@ import { ProductModelServer, ServerResponse } from 'src/app/models/product.model
 @Component({
   selector: 'app-wm-accessories',
   templateUrl: './wm-accessories.component.html',
-  styleUrls: ['./wm-accessories.component.scss']
 })
 export class WmAccessoriesComponent implements OnInit {
   products: ProductModelServer[] = [];

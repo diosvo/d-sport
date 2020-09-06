@@ -7,7 +7,6 @@ import { ProductModelServer, ServerResponse } from 'src/app/models/product.model
 @Component({
   selector: 'app-k-bottom',
   templateUrl: './k-bottom.component.html',
-  styleUrls: ['./k-bottom.component.scss']
 })
 export class KBottomComponent implements OnInit {
 

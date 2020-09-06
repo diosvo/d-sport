@@ -95,7 +95,7 @@ header {
 
 .change-bg {
     width: 300px;
-    height: 100vh;
+    height: 135vh;
     transform: translate(-10%, -30%);
 }
 
@@ -166,6 +166,14 @@ header {
             overflow-y: scroll;
             overflow-x: hidden;
 
+            .qc-img {
+                width: 100px;
+            }
+
+            .delete-item {
+                width: 4%;
+            }
+
             .cart--buttons div {
                 margin-top   : 0.5rem;
                 padding      : 0.65rem 1.5rem;
@@ -183,7 +191,7 @@ header {
             }
 
             .viewcart {
-                border: 0.5px solid #cccccc;
+                border: 1px solid #cccccc;
             }
 
             .checkout {

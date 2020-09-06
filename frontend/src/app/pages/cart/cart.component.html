@@ -50,7 +50,7 @@
                         </div>
 
                         <div class="col-md-2 py-3">
-                            <p class="text-center">{{c.product?.price | currency:'USD' : 'symbol-narrow':'.2'}}</p>
+                            <p>{{c.product?.price | currency:'USD' : 'symbol-narrow':'.2'}}</p>
                         </div>
 
                     </div>
@@ -77,9 +77,6 @@
             </div>
             <div class="cart-btn text-center py-2 mt-2" width=100%>
                 <div class="btn-shop__bgBlack py-3 font-17" routerLink="/checkout">Checkout</div>
-                <div class="btn-shop__bgLight py-3 mt-2">
-                    <img src="../../../assets/images/paypal-logo.png" alt="paypal" width=20%>
-                </div>
             </div>
         </div>
     </div>

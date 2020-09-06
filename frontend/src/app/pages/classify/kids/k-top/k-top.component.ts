@@ -7,7 +7,6 @@ import { ProductModelServer, ServerResponse } from 'src/app/models/product.model
 @Component({
   selector: 'app-k-top',
   templateUrl: './k-top.component.html',
-  styleUrls: ['./k-top.component.scss']
 })
 export class KTopComponent implements OnInit {
   products: ProductModelServer[] = [];
