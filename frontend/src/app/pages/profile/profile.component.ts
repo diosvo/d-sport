@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { UserModelServer } from 'src/app/models/user.model';
-import { map } from 'rxjs/operators';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { CartModelServer } from 'src/app/models/cart.model';
+import { CartService } from 'src/app/services/cart.service';
+
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
@@ -11,10 +14,12 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 })
 export class ProfileComponent implements OnInit {
   myUser: any;
+  cartData: CartModelServer
 
   constructor(
     private userService: UserService,
-    private token: TokenStorageService) {
+    private token: TokenStorageService,
+    private cartService: CartService) {
   }
 
   ngOnInit(): void {
@@ -33,5 +38,6 @@ export class ProfileComponent implements OnInit {
   logout() {
     this.userService.logout();
     this.token.removeTokens()
+    this.cartService.cartData$.subscribe(data => this.cartData = data)
   }
 }

@@ -9,7 +9,7 @@
                         <div id="bar-2" class="bar"></div>
                         <div id="bar-3" class="bar"></div>
                     </div>
-                    <div class="nav font-18 font-weight-bold text-uppercase" id="nav">
+                    <div class="nav font-weight-bold text-uppercase" id="nav">
                         <p routerLink="/">home</p>
                         <p routerLink="/men">men</p>
                         <p routerLink="/women">women</p>
@@ -35,24 +35,30 @@
                     <div style="width: 35px"><img src="../../../assets/images/shopping-bag.png" alt="shopping bag"
                             width=100%></div>
                     <span
-                        class="cart--items--qty">{{cartData.data[0].numInCart !== 0 ? cartData.data.length : 0}}</span>
+                        class="cart--items--qty">{{(cartData.data[0].numInCart !== 0 && authState === true) ? cartData.data.length : 0}}</span>
                 </span>
 
                 <div class="qc-view">
                     <div class="cart-transparent"></div>
 
-                    <div>
+                    <div *ngIf="authState === false">
+                        <div class="no-items scale-up-ver-bottom text-center">
+                            <p>You need to <u routerLink="/login" class="not-login">login</u> first</p>
+                        </div>
+                    </div>
+
+                    <div *ngIf="authState === true">
                         <div class="no-items scale-up-ver-bottom" *ngIf="cartData.data[0].numInCart === 0">
                             <p>Your cart is currently empty.</p>
                         </div>
 
                         <div class="quick-cart scale-up-ver-bottom container" *ngIf="cartData.data[0].numInCart !== 0">
                             <div *ngFor="let c of cartData.data; let i=index">
-                                <div class="d-flex justify-content-between mb-2">
+                                <div class="d-flex mb-2">
                                     <div class="qc-img">
                                         <img [src]="c.product?.image" alt="pro-img" width=100%>
                                     </div>
-                                    <div class="px-1">
+                                    <div class="px-2 mr-auto">
                                         <p class="font-15" (click)="selectProduct(c.product?.id)">{{c.product?.title}}
                                         </p>
                                         <div class="font-13">
@@ -72,7 +78,7 @@
 
                             <div class="cart--buttons d-flex justify-content-around align-items-baseline">
                                 <div class="viewcart" routerLink="/cart">View
-                                    Checkout ({{cartData.data[0].numInCart !== 0 ? cartData.data.length : 0}})</div>
+                                    Checkout ({{(cartData.data[0].numInCart !== 0 && authState === true) ? cartData.data.length : 0}})</div>
                                 <div class="checkout" routerLink="/checkout">Checkout</div>
                             </div>
                         </div>

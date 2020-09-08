@@ -29,6 +29,10 @@ export class TokenStorageService {
     return localStorage.getItem('x-refresh-token');
   }
 
+  getUser() {
+    return localStorage.getItem('user-id');
+  }
+
   refreshToken() {
     return this.http.post<any>(`${this.SERVER_URL}/refresh-token`, {
       'refreshToken': this.getRefreshToken()

@@ -1,7 +1,7 @@
 <section id="product" class="container">
   <div class="row py-5">
     <!-- Product Images -->
-    <div class="col-md-8 prod-img-container p-2" *ngIf="product">
+    <div class="col-md-8 prod-img-container p-2">
       <ng-container *ngIf="product?.image">
         <img [src]="product?.image" width=100% alt="image-1" id="zoomImg">
       </ng-container>

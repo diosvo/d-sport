@@ -14,7 +14,6 @@ export class UserService {
 
   authState$ = new BehaviorSubject<boolean>(this.auth);
   userData$ = new BehaviorSubject<UserModelServer | object>(null);
-  loginMessage$ = new BehaviorSubject<string>(null);
 
   constructor(private http: HttpClient,
     private tokenStorageService: TokenStorageService) { }
