@@ -46,7 +46,7 @@ const routes: Routes = [
   /* Pages */
   { path: 'product/:id', component: ProductComponent },
   { path: 'cart', component: CartComponent },
-  { path: 'checkout', component: CheckoutComponent},
+  { path: 'checkout', component: CheckoutComponent, canActivate: [ProfileGuard] },
   { path: 'thankyou', component: ThankyouComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [ProfileGuard] },
   { path: 'about.d', component: AboutusComponent},

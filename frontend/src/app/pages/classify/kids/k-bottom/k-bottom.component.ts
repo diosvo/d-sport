@@ -7,7 +7,6 @@ import { ProductModelServer, ServerResponse } from 'src/app/models/product.model
 @Component({
   selector: 'app-k-bottom',
   templateUrl: './k-bottom.component.html',
-  styleUrls: ['./k-bottom.component.scss']
 })
 export class KBottomComponent implements OnInit {
 
@@ -19,7 +18,7 @@ export class KBottomComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getProdFromClassifyIdCategoryId(3, 3).subscribe((prods: ServerResponse) => {
       this.products = prods.products
-      console.log(this.products);
+      console.table(this.products);
     })
   }
 

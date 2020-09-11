@@ -17,12 +17,21 @@
         }
 
         &:hover img.product-img {
-            cursor: pointer;
+            cursor : pointer;
             opacity: 0.9;
         }
 
         .product-name:hover {
             cursor: pointer;
         }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .product-list {
+        display              : grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-column-gap      : .75rem;
+        grid-row-gap         : .75rem;
     }
 }

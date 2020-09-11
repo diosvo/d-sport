@@ -1,12 +1,14 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { ProductService } from 'src/app/services/product.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { CartService } from 'src/app/services/cart.service';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+
 import { map } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 
-declare let $: any;
-
+import { CartService } from 'src/app/services/cart.service';
+import { ProductService } from 'src/app/services/product.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { UserService } from 'src/app/services/user.service';
+import { UserModelServer } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-product',
@@ -24,7 +26,10 @@ export class ProductComponent implements OnInit, AfterViewInit {
   constructor(private productService: ProductService,
     private cartService: CartService,
     private route: ActivatedRoute,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private token: TokenStorageService,
+    private userService: UserService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -50,14 +55,23 @@ export class ProductComponent implements OnInit, AfterViewInit {
     })
   }
 
-
   addToCart(id: number) {
-    if (this.product.quantity >= 1) {
-      this.cartService.addProductToCart(id, parseInt(this.quantityInput.nativeElement.value));
-      console.log('Add to cart successfully w/ ProductID:', id, 'x', this.quantityInput.nativeElement.value);
-    } else {
-      this.oos();
-    }
+      if (this.userService.authState$) {
+        this.userService.userData$
+          .subscribe((data: UserModelServer) => {
+            const getUserID = parseInt(this.token.getUser())
+  
+            if (data.id = getUserID) {
+              if (this.product.quantity >= 1) {
+                this.cartService.addProductToCart(id, parseInt(this.quantityInput.nativeElement.value));
+                console.log('Add to cart successfully w/ ProductID:', id, 'x', this.quantityInput.nativeElement.value);
+              } else {
+                this.oos();
+              }
+            }
+          })
+      } else return this.router.navigateByUrl('/login')
+
   }
 
   Increase() {

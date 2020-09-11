@@ -1,3 +1,9 @@
+.not-login span:hover {
+    cursor: pointer;
+    transition    : var(--hoverTransition);
+    letter-spacing: var(--mainSpacing);
+}
+
 .cart-item {
     border-bottom: 0.75px solid #e5e5e5;
 }
@@ -25,8 +31,8 @@
 }
 
 input {
-    width     : 3rem;
-    padding   : .2rem .3rem;
+    width  : 3rem;
+    padding: .2rem .3rem;
 
     border: 0.25px solid #e5e5e5;
 

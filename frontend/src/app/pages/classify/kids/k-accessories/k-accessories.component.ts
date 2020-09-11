@@ -7,7 +7,6 @@ import { ProductModelServer, ServerResponse } from 'src/app/models/product.model
 @Component({
   selector: 'app-k-accessories',
   templateUrl: './k-accessories.component.html',
-  styleUrls: ['./k-accessories.component.scss']
 })
 
 export class KAccessoriesComponent implements OnInit {
@@ -19,7 +18,7 @@ export class KAccessoriesComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getProdFromClassifyIdCategoryId(3, 3).subscribe((prods: ServerResponse) => {
       this.products = prods.products
-      console.log(this.products);
+      console.table(this.products);
     })
   }
 

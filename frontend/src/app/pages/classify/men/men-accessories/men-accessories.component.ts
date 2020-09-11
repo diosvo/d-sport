@@ -7,7 +7,6 @@ import { ProductModelServer, ServerResponse } from 'src/app/models/product.model
 @Component({
   selector: 'app-men-accessories',
   templateUrl: './men-accessories.component.html',
-  styleUrls: ['./men-accessories.component.scss']
 })
 export class MenAccessoriesComponent implements OnInit {
   products: ProductModelServer[] = [];
@@ -18,7 +17,7 @@ export class MenAccessoriesComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getProdFromClassifyIdCategoryId(1, 4).subscribe((prods: ServerResponse) => {
       this.products = prods.products
-      console.log(this.products);
+      console.table(this.products);
     })
   }
 

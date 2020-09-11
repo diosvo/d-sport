@@ -7,7 +7,6 @@ import { ProductService } from 'src/app/services/product.service';
 @Component({
   selector: 'app-men-shoes',
   templateUrl: './men-shoes.component.html',
-  styleUrls: ['./men-shoes.component.scss']
 })
 export class MenShoesComponent implements OnInit {
 
@@ -20,7 +19,7 @@ export class MenShoesComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getProdFromClassifyIdCategoryId(1, 1).subscribe((prods: ServerResponse) => {
       this.products = prods.products;
-      console.log(this.products)
+      console.table(this.products)
     })
   }
 

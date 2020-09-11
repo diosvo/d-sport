@@ -1,7 +1,8 @@
 @baseUrl = http://localhost:2609
 
 GET {{baseUrl}}
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTkyMjczMzIsImV4cCI6MTU5OTIzMDkzMiwiYXVkIjpbNzddfQ.T-Qawfgfxjo5H9H3OWICjpa3Cwhj_wJ_PqKEIUL7OGA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTk4MTk3MTcsImV4cCI6MTU5OTgyMzMxNywiYXVkIjpbODRdfQ.nEDIy-H-HuzCqNO9WAEqxw18NOJj0aQDI50ir2SWQn8
+
 ### Login route
 POST {{baseUrl}}/api/auth/login
 Content-Type: application/json
@@ -28,7 +29,7 @@ POST {{baseUrl}}/api/auth/refresh-token
 Content-Type: application/json
 
 {
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTkyODg3MTksImV4cCI6MTU5OTI5MjMxOSwiYXVkIjpbODRdfQ.ppGYuPzL2V72haUHqj2uZ7f62ZqZ2Av5tcZqvKP2vj0"
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTk4MjQzMzksImV4cCI6MTU5OTgyNzkzOSwiYXVkIjoiODQifQ.qi9YhdLxHrb9TY_0Or-bg4fPVgYXPa1L1o-86spIv4M"
 }
 
 ### Logout route

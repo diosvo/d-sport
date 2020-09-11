@@ -8,7 +8,6 @@ import { ProductModelServer, ServerResponse } from 'src/app/models/product.model
 @Component({
   selector: 'app-accessories',
   templateUrl: './accessories.component.html',
-  styleUrls: ['./accessories.component.scss']
 })
 
 export class AccessoriesComponent implements OnInit {
@@ -20,7 +19,7 @@ export class AccessoriesComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getAccessoriesProducts().subscribe((prods: ServerResponse) => {
       this.products = prods.products
-      console.log(this.products);
+      console.table(this.products);
     })
   }
 

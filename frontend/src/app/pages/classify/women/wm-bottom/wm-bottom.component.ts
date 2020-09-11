@@ -7,7 +7,6 @@ import { ProductModelServer, ServerResponse } from 'src/app/models/product.model
 @Component({
   selector: 'app-wm-bottom',
   templateUrl: './wm-bottom.component.html',
-  styleUrls: ['./wm-bottom.component.scss']
 })
 export class WmBottomComponent implements OnInit {
   products: ProductModelServer[] = [];
@@ -18,7 +17,7 @@ export class WmBottomComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getProdFromClassifyIdCategoryId(2, 3).subscribe((prods: ServerResponse) => {
       this.products = prods.products
-      console.log(this.products);
+      console.table(this.products);
     })
   }
 

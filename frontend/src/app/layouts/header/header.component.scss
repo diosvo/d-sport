@@ -16,6 +16,7 @@ header {
 #logo {
     width      : 12%;
     margin-left: 35px;
+
     img {
         &:hover {
             cursor: pointer;
@@ -30,7 +31,7 @@ header {
 /* NAV-BAR */
 #menu-bar {
     margin-top: -.35rem;
-    z-index: 2;
+    z-index   : 2;
 
     #menu {
         width : 35px;
@@ -60,7 +61,8 @@ header {
     transition: var(--hoverTransition);
     padding   : .75rem 3rem;
 
-    display: none;
+    display  : none;
+    font-size: 18px;
 
     p {
         color        : white;
@@ -89,13 +91,13 @@ header {
     width : 0;
     height: 0;
 
-    background   : linear-gradient(#ff4b1f, #ff9068);
-    transition   : var(--hoverTransition);
+    background: linear-gradient(#ff4b1f, #ff9068);
+    transition: var(--hoverTransition);
 }
 
 .change-bg {
-    width: 300px;
-    height: 100vh;
+    width    : 300px;
+    height   : 129.5vh;
     transform: translate(-10%, -30%);
 }
 
@@ -125,6 +127,11 @@ header {
 
     .qc-view {
         display: none;
+
+        .not-login:hover {
+            transition    : var(--hoverTransition);
+            letter-spacing: var(--mainSpacing);
+        }
 
         .cart-transparent {
             position: absolute;
@@ -166,6 +173,18 @@ header {
             overflow-y: scroll;
             overflow-x: hidden;
 
+            .qc-img {
+                width: 26%;
+
+                img {
+                    width: 100%;
+                }
+            }
+
+            .delete-item {
+                width: 4%;
+            }
+
             .cart--buttons div {
                 margin-top   : 0.5rem;
                 padding      : 0.65rem 1.5rem;
@@ -183,7 +202,7 @@ header {
             }
 
             .viewcart {
-                border: 0.5px solid #cccccc;
+                border: 1px solid #cccccc;
             }
 
             .checkout {
@@ -233,5 +252,20 @@ header {
 @media only screen and (max-width: 768px) {
     #logo {
         width: 25%;
+    }
+
+    .qc-img {
+        width: 85px;
+    }
+
+    .nav {
+        padding: 1.5rem 3rem;
+
+        font-size: 16px;
+    }
+
+    .change-bg {
+        width : 230px;
+        height: 132vh;
     }
 }

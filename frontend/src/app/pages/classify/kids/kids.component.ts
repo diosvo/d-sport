@@ -18,7 +18,7 @@ export class KidsComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getKidsProducts().subscribe((prods: ServerResponse) => {
       this.products = prods.products
-      console.log(this.products);
+      console.table(this.products);
     })
   }
 

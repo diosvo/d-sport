@@ -7,7 +7,6 @@ import { ProductModelServer, ServerResponse } from 'src/app/models/product.model
 @Component({
   selector: 'app-wm-shoes-u100',
   templateUrl: './wm-shoes-u100.component.html',
-  styleUrls: ['./wm-shoes-u100.component.scss']
 })
 export class WmShoesU100Component implements OnInit {
   products: ProductModelServer[];
@@ -20,7 +19,7 @@ export class WmShoesU100Component implements OnInit {
       this.products = prods.products.filter(prod => {
         return prod.price <= 100;
       })
-      console.log(this.products)
+      console.table(this.products)
     })  
   }
 

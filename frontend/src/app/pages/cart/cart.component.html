@@ -1,86 +1,92 @@
 <section id="cart-page" class="container py-5">
-    <!-- The cart is empty -->
-    <div class="text-center" style="margin: 0 auto;" *ngIf="cartData.data[0].numInCart === 0">
-        <h1 style="font-family: Bangers, sans-serif">cart</h1>
-        <div>
-            <img src="../../../assets/images/empty-cart.jpg" alt="empty cart" width=25%>
-        </div>
-        <p class="mb-0">There are no items in your cart.</p>
+    <!-- Not Login -->
+    <div class="text-center not-login" style="margin: 0 auto; padding: 0.8rem 0" *ngIf="authState === false">
+        <h1 style="font-family: Bangers, sans-serif">You must login first</h1>
+        <span routerLink="/login"> <u>Login here</u></span>
     </div>
 
-    <!-- The cart is has some items -->
-    <div class="row" *ngIf="cartData.data[0].numInCart !== 0">
-        <div class="col-md-8">
-            <p class="font-21 mb-0">Cart</p>
+    <!-- Logged in -->
+    <div *ngIf=" authState === true">
 
-            <div *ngFor="let c of cartData.data; let i = index">
-                <div class="cart-item py-2">
-                    <div class="row">
+        <!-- The cart is empty -->
+        <div class="text-center" style="margin: 0 auto;" *ngIf="cartData.data[0].numInCart === 0">
+            <h1 style="font-family: Bangers, sans-serif">cart</h1>
+            <div>
+                <img src="../../../assets/images/empty-cart.jpg" alt="empty cart" width=25%>
+            </div>
+            <p class="mb-0">There are no items in your cart.</p>
+        </div>
 
-                        <div class="col-md-3 py-3">
-                            <img [src]="c.product?.image" alt="pro-img" width=100%>
-                        </div>
+        <!-- The cart is has some items -->
+        <div class="row" *ngIf="cartData.data[0].numInCart !== 0">
+            <div class="col-md-8">
+                <p class="font-21 mb-0">Cart</p>
 
-                        <div class="col-md-7 py-3 product-details d-flex flex-column">
-                            <div class="mb-auto">
-                                <p class="text-capitalize font-17" style="cursor: pointer" (click)="selectProduct(c.product?.id)">{{c.product?.title}}</p>
-                                <div class="text-secondary font-14">
-                                    <p>{{c.product?.another_CatName}}</p>
-                                    <div class="d-flex align-items-baseline mt-2">
-                                        <p class="mr-2">Quantity: </p>
-                                        <div>
-                                            <span id="decrease" class="qty-down" (click)=ChangeQty(i,false)>-</span>
-                                            <label>
-                                              <input type="number"
-                                              class="text-right"
-                                                     [max]="c.product.quantity"
-                                                     readonly
-                                                     [value]="c.numInCart"/>
-                                            </label>
-                                            <span id="increase" class="qty-up"  (click)=ChangeQty(i,true)>+</span>
-                                          </div>
+                <div *ngFor="let c of cartData.data; let i = index">
+                    <div class="cart-item py-2">
+                        <div class="row">
+
+                            <div class="col-md-3 py-3">
+                                <img [src]="c.product?.image" alt="pro-img" width=100%>
+                            </div>
+
+                            <div class="col-md-7 py-3 product-details d-flex flex-column">
+                                <div class="mb-auto">
+                                    <p class="text-capitalize font-17" style="cursor: pointer"
+                                        (click)="selectProduct(c.product?.id)">{{c.product?.title}}</p>
+                                    <div class="text-secondary font-14">
+                                        <p>{{c.product?.another_CatName}}</p>
+                                        <div class="d-flex align-items-baseline mt-2">
+                                            <p class="mr-2">Quantity: </p>
+                                            <div>
+                                                <span id="decrease" class="qty-down" (click)=ChangeQty(i,false)>-</span>
+                                                <label>
+                                                    <input type="number" class="text-right" [max]="c.product.quantity"
+                                                        readonly [value]="c.numInCart" />
+                                                </label>
+                                                <span id="increase" class="qty-up" (click)=ChangeQty(i,true)>+</span>
+                                            </div>
+                                        </div>
                                     </div>
+                                </div>
+
+                                <div class="text-secondary font-14 cart-funcs d-flex">
+                                    <span class="mr-2">Move to Favorites</span>
+                                    <span (click)="cartService.deleteProductFromCart(i)">Remove</span>
                                 </div>
                             </div>
 
-                            <div class="text-secondary font-14 cart-funcs d-flex">
-                                <span class="mr-2">Move to Favorites</span>
-                                <span (click)="cartService.deleteProductFromCart(i)">Remove</span>
+                            <div class="col-md-2 py-3">
+                                <p>{{c.product?.price | currency:'USD' : 'symbol-narrow':'.2'}}</p>
                             </div>
-                        </div>
 
-                        <div class="col-md-2 py-3">
-                            <p class="text-center">{{c.product?.price | currency:'USD' : 'symbol-narrow':'.2'}}</p>
                         </div>
-
                     </div>
                 </div>
+
             </div>
 
-        </div>
-
-        <div class="col-md-4">
-            <p class="font-21 mb-0">Summary</p>
-            <div class="py-3">
-                <div class="d-flex justify-content-between">
-                    <p>Subtotal</p>
-                    <p>{{cartTotal| currency:'USD' : 'symbol-narrow':'.2'}}</p>
+            <div class="col-md-4">
+                <p class="font-21 mb-0">Summary</p>
+                <div class="py-3">
+                    <div class="d-flex justify-content-between">
+                        <p>Subtotal</p>
+                        <p>{{cartTotal| currency:'USD' : 'symbol-narrow':'.2'}}</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p>Estimated Shipping & Handling</p>
+                        <p>$0.00</p>
+                    </div>
+                    <div class="total d-flex justify-content-between pt-3">
+                        <p>Total</p>
+                        <p class="font-weight-bold">{{cartTotal | currency:'USD' : 'symbol-narrow':'.2'}}</p>
+                    </div>
                 </div>
-                <div class="d-flex justify-content-between">
-                    <p>Estimated Shipping & Handling</p>
-                    <p>$0.00</p>
-                </div>
-                <div class="total d-flex justify-content-between pt-3">
-                    <p>Total</p>
-                    <p class="font-weight-bold">{{cartTotal | currency:'USD' : 'symbol-narrow':'.2'}}</p>
-                </div>
-            </div>
-            <div class="cart-btn text-center py-2 mt-2" width=100%>
-                <div class="btn-shop__bgBlack py-3 font-17" routerLink="/checkout">Checkout</div>
-                <div class="btn-shop__bgLight py-3 mt-2">
-                    <img src="../../../assets/images/paypal-logo.png" alt="paypal" width=20%>
+                <div class="cart-btn text-center py-2 mt-2" width=100%>
+                    <div class="btn-shop__bgBlack py-3 font-17" routerLink="/checkout">Checkout</div>
                 </div>
             </div>
         </div>
+
     </div>
 </section>

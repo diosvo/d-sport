@@ -9,7 +9,7 @@ module.exports = {
             const secret = process.env.ACCESS_TOKEN
             const options = {
                 expiresIn: process.env.JWT_EXPIRES_IN,
-                audience: [userID]
+                audience: `${userID}`
             }
 
             jwt.sign(payload, secret, options, (err, token) => {
@@ -44,7 +44,7 @@ module.exports = {
             const secret = process.env.REFRESH_TOKEN
             const options = {
                 expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN,
-                audience: [userID]
+                audience: `${userID}`
             }
 
             jwt.sign(payload, secret, options, (err, token) => {
@@ -52,18 +52,43 @@ module.exports = {
                     console.log(err.message);
                     reject(createError.InternalServerError())
                 }
-                resolve(token)
+
+                /// Redis- TTL
+                client.SET(userID, token, 'EX', 365 * 24 * 60 * 60, (err, reply) => {
+                    if (err) {
+                        console.log(err.message);
+                        reject(createError.InternalServerError())
+                        return
+                    }
+                    resolve(token)
+                })
+
             })
         })
     },
 
     verifyRefreshToken: (refreshToken) => {
         return new Promise((resolve, reject) => {
-            jwt.verify(refreshToken, process.env.REFRESH_TOKEN, (err, payload) => {
-                if (err) return reject(createError.Unauthorized())
-                const userID = payload.aud
-                resolve(userID)
-            })
+            jwt.verify(
+                refreshToken,
+                process.env.REFRESH_TOKEN,
+                (err, payload) => {
+                    if (err) return reject(createError.Unauthorized())
+                    const userID = payload.aud
+
+                    client.GET(userID, (err, result) => {
+                        console.log('UserID :', userID);
+
+                        if (err) {
+                            console.log(err.message);
+                            reject(createError.InternalServerError())
+                            return
+                        } else {
+                            if (result === refreshToken) return resolve(userID)
+                            reject(createError.Unauthorized())
+                        }
+                    })
+                })
         })
     }
 }
