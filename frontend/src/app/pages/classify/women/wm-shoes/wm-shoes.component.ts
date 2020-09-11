@@ -17,7 +17,7 @@ export class WmShoesComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getProdFromClassifyIdCategoryId(2, 1).subscribe((prods: ServerResponse) => {
       this.products = prods.products
-      console.log(this.products)
+      console.table(this.products)
     })
   }
   

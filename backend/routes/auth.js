@@ -6,8 +6,8 @@ const createError = require('http-errors');
 const { database } = require('../config/helpers');
 const { signAccessToken, signRefreshToken, verifyRefreshToken } = require('../config/jwt');
 const { authSchema } = require('../config/validation_schema');
-const client = require('../config/redis')
-
+var session = require('express-session');
+var redisStore = require('connect-redis')(session);
 require('dotenv').config()
 
 router.post('/register', bodyParser.json(), async (req, res, next) => {

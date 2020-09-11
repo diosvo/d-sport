@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { UserModelServer } from '../models/user.model';
 import { environment } from 'src/environments/environment';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { TokenStorageService } from './token-storage.service';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class UserService {
 
   authState$ = new BehaviorSubject<boolean>(this.auth);
   userData$ = new BehaviorSubject<UserModelServer | object>(null);
+  loginMessage$ = new BehaviorSubject<string>(null);
 
   constructor(private http: HttpClient,
     private tokenStorageService: TokenStorageService) { }
@@ -34,19 +36,19 @@ export class UserService {
 
   loginUser(email: string, password: string) {
     this.http.post<UserModelServer>(`${this.SERVER_URL}/auth/login`, { email, password })
+      .pipe(catchError((err: HttpErrorResponse) => of(err.error.message)))
       .subscribe((data: UserModelServer) => {
         this.auth = data.auth;
+        this.tokenStorageService.setSession(data.id, data.accessToken, data.refreshToken)
+
         this.authState$.next(this.auth);
         this.userData$.next(data);
-
-        this.tokenStorageService.setSession(data.id, data.accessToken, data.refreshToken)
       })
   }
 
   logout() {
     this.auth = false;
     this.authState$.next(this.auth);
-
     return this.http.post<any>(`${this.SERVER_URL}/logout`, {
       'refreshToken': this.tokenStorageService.getRefreshToken()
     })

@@ -42,22 +42,17 @@ export class HeaderComponent implements OnInit {
               this.cartService.cartData$.subscribe(data => {
                 this.cartData = data
                 const number = this.cartData.data[0].numInCart
-                console.log(number)
+                console.log('auth:',this.userService.auth, 'number in cart:', number)
               })
-
-              console.log('auth State:', this.authState);
-
               this.userService.authState$.subscribe(authState => { this.authState = authState })
             } else return
           })
       } else {
-        console.log(this.userService.auth);
-
         this.userService.authState$.subscribe(authState => { this.authState = authState })
         this.cartService.cartData$.subscribe(data => {
           this.cartData = data
           const number = this.cartData.data[0].numInCart
-          console.log(number)
+          console.log('auth:',this.userService.auth, 'number in cart:', number)
         })
 
         localStorage.removeItem('cart')

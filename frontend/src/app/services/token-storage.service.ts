@@ -11,14 +11,12 @@ export class TokenStorageService {
 
   constructor(private http: HttpClient) { }
 
-  signout() {
-    window.sessionStorage.clear()
-  }
-
-  public setSession(userId: number, accessToken: string, refreshToken: string) {
+  setSession(userId: number, accessToken: string, refreshToken: string) {
     localStorage.setItem('user-id', JSON.stringify(userId));
     localStorage.setItem('x-access-token', accessToken);
     localStorage.setItem('x-refresh-token', refreshToken);
+
+    console.log('User ID: ', JSON.stringify(userId))
   }
 
   getAccessToken() {

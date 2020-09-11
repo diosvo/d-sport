@@ -19,7 +19,7 @@ export class WmShoesU100Component implements OnInit {
       this.products = prods.products.filter(prod => {
         return prod.price <= 100;
       })
-      console.log(this.products)
+      console.table(this.products)
     })  
   }
 

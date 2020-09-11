@@ -32,7 +32,6 @@ export class ProfileComponent implements OnInit {
       .subscribe((data: UserModelServer) => {
         this.myUser = data;
       });
-    console.log(this.myUser)
   }
 
   logout() {

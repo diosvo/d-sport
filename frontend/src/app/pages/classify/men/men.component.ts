@@ -20,7 +20,7 @@ export class MenComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getMenProducts().subscribe((prods: ServerResponse) => {
       this.products = prods.products
-      console.log(this.products);
+      console.table(this.products);
     })
   }
 

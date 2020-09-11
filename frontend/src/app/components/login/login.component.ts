@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { ValidationService } from 'src/app/validators/validation.service';
 import { UserService } from 'src/app/services/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,6 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  loginMessage: string;
 
   loginForm = this.fb.group(
     {
@@ -27,9 +27,10 @@ export class LoginComponent implements OnInit {
     private validation: ValidationService,
     private userService: UserService,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private toastr: ToastrService) { }
 
-  ngOnInit(): void {  
+  ngOnInit(): void {
     this.userService.authState$.subscribe(authState => {
       if (authState) {
         this.router.navigateByUrl(this.route.snapshot.queryParams['returnUrl'] || '/profile');
@@ -44,7 +45,7 @@ export class LoginComponent implements OnInit {
       return
     }
 
-    this.userService.loginUser(this.email.value, this.password.value);
+    this.userService.loginUser(this.email.value, this.password.value)
     this.loginForm.reset();
   }
 

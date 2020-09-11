@@ -5,9 +5,21 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const app = express();
 const createError = require('http-errors');
-const { verifyAccessToken } = require('./config/jwt')
 const compression = require('compression')
-// require('./config/redis')
+const { verifyAccessToken } = require('./config/jwt')
+
+/* Redis */
+const { client } = require('./config/redis')
+
+const session = require('express-session')
+const RedisStore = require('connect-redis')(session)
+
+app.use(session({
+    store: new RedisStore({ client: client }),
+    secret: 'rat la secret luon ^^',
+    resave: false,
+    saveUninitialized: false
+}))
 
 /* Middleware */
 const cors = require('cors');
