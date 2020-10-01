@@ -13,8 +13,9 @@
                 </select>
             </div>
             <form class="search">
-                <input class="search-input" type="text" placeholder="Search">
-                <button class="search-btn" href="#">
+                <input [(ngModel)]="searchValue" class="search-input" type="search" placeholder="Search"
+                    (input)="searchProduct()" [ngModelOptions]="{standalone: true}">
+                <button class="search-btn">
                     <i class="fas fa-search"></i>
                 </button>
             </form>
@@ -27,10 +28,10 @@
             <!-- Single Product -->
             <article class="products">
                 <div class="product-img-container">
-                    <img class="product-img" [src]="p?.image" alt={{p?.CategoryName}} (click)="selectProduct(p.id)">
+                    <img class="product-img" loading=lazy [src]="p?.image" alt={{p?.CategoryName}} (click)="selectProduct(p.id)">
                     <div class="d-flex justify-content-between align-items-baseline">
                         <div class=" mt-2">
-                            <p class="product-name mb-0" (click)="selectProduct(p.id)">{{p?.ProductName}}</p>
+                            <p class="product-name mb-0" (click)="selectProduct(p.id)">{{p?.title}}</p>
                             <p class="text-secondary">{{p?.another_CatName}}</p>
                         </div>
                         <p>{{p?.price | currency: 'USD':'symbol-narrow':'.0'}}</p>

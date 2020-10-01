@@ -56,7 +56,7 @@ export class ProductComponent implements OnInit, AfterViewInit {
   }
 
   addToCart(id: number) {
-      if (this.userService.authState$) {
+      if (this.userService.auth == true) {
         this.userService.userData$
           .subscribe((data: UserModelServer) => {
             const getUserID = parseInt(this.token.getUser())
@@ -70,7 +70,9 @@ export class ProductComponent implements OnInit, AfterViewInit {
               }
             }
           })
-      } else return this.router.navigateByUrl('/login')
+      } else {
+        return this.router.navigateByUrl('/login')
+      } 
 
   }
 

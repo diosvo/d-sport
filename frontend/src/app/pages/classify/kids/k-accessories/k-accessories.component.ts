@@ -10,7 +10,9 @@ import { ProductModelServer, ServerResponse } from 'src/app/models/product.model
 })
 
 export class KAccessoriesComponent implements OnInit {
+  
   products: ProductModelServer[] = [];
+  searchValue: string
 
   constructor(private productService: ProductService,
     private router: Router) { }
@@ -26,4 +28,13 @@ export class KAccessoriesComponent implements OnInit {
     return this.router.navigate(['/product', id]).then();
   }
 
+  searchProduct() {
+    if(this.searchValue != "") {
+      this.products = this.products.filter(res => {
+        return res.title.toLowerCase().match(this.searchValue.toLowerCase())
+      })
+    } else if(this.searchValue == "") {
+      this.ngOnInit()
+    }
+  }
 }

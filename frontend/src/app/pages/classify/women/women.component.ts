@@ -26,6 +26,7 @@ export class WomenComponent implements OnInit {
     pullDrag: true,
     dots: false,
     navSpeed: 700,
+    navText: ['', ''],
     responsive: {
       0: {
         items: 1

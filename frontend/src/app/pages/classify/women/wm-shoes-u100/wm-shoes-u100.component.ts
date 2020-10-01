@@ -9,7 +9,9 @@ import { ProductModelServer, ServerResponse } from 'src/app/models/product.model
   templateUrl: './wm-shoes-u100.component.html',
 })
 export class WmShoesU100Component implements OnInit {
+
   products: ProductModelServer[];
+  searchValue: string
 
   constructor(private productService: ProductService,
     private router: Router) { }
@@ -20,10 +22,20 @@ export class WmShoesU100Component implements OnInit {
         return prod.price <= 100;
       })
       console.table(this.products)
-    })  
+    })
   }
 
-    selectProduct(id: Number) {
-      return this.router.navigate(['/product', id]).then();
+  selectProduct(id: Number) {
+    return this.router.navigate(['/product', id]).then();
+  }
+
+  searchProduct() {
+    if (this.searchValue != "") {
+      this.products = this.products.filter(res => {
+        return res.title.toLowerCase().match(this.searchValue.toLowerCase())
+      })
+    } else if (this.searchValue == "") {
+      this.ngOnInit()
     }
+  }
 }

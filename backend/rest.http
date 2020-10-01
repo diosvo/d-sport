@@ -1,14 +1,15 @@
 @baseUrl = http://localhost:2609
 
+### Home
 GET {{baseUrl}}
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTk4MTk3MTcsImV4cCI6MTU5OTgyMzMxNywiYXVkIjpbODRdfQ.nEDIy-H-HuzCqNO9WAEqxw18NOJj0aQDI50ir2SWQn8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDE0NDQ2NjYsImV4cCI6MTYwMTQ0ODI2NiwiYXVkIjoiODQifQ.xqPn-9uynxJBwi96_nTU-p63qUaV8U-IMc2JHJ6VbpI
 
 ### Login route
 POST {{baseUrl}}/api/auth/login
 Content-Type: application/json
 
 {
-    "email": "1751010102nhung@ou.edu.vn",
+    "email": "vtmn1212@gmail.com",
     "password": "123456"
 }
 
@@ -17,7 +18,7 @@ POST {{baseUrl}}/api/auth/register
 Content-Type: application/json
 
 {
-    "email": "diosvo@gmail.com",
+    "email": "vtmn1212@gmail.com",
     "password": "123456",
     "firstname": "Nhung",
     "lastname": "Vo",

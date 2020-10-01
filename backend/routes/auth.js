@@ -25,12 +25,6 @@ router.post('/register', bodyParser.json(), async (req, res, next) => {
             result.password = res;
         });
 
-        // Access token
-        const accessToken = await signAccessToken(result.id)
-
-        // Refresh token
-        const refreshToken = await signRefreshToken(result.id)
-
         // Insert into database table 'users'
         await database.table('users')
             .insert({
@@ -39,10 +33,10 @@ router.post('/register', bodyParser.json(), async (req, res, next) => {
                 firstname: result.firstname || null,
                 lastname: result.lastname || null,
                 dob: result.dob || null,
+                role: null
             }).catch(err => console.log(err));
 
-        res.send("Register Successfully")
-
+            res.send("Register Successfully")
     } catch (error) {
         if (error.isJoi === true) error.status = 422
         next(error)
