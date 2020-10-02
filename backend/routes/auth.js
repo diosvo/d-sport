@@ -6,8 +6,6 @@ const createError = require('http-errors');
 const { database } = require('../config/helpers');
 const { signAccessToken, signRefreshToken, verifyRefreshToken } = require('../config/jwt');
 const { authSchema } = require('../config/validation_schema');
-var session = require('express-session');
-var redisStore = require('connect-redis')(session);
 require('dotenv').config()
 
 router.post('/register', bodyParser.json(), async (req, res, next) => {
@@ -54,7 +52,7 @@ router.post('/login', bodyParser.json(), async (req, res, next) => {
         // Compare password
         try {
             const isMatch = await bcrypt.compare(result.password, user.password);
-            if (!isMatch) throw createError.Unauthorized('Email/ password is not valid')
+            if (!isMatch) throw createError.Unauthorized('Your email or password is incorrect')
         } catch (error) {
             throw error
         }
@@ -74,7 +72,7 @@ router.post('/login', bodyParser.json(), async (req, res, next) => {
             email: result.email,
         })
     } catch (error) {
-        if (error.isJoi === true) return next(createError.BadRequest('Invalid email/ password'))
+        if (error.isJoi === true) return next(createError.BadRequest('Incorrect email or password type.'))
         next(error)
     }
 })

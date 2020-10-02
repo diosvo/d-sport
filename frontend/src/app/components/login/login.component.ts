@@ -4,7 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { ValidationService } from 'src/app/validators/validation.service';
 import { UserService } from 'src/app/services/user.service';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +11,8 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
+  message: string
 
   loginForm = this.fb.group(
     {
@@ -27,8 +28,7 @@ export class LoginComponent implements OnInit {
     private validation: ValidationService,
     private userService: UserService,
     private router: Router,
-    private route: ActivatedRoute,
-    private toastr: ToastrService) { }
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.userService.authState$.subscribe(authState => {
@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     if (this.loginForm.invalid) {
       return
-    }
+    } 
 
     this.userService.loginUser(this.email.value, this.password.value)
     this.loginForm.reset();

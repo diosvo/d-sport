@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { Router } from '@angular/router';
 import { ServerResponse, ProductModelServer } from 'src/app/models/product.model';
 @Component({
   selector: 'app-home',
@@ -12,19 +11,13 @@ import { ServerResponse, ProductModelServer } from 'src/app/models/product.model
 export class HomeComponent implements OnInit {
   products: ProductModelServer[] = [];
 
-  constructor(private productService: ProductService,
-    private router: Router) { }
+  constructor(private productService: ProductService) { }
 
   ngOnInit() {
     this.productService.getHomeProducts().subscribe((prods: ServerResponse) => {
       this.products = prods.products
       console.table(this.products);
     })
-  }
-
-  /* Select Product by ID */
-  selectProduct(id: Number) {
-    return this.router.navigate(['/product', id]).then();
   }
 
   proCustomOptions: OwlOptions = {

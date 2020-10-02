@@ -24,11 +24,6 @@ export class MenComponent implements OnInit {
     })
   }
 
-  /* Select Product by ID */
-  selectProduct(id: Number) {
-    return this.router.navigate(['/product', id]).then();
-  }
-
   proCustomOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,

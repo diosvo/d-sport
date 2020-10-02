@@ -28,10 +28,10 @@
             <!-- Single Product -->
             <article class="products">
                 <div class="product-img-container">
-                    <img class="product-img" loading=lazy [src]="p?.image" alt={{p?.CategoryName}} (click)="selectProduct(p.id)">
+                    <img class="product-img" loading=lazy [src]="p?.image" alt={{p?.CategoryName}} [routerLink]="['/product', p.id]">
                     <div class="d-flex justify-content-between align-items-baseline">
                         <div class=" mt-2">
-                            <p class="product-name mb-0" (click)="selectProduct(p.id)">{{p?.title}}</p>
+                            <p class="product-name mb-0" [routerLink]="['/product', p.id]">{{p?.title}}</p>
                             <p class="text-secondary">{{p?.another_CatName}}</p>
                         </div>
                         <p>{{p?.price | currency: 'USD':'symbol-narrow':'.0'}}</p>

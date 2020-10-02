@@ -49,11 +49,11 @@
                     <ng-template carouselSlide class="px-1">
                         <div class="px-2">
                             <div class="img-container">
-                                <img loading=lazy [src]="p.image" style="cursor: pointer;" (click)="selectProduct(p.id)">
+                                <img loading=lazy [src]="p.image" style="cursor: pointer;"  [routerLink]="['/product', p.id]">
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="text-capitalize mb-0 mt-1" style="cursor: pointer;"
-                                    (click)="selectProduct(p.id)">
+                                     [routerLink]="['/product', p.id]">
                                     {{p.ProductName}}</p>
                                 <p class="mb-0 mt-1">{{p.price | currency: 'USD':'symbol-narrow':'.0'}}</p>
                             </div>

@@ -26,7 +26,7 @@
 
             <!-- LOGO -->
             <div id="logo">
-                <img src="./assets/images/logo.png" alt="logo" routerLink="/" width=100%>
+                <img src="./assets/images/logo.png" loading=lazy alt="logo" routerLink="/" width=100%>
             </div>
 
             <!-- CART -->
@@ -56,10 +56,10 @@
                             <div *ngFor="let c of cartData.data; let i=index">
                                 <div class="d-flex mb-2">
                                     <div class="qc-img">
-                                        <img [src]="c.product?.image" alt="pro-img" width=100%>
+                                        <img [src]="c.product?.image" loading=lazy alt="pro-img" [routerLink]="['/product', c.product?.id]" width=100%>
                                     </div>
                                     <div class="px-2 mr-auto">
-                                        <p class="font-15" (click)="selectProduct(c.product?.id)">{{c.product?.title}}
+                                        <p class="font-15" [routerLink]="['/product', c.product?.id]">{{c.product?.title}}
                                         </p>
                                         <div class="font-13">
                                             <p class="product-category text-secondary">
@@ -69,9 +69,8 @@
                                         </div>
                                     </div>
                                     <div class="delete-item">
-                                        <span (click)="cartService.deleteProductFromCart(i)"><img
-                                                src="../../../assets/images/remove-icon.png" alt="remove"
-                                                width=100%></span>
+                                        <span (click)="cartService.deleteProductFromCart(i)">
+                                            <img src="../../../assets/images/remove-icon.png" loading=lazy alt="remove" width=100%></span>
                                     </div>
                                 </div>
                             </div>

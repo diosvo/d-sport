@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { ProductService } from 'src/app/services/product.service';
 import { ProductModelServer, ServerResponse } from 'src/app/models/product.model';
@@ -13,18 +12,13 @@ export class WmBottomComponent implements OnInit {
   products: ProductModelServer[] = [];
   searchValue: string
 
-  constructor(private productService: ProductService,
-    private router: Router) { }
+  constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
     this.productService.getProdFromClassifyIdCategoryId(2, 3).subscribe((prods: ServerResponse) => {
       this.products = prods.products
       console.table(this.products);
     })
-  }
-
-  selectProduct(id: Number) {
-    return this.router.navigate(['/product', id]).then();
   }
 
   searchProduct() {

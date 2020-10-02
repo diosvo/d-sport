@@ -4,7 +4,7 @@
     <!-- INTRODUCTION -->
     <div id="introduction">
         <div>
-            <img src="../../../assets/images/banner.jpg" alt="home banner" width=100%>
+            <img src="../../../assets/images/banner.jpg" loading=lazy alt="home banner" width=100%>
         </div>
         <div class="d-flex flex-column justify-content-center align-items-center py-4">
             <p class="title mb-2">YOU CAN’T STOP SPORT.</p>
@@ -20,7 +20,7 @@
     <div id="next-season">
         <div class="position-relative">
             <div class="image-container">
-                <img src="../../../assets/images/home-1.jpg" width=100%>
+                <img src="../../../assets/images/home-1.jpg" loading=lazy width=100%>
             </div>
             <div class="content position-absolute">
                 <div class="content--title">
@@ -37,7 +37,7 @@
     <div id="next-season-sm">
         <p class="text-capitalize font-20 mt-5 mb-3">everyday essentials</p>
         <div>
-            <img src="../../../assets/images/home-14.png" width=100%>
+            <img src="../../../assets/images/home-14.png" loading=lazy width=100%>
         </div>
         <div class="font-30" style="font-family: Bangers, sans-serif">
             <p class="mb-0">NEW FOR NEXT <br> SEASON</p>
@@ -53,7 +53,7 @@
         <div class="banner-container my-2">
             <div class="position-relative">
                 <div class="first-banner" width=50%>
-                    <img src="../../../assets/images/home-3.jpg" width=100%>
+                    <img src="../../../assets/images/home-3.jpg" loading=lazy width=100%>
                 </div>
                 <div class="content_bottom position-absolute">
                     <p class="font-19 text-capitalize">all day, every day layers</p>
@@ -62,7 +62,7 @@
             </div>
             <div class="position-relative">
                 <div width=50%>
-                    <img src="../../../assets/images/home-7.jpg" width=100%>
+                    <img src="../../../assets/images/home-7.jpg" loading=lazy width=100%>
                 </div>
                 <div class="content_bottom position-absolute">
                     <p class="font-19 text-capitalize">the latest running essentials</p>
@@ -79,10 +79,10 @@
             <ng-container *ngFor="let p of products">
                 <ng-template carouselSlide class="px-1">
                     <div class="img-container">
-                        <img [src]="p.image" style="cursor: pointer;" (click)="selectProduct(p.id)">
+                        <img [src]="p.image" style="cursor: pointer;" loading=lazy [routerLink]="['/product', p.id]">
                     </div>
                     <div class="d-flex justify-content-between align-items-center">
-                        <p class="text-capitalize mb-0 mt-1" style="cursor: pointer;" (click)="selectProduct(p.id)">
+                        <p class="text-capitalize mb-0 mt-1" style="cursor: pointer;" [routerLink]="['/product', p.id]">
                             {{p.name}}</p>
                         <p class="mb-0 mt-1">{{p.price | currency: 'USD':'symbol-narrow':'.0'}}</p>
                     </div>
@@ -97,7 +97,7 @@
         <p class="text-capitalize font-20 mt-3">trending now</p>
         <div class="trending position-relative">
             <div class="image-container">
-                <img src="../../../assets/images/home-2.jpg" width=100%>
+                <img src="../../../assets/images/home-2.jpg" loading=lazy width=100%>
             </div>
             <div class="content position-absolute">
                 <div class="content--title text-uppercase" style="line-height: 1;">
@@ -116,7 +116,7 @@
         <p class="text-capitalize font-20 mt-3">trending now</p>
         <div class="trending position-relative">
             <div class="image-container">
-                <img src="../../../assets/images/home-5.jpg" width=100%>
+                <img src="../../../assets/images/home-5.jpg" loading=lazy width=100%>
             </div>
             <div class="content position-absolute">
                 <div class="content--title text-uppercase" style="line-height: 1;">
@@ -137,7 +137,7 @@
         <div class="ff-container my-2">
             <div class="position-relative">
                 <div class="first-ff" width=50%>
-                    <img src="../../../assets/images/home-8.jpg" width=100%>
+                    <img src="../../../assets/images/home-8.jpg" loading=lazy width=100%>
                 </div>
                 <div class="content_bottom position-absolute">
                     <p class="font-19 text-capitalize">vapor max 2020</p>
@@ -146,7 +146,7 @@
             </div>
             <div class="position-relative">
                 <div width=50%>
-                    <img src="../../../assets/images/home-9.jpg" width=100%>
+                    <img src="../../../assets/images/home-9.jpg" loading=lazy width=100%>
                 </div>
                 <div class="content_bottom position-absolute" style="color: black">
                     <p class="font-19 text-capitalize">what's new. what's coming.</p>
@@ -162,19 +162,19 @@
         <owl-carousel-o [options]="bsCustomOptions">
             <ng-template carouselSlide>
                 <div>
-                    <img src="../../../assets/images/home-10.jpg" width=100% style="height:486px">
+                    <img src="../../../assets/images/home-10.jpg" loading=lazy width=100% style="height:486px">
                     <p class="mt-2 font-18" style="cursor: pointer;" routerLink="/men">Men's</p>
                 </div>
             </ng-template>
             <ng-template carouselSlide>
                 <div>
-                    <img src="../../../assets/images/home-11.jpg" width=100% style="height:486px">
+                    <img src="../../../assets/images/home-11.jpg" loading=lazy width=100% style="height:486px">
                     <p class="mt-2 font-18" style="cursor: pointer;" routerLink="/kids">Women's</p>
                 </div>
             </ng-template>
             <ng-template carouselSlide>
                 <div>
-                    <img src="../../../assets/images/home-12.jpg" width=100% style="height:486px">
+                    <img src="../../../assets/images/home-12.jpg" loading=lazy width=100% style="height:486px">
                     <p class="mt-2 font-18" style="cursor: pointer;" routerLink="/accessories">Accessories & Equipment</p>
                 </div>
             </ng-template>

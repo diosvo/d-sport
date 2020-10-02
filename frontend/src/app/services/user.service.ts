@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+
 import { UserModelServer } from '../models/user.model';
 import { environment } from 'src/environments/environment';
-import { BehaviorSubject, of } from 'rxjs';
 import { TokenStorageService } from './token-storage.service';
+
+import { BehaviorSubject, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -29,8 +31,6 @@ export class UserService {
       firstname: firstname || null,
       lastname: lastname || null,
       dob: dob || null
-    }).subscribe((data: UserModelServer) => {
-      this.tokenStorageService.setSession(data.id, data.accessToken, data.refreshToken)
     })
   }
 
