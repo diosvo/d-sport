@@ -183,20 +183,6 @@ router.get('/classify/:classifyName', (req, res) => {
 
 /* === 4. BY CLASSIFY + CATEGORY === */
 router.get('/classify/:classifyID/category/:cateID', (req, res) => {
-    let page = (req.query.page !== undefined && req.query.page !== 0) ? req.query.page : 1; // set the current page number
-    const limit = (req.query.limit !== undefined && req.query.limit !== 0) ? req.query.limit : 100; // set the limit of items per page
-
-    let startValue;
-    let endValue;
-
-    if (page > 0) {
-        startValue = ((page - 1) * limit)  // 0,12,24,36,..
-        endValue = page * limit;
-    } else {
-        startValue = 0;
-        endValue = 12;
-    }
-
     // Fetch
     const classify_id = req.params.classifyID;
     const cat_id = req.params.cateID;
@@ -224,7 +210,6 @@ router.get('/classify/:classifyID/category/:cateID', (req, res) => {
             'p.id'
         ])
         .filter({ 'cl.id': classify_id, 'c.id': cat_id })
-        .slice(startValue, endValue)
         .getAll()
         .then(prods => {
             if (prods.length > 0) {

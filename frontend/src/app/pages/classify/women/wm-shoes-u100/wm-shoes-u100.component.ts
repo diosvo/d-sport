@@ -11,6 +11,7 @@ export class WmShoesU100Component implements OnInit {
 
   products: ProductModelServer[];
   searchValue: string
+  p: number = 1
 
   constructor(private productService: ProductService) { }
 
@@ -19,7 +20,6 @@ export class WmShoesU100Component implements OnInit {
       this.products = prods.products.filter(prod => {
         return prod.price <= 100;
       })
-      console.table(this.products)
     })
   }
 

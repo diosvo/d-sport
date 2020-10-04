@@ -11,6 +11,7 @@ export class MenAccessoriesComponent implements OnInit {
 
   products: ProductModelServer[] = [];
   searchValue: string
+  p: number = 1 // current page
 
   constructor(private productService: ProductService) { }
 

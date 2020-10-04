@@ -11,13 +11,13 @@ export class WmShoesComponent implements OnInit {
 
   products: ProductModelServer[];
   searchValue: string
+  p: number = 1
 
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
     this.productService.getProdFromClassifyIdCategoryId(2, 1).subscribe((prods: ServerResponse) => {
       this.products = prods.products
-      console.table(this.products)
     })
   }
 

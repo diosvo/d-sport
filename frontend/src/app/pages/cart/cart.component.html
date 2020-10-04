@@ -12,7 +12,7 @@
         <div class="text-center" style="margin: 0 auto;" *ngIf="cartData.data[0].numInCart === 0">
             <h1 style="font-family: Bangers, sans-serif">cart</h1>
             <div>
-                <img src="../../../assets/images/empty-cart.jpg" loading=lazy alt="empty cart" width=25%>
+                <img src="../../../assets/images/empty-cart.jpg" loading="lazy" alt="empty cart" width=25%>
             </div>
             <p class="mb-0">There are no items in your cart.</p>
         </div>
@@ -27,7 +27,7 @@
                         <div class="row">
 
                             <div class="col-md-3 py-3">
-                                <img [src]="c.product?.image" loading=lazy alt="pro-img" width=100% [routerLink]="['/product', c.product?.id]">
+                                <img [src]="c.product?.image" loading="lazy" alt="pro-img" width=100% [routerLink]="['/product', c.product?.id]">
                             </div>
 
                             <div class="col-md-7 py-3 product-details d-flex flex-column">

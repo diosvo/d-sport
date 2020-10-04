@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit {
               this.cartService.cartData$.subscribe(data => {
                 this.cartData = data
                 const number = this.cartData.data[0].numInCart
-                console.log('auth:',this.userService.auth, 'number in cart:', number)
+                console.log('auth:', this.userService.auth, 'number in cart:', number)
               })
               this.userService.authState$.subscribe(authState => { this.authState = authState })
             } else return
@@ -52,19 +52,28 @@ export class HeaderComponent implements OnInit {
         this.cartService.cartData$.subscribe(data => {
           this.cartData = data
           const number = this.cartData.data[0].numInCart
-          console.log('auth:',this.userService.auth, 'number in cart:', number)
+          console.log('auth:', this.userService.auth, 'number in cart:', number)
         })
 
         localStorage.removeItem('cart')
       }
     }
-    
+
   }
 
   onClickMenu() {
-    document.getElementById("menu").classList.toggle("change");
-    document.getElementById("nav").classList.toggle("change");
-    document.getElementById("menu-bg").classList.toggle("change-bg");
+    const nav = document.querySelector('.nav')
+    document.querySelector('#btnNav').addEventListener("click", () => {
+      nav.classList.add('nav--open')
+    })
+
+    document.querySelector('.nav__overlay').addEventListener("click", () => {
+      nav.classList.remove('nav--open')
+    })
+
+    document.querySelector('#nav--close').addEventListener("click", () => {
+      nav.classList.remove('nav--open')
+    })
   }
 
   selectProduct(id: Number) {

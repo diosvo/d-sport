@@ -14,6 +14,7 @@ export class MenShoesComponent implements OnInit {
   products: ProductModelServer[];
   searchValue: string
   selected: Number
+  p: number = 1 // current page
 
   options: Options[] = [
     { id: 1, option: 'Price: Low-High' },

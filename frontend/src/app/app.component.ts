@@ -9,6 +9,8 @@ export class AppComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    window.localStorage.clear();
+    window.onbeforeunload = () => {
+      window.scrollTo(0, 0);
+    }
   }
 }

@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { NgxSpinnerModule } from "ngx-spinner";
@@ -110,13 +110,13 @@ const config: SocketIoConfig = { url: 'http://localhost:2609', options: {} };
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule, 
     AppRoutingModule,
     HttpClientModule,
 
     CarouselModule,
     NgxSpinnerModule,
     NgxPaginationModule,
-    BrowserAnimationsModule,
     ToastrModule.forRoot(),
 
     SocketIoModule.forRoot(config),

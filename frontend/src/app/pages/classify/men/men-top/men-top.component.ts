@@ -11,13 +11,13 @@ export class MenTopComponent implements OnInit {
   
   products: ProductModelServer[] = [];
   searchValue: string
+  p: number = 1 // current page
 
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
     this.productService.getProdFromClassifyIdCategoryId(1, 2).subscribe((prods: ServerResponse) => {
       this.products = prods.products
-      console.table(this.products);
     })
   }
 

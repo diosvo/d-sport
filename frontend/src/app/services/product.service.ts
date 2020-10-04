@@ -42,15 +42,6 @@ export class ProductService {
     })
   }
 
-  /* Get products for New Releases page */
-  getNewReleaseProducts(numberOfResults = 12): Observable<ServerResponse> {
-    return this.http.get<ServerResponse>(this.SERVER_URL + '/products/classify/new-releases', {
-      params: {
-        limit: numberOfResults.toString()
-      }
-    })
-  }
-
   /* Get products for Accessories page */
   getAccessoriesProducts(numberOfResults = 12): Observable<ServerResponse> {
     return this.http.get<ServerResponse>(this.SERVER_URL + '/products/category/accessories', {
@@ -71,12 +62,8 @@ export class ProductService {
   }
 
   /* Get products from ClassifyID + CategoryID */
-  getProdFromClassifyIdCategoryId(ClassId: Number, CateId: Number, numberOfResults = 24): Observable<ServerResponse> {
-    return this.http.get<ServerResponse>(this.SERVER_URL + '/products/classify/' + ClassId + '/category/' + CateId, {
-      params: {
-        limit: numberOfResults.toString()
-      }
-    })
+  getProdFromClassifyIdCategoryId(ClassId: Number, CateId: Number): Observable<ServerResponse> {
+    return this.http.get<ServerResponse>(this.SERVER_URL + '/products/classify/' + ClassId + '/category/' + CateId)
   }
 
 }

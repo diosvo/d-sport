@@ -12,13 +12,13 @@ export class KShoesComponent implements OnInit {
   
   products: ProductModelServer[];
   searchValue: string
+  p: number = 1
 
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
     this.productService.getProdFromClassifyIdCategoryId(3, 1).subscribe((prods: ServerResponse) => {
       this.products = prods.products
-      console.table(this.products)
     })
   }
   

@@ -11,6 +11,7 @@ export class WmTopComponent implements OnInit {
 
   products: ProductModelServer[] = [];
   searchValue: string
+  p: number = 1
 
   constructor(private productService: ProductService) { }
 
