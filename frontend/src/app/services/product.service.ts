@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
 import { ServerResponse, ProductModelServer } from '../models/product.model';
-
+import { Observable } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +12,7 @@ export class ProductService {
 
   private SERVER_URL = environment.SERVER_URL
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,     private route: ActivatedRoute, private router: Router) {
   }
 
   /* Get products for home page */
@@ -42,15 +42,6 @@ export class ProductService {
     })
   }
 
-  /* Get products for New Releases page */
-  getNewReleaseProducts(numberOfResults = 12): Observable<ServerResponse> {
-    return this.http.get<ServerResponse>(this.SERVER_URL + '/products/classify/new-releases', {
-      params: {
-        limit: numberOfResults.toString()
-      }
-    })
-  }
-
   /* Get products for Accessories page */
   getAccessoriesProducts(numberOfResults = 12): Observable<ServerResponse> {
     return this.http.get<ServerResponse>(this.SERVER_URL + '/products/category/accessories', {
@@ -71,12 +62,8 @@ export class ProductService {
   }
 
   /* Get products from ClassifyID + CategoryID */
-  getProdFromClassifyIdCategoryId(ClassId: Number, CateId: Number, numberOfResults = 12): Observable<ServerResponse> {
-    return this.http.get<ServerResponse>(this.SERVER_URL + '/products/classify/' + ClassId + '/category/' + CateId, {
-      params: {
-        limit: numberOfResults.toString()
-      }
-    })
+  getProdFromClassifyIdCategoryId(ClassId: Number, CateId: Number): Observable<ServerResponse> {
+    return this.http.get<ServerResponse>(this.SERVER_URL + '/products/classify/' + ClassId + '/category/' + CateId)
   }
 
 }

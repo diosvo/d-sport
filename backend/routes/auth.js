@@ -6,8 +6,6 @@ const createError = require('http-errors');
 const { database } = require('../config/helpers');
 const { signAccessToken, signRefreshToken, verifyRefreshToken } = require('../config/jwt');
 const { authSchema } = require('../config/validation_schema');
-var session = require('express-session');
-var redisStore = require('connect-redis')(session);
 require('dotenv').config()
 
 router.post('/register', bodyParser.json(), async (req, res, next) => {
@@ -25,12 +23,6 @@ router.post('/register', bodyParser.json(), async (req, res, next) => {
             result.password = res;
         });
 
-        // Access token
-        const accessToken = await signAccessToken(result.id)
-
-        // Refresh token
-        const refreshToken = await signRefreshToken(result.id)
-
         // Insert into database table 'users'
         await database.table('users')
             .insert({
@@ -39,10 +31,10 @@ router.post('/register', bodyParser.json(), async (req, res, next) => {
                 firstname: result.firstname || null,
                 lastname: result.lastname || null,
                 dob: result.dob || null,
+                role: null
             }).catch(err => console.log(err));
 
-        res.send("Register Successfully")
-
+            res.send("Register Successfully")
     } catch (error) {
         if (error.isJoi === true) error.status = 422
         next(error)
@@ -60,7 +52,7 @@ router.post('/login', bodyParser.json(), async (req, res, next) => {
         // Compare password
         try {
             const isMatch = await bcrypt.compare(result.password, user.password);
-            if (!isMatch) throw createError.Unauthorized('Email/ password is not valid')
+            if (!isMatch) throw createError.Unauthorized('Your email or password is incorrect')
         } catch (error) {
             throw error
         }
@@ -80,7 +72,7 @@ router.post('/login', bodyParser.json(), async (req, res, next) => {
             email: result.email,
         })
     } catch (error) {
-        if (error.isJoi === true) return next(createError.BadRequest('Invalid email/ password'))
+        if (error.isJoi === true) return next(createError.BadRequest('Incorrect email or password type.'))
         next(error)
     }
 })

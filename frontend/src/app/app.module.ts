@@ -1,14 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ToastrModule } from "ngx-toastr";
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NgxPaginationModule } from "ngx-pagination";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -110,13 +110,15 @@ const config: SocketIoConfig = { url: 'http://localhost:2609', options: {} };
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule, 
     AppRoutingModule,
     HttpClientModule,
+
     CarouselModule,
     NgxSpinnerModule,
-    InfiniteScrollModule,
-    BrowserAnimationsModule,
+    NgxPaginationModule,
     ToastrModule.forRoot(),
+
     SocketIoModule.forRoot(config),
     ReactiveFormsModule,
     FormsModule

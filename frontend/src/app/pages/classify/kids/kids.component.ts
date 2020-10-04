@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ProductModelServer, ServerResponse } from 'src/app/models/product.model';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-kids',
@@ -12,8 +11,7 @@ import { Router } from '@angular/router';
 export class KidsComponent implements OnInit {
   products: ProductModelServer[] = [];
 
-  constructor(private productService: ProductService,
-    private router: Router) { }
+  constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
     this.productService.getKidsProducts().subscribe((prods: ServerResponse) => {
@@ -22,20 +20,15 @@ export class KidsComponent implements OnInit {
     })
   }
 
-  /* Select Product by ID */
-  selectProduct(id: Number) {
-    return this.router.navigate(['/product', id]).then();
-  }
-
   proCustomOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,
-    dots: true,
+    dots: false,
     navSpeed: 700,
     autoplay: true,
-    navText: ['<i class="fas fa-long-arrow-alt-left"></i>', '<i class="fas fa-long-arrow-alt-right"></i>'],
+    navText: ['', ''],
     responsive: {
       0: {
         items: 1

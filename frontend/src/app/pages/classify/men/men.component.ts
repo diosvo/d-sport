@@ -24,11 +24,6 @@ export class MenComponent implements OnInit {
     })
   }
 
-  /* Select Product by ID */
-  selectProduct(id: Number) {
-    return this.router.navigate(['/product', id]).then();
-  }
-
   proCustomOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
@@ -37,7 +32,7 @@ export class MenComponent implements OnInit {
     dots: true,
     navSpeed: 700,
     autoplay: true,
-    navText: ['<i class="fas fa-long-arrow-alt-left"></i>', '<i class="fas fa-long-arrow-alt-right"></i>'],
+    navText: ['', ''],
     responsive: {
       0: {
         items: 1
@@ -62,6 +57,7 @@ export class MenComponent implements OnInit {
     pullDrag: true,
     dots: false,
     navSpeed: 700,
+    navText: ['', ''],
     responsive: {
       0: {
         items: 1

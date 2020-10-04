@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { ProductService } from 'src/app/services/product.service';
 import { ProductModelServer, ServerResponse } from 'src/app/models/product.model';
@@ -9,19 +8,26 @@ import { ProductModelServer, ServerResponse } from 'src/app/models/product.model
   templateUrl: './wm-bottom.component.html',
 })
 export class WmBottomComponent implements OnInit {
+  
   products: ProductModelServer[] = [];
-
-  constructor(private productService: ProductService,
-    private router: Router) { }
+  searchValue: string
+  p: number = 1
+  
+  constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
     this.productService.getProdFromClassifyIdCategoryId(2, 3).subscribe((prods: ServerResponse) => {
       this.products = prods.products
-      console.table(this.products);
     })
   }
 
-  selectProduct(id: Number) {
-    return this.router.navigate(['/product', id]).then();
+  searchProduct() {
+    if(this.searchValue != "") {
+      this.products = this.products.filter(res => {
+        return res.title.toLowerCase().match(this.searchValue.toLowerCase())
+      })
+    } else if(this.searchValue == "") {
+      this.ngOnInit()
+    }
   }
 }

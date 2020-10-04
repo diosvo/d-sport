@@ -1,54 +1,54 @@
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HTTP_INTERCEPTORS, HttpResponse, HttpErrorResponse, HttpClient } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HTTP_INTERCEPTORS, HttpErrorResponse} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, throwError, BehaviorSubject } from 'rxjs';
+
+import { Observable, Subject, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
+import { ToastrService } from 'ngx-toastr';
 import { TokenStorageService } from '../services/token-storage.service';
-import { catchError, switchMap, filter, take, } from 'rxjs/operators';
 
 @Injectable()
 export class Interceptor implements HttpInterceptor {
-    constructor(private token: TokenStorageService) { }
-
-    private isRefreshing = false;
-    private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+    constructor(private token: TokenStorageService,
+        private toastr: ToastrService,
+    ) { }
 
     accessTokenRefreshed: Subject<any> = new Subject();
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const accessToken = this.token.getAccessToken()
 
         if (accessToken) {
             req = this.addToken(req, accessToken);
         }
-
-        return next.handle(req).pipe(catchError(error => {
-            if (error instanceof HttpErrorResponse && error.status === 401) {
-                return this.handle401Error(req, next);
-            } else {
-                return throwError(error);
-            }
-        }));
+        return next.handle(req).pipe(catchError(x => this.handleAuthError(x))); //here use an arrow function, otherwise you may get "Cannot read property 'navigate' of undefined" on angular 4.4.2/net core 2/webpack 2.70
     }
 
-    private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
-        if (!this.isRefreshing) {
-            this.isRefreshing = true;
-            this.refreshTokenSubject.next(null);
-
-            return this.token.refreshToken().pipe(
-                switchMap((token: any) => {
-                    this.isRefreshing = false;
-                    this.refreshTokenSubject.next(token.jwt);
-                    return next.handle(this.addToken(request, token.jwt));
-                }));
-
-        } else {
-            return this.refreshTokenSubject.pipe(
-                filter(token => token != null),
-                take(1),
-                switchMap(jwt => {
-                    return next.handle(this.addToken(request, jwt));
-                }));
+    private handleAuthError(err: HttpErrorResponse): Observable<any> {
+        if (err.status === 400) {
+            this.toastr.warning('Incorrect email or password type.', 'Please, try again!', {
+                timeOut: 2500,
+                positionClass: 'toast-top-right',
+                closeButton: true
+            })
         }
+        if (err.status === 401) {
+            this.toastr.error('Your email or password is incorrect.', 'Please, try again!', {
+                timeOut: 2500,
+                positionClass: 'toast-top-right',
+                closeButton: true
+            })
+        }
+
+        if (err.status === 404) {
+            this.toastr.error('Click "Join Us" below to register.', 'Email address does not exist.', {
+                timeOut: 3000,
+                positionClass: 'toast-top-right',
+                closeButton: true
+            })
+        }
+
+        return throwError(err);
     }
 
     private addToken(request: HttpRequest<any>, token: string) {

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { UserService } from 'src/app/services/user.service';
 import { ValidationService } from 'src/app/validators/validation.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -30,7 +31,8 @@ export class RegisterComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private validation: ValidationService,
     private userService: UserService,
-    private router: Router) { }
+    private router: Router,
+    private toastr: ToastrService) { }
 
   onSubmit() {
     if (this.registerForm.invalid) {
@@ -39,10 +41,13 @@ export class RegisterComponent implements OnInit {
 
     // @ts-ignore
     this.userService.registerUser(this.registerForm.value)
-    
-    console.log(this.registerForm.value);
+
+    this.toastr.success('Register Successfully!', '', {
+      timeOut: 2000,
+      positionClass: 'toast-top-left',
+    })
     this.router.navigate(['/login']).then();
-    this.registerForm.reset();
+    this.registerForm.reset();  
   }
 
   get email() {

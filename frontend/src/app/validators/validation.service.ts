@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, AbstractControl, AsyncValidatorFn } from '@angular/forms';
-import { map, switchMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+
+import { map, switchMap } from 'rxjs/operators';
 import { timer, Observable } from 'rxjs';
+
 import { environment } from 'src/environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +15,8 @@ import { environment } from 'src/environments/environment';
 export class ValidationService {
   private SERVER_URL = environment.SERVER_URL
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private toastr: ToastrService) { }
 
   /* PASSWORD */
   passwordMatchValidator(password: string, confirmPassword: string) {

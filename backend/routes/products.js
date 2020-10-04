@@ -1,11 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const jwt = require('jsonwebtoken');
-const {database} = require('../config/helpers');
+const { database } = require('../config/helpers');
 
 /* === 1. SINGLE PRODUCT === */
-
-// Get [All] products
 router.get('/', function (req, res) {
     let page = (req.query.page !== undefined && req.query.page !== 0) ? req.query.page : 1; // set the current page number
     const limit = (req.query.limit !== undefined && req.query.limit !== 0) ? req.query.limit : 12; // set the limit of items per page
@@ -42,7 +39,7 @@ router.get('/', function (req, res) {
             'p.id'
         ])
         .slice(startValue, endValue)
-        .sort({id: .1})
+        .sort({ id: .1 })
         .getAll()
         .then(prods => {
             if (prods.length > 0) {
@@ -51,7 +48,7 @@ router.get('/', function (req, res) {
                     products: prods
                 })
             } else {
-                res.json({message: 'No products found'})
+                res.json({ message: 'No products found' })
             }
         }).catch(err => console.log(err));
 });
@@ -78,68 +75,18 @@ router.get('/:prodId', (req, res) => {
             'p.another_CatName',
             'p.id'
         ])
-        .filter({'p.id': productId})
+        .filter({ 'p.id': productId })
         .get()
         .then(prod => {
             if (prod) {
                 res.status(200).json(prod);
             } else {
-                res.json({message: `No product found with product ID ${productId}`});
+                res.json({ message: `No product found with product ID ${productId}` });
             }
         }).catch(err => console.log(err));
 });
 
-// Get all products width [Key Name]
-router.get('/s/:proName', (req, res) => {
-    let page = (req.query.page !== undefined && req.query.page !== 0) ? req.query.page : 1; // set the current page number
-    const limit = (req.query.limit !== undefined && req.query.limit !== 0) ? req.query.limit : 12; // set the limit of items per page
-
-    let startValue;
-    let endValue;
-
-    if (page > 0) {
-        startValue = (page * limit) - limit; // 0,12,24,36,..
-        endValue = page * limit;
-    } else {
-        startValue = 0;
-        endValue = 12;
-    }
-
-    // Fetch the category name from the URL
-    const pro_title = req.params.proName;
-    console.log('Product name:', pro_title)
-
-    database.table('categories as c')
-        .join([{
-            table: 'products as p',
-            on: `c.id = p.category_id WHERE p.title LIKE '%${pro_title}%'`
-        }])
-        .withFields(['c.title as categories',
-            'p.title as name',
-            'p.price',
-            'p.quantity',
-            'p.image',
-            'p.description',
-            'p.id'
-        ])
-        .slice(startValue, endValue)
-        .sort({'p.id': .1})
-        .getAll()
-        .then(prods => {
-            if (prods.length > 0) {
-                res.status(200).json({
-                    count: prods.length,
-                    products: prods
-                })
-            } else {
-                res.json({message: `No product found with key name: ${pro_title}.`})
-            }
-        }).catch(err => console.log(err));
-})
-
 /* === 2. BY CATEGORY === */
-
-// Get all products with [Name]
 router.get('/category/:catName', (req, res) => {
     let page = (req.query.page !== undefined && req.query.page !== 0) ? req.query.page : 1; // set the current page number
     const limit = (req.query.limit !== undefined && req.query.limit !== 0) ? req.query.limit : 12; // set the limit of items per page
@@ -172,7 +119,7 @@ router.get('/category/:catName', (req, res) => {
             'p.id'
         ])
         .slice(startValue, endValue)
-        .sort({id: .1})
+        .sort({ id: .1 })
         .getAll()
         .then(prods => {
             if (prods.length > 0) {
@@ -181,14 +128,12 @@ router.get('/category/:catName', (req, res) => {
                     products: prods
                 })
             } else {
-                res.json({message: `No products found from category ${cat_title}.`})
+                res.json({ message: `No products found from category ${cat_title}.` })
             }
         }).catch(err => console.log(err));
 })
 
 /* === 3. BY CLASSIFY ===*/
-
-// Get all products
 router.get('/classify/:classifyName', (req, res) => {
     let page = (req.query.page !== undefined && req.query.page !== 0) ? req.query.page : 1; // set the current page number
     const limit = (req.query.limit !== undefined && req.query.limit !== 0) ? req.query.limit : 12; // set the limit of items per page
@@ -222,7 +167,7 @@ router.get('/classify/:classifyName', (req, res) => {
             'p.id'
         ])
         .slice(startValue, endValue)
-        .sort({id: .1})
+        .sort({ id: .1 })
         .getAll()
         .then(prods => {
             if (prods.length > 0) {
@@ -231,79 +176,13 @@ router.get('/classify/:classifyName', (req, res) => {
                     products: prods
                 })
             } else {
-                res.json({message: `No products found from classify ${classify_name}.`})
-            }
-        }).catch(err => console.log(err));
-})
-
-// Get all products with [Key Name]
-router.get('/by/classify/:clName/s/:proName', (req, res) => {
-    let page = (req.query.page !== undefined && req.query.page !== 0) ? req.query.page : 1; // set the current page number
-    const limit = (req.query.limit !== undefined && req.query.limit !== 0) ? req.query.limit : 12; // set the limit of items per page
-
-    let startValue;
-    let endValue;
-
-    if (page > 0) {
-        startValue = (page * limit) - limit; // 0,12,24,36,..
-        endValue = page * limit;
-    } else {
-        startValue = 0;
-        endValue = 12;
-    }
-
-    // Fetch
-    const cl_name = req.params.clName;
-    const pro_title = req.params.proName;
-    console.log(cl_name, pro_title)
-
-    database.table('products as p')
-        .join([{
-            table: 'classify as cl',
-            on: `cl.id = p.classify_id WHERE cl.name LIKE '%${cl_name}%'
-                                        AND p.title LIKE '%${pro_title}%'`
-        }])
-        .withFields(['cl.name as classifyName',
-            'p.title as productName',
-            'p.price',
-            'p.quantity',
-            'p.image',
-            'p.description',
-            'p.id'
-        ])
-        .slice(startValue, endValue)
-        .sort({id: .1})
-        .getAll()
-        .then(prods => {
-            if (prods.length > 0) {
-                res.status(200).json({
-                    count: prods.length,
-                    products: prods
-                })
-            } else {
-                res.json({message: `No product key name ${pro_title} found from category ${cl_name}.`})
+                res.json({ message: `No products found from classify ${classify_name}.` })
             }
         }).catch(err => console.log(err));
 })
 
 /* === 4. BY CLASSIFY + CATEGORY === */
-
-// Get all products
 router.get('/classify/:classifyID/category/:cateID', (req, res) => {
-    let page = (req.query.page !== undefined && req.query.page !== 0) ? req.query.page : 1; // set the current page number
-    const limit = (req.query.limit !== undefined && req.query.limit !== 0) ? req.query.limit : 100; // set the limit of items per page
-
-    let startValue;
-    let endValue;
-
-    if (page > 0) {
-        startValue = ((page - 1) * limit)  // 0,12,24,36,..
-        endValue = page * limit;
-    } else {
-        startValue = 0;
-        endValue = 12;
-    }
-
     // Fetch
     const classify_id = req.params.classifyID;
     const cat_id = req.params.cateID;
@@ -322,7 +201,7 @@ router.get('/classify/:classifyID/category/:cateID', (req, res) => {
         ])
         .withFields(['cl.name as ClassifyName',
             'c.title as CategoriesName',
-            'p.title as ProductName',
+            'p.title',
             'p.price',
             'p.quantity',
             'p.image',
@@ -330,8 +209,7 @@ router.get('/classify/:classifyID/category/:cateID', (req, res) => {
             'p.description',
             'p.id'
         ])
-        .filter({'cl.id': classify_id, 'c.id': cat_id})
-        .slice(startValue, endValue)
+        .filter({ 'cl.id': classify_id, 'c.id': cat_id })
         .getAll()
         .then(prods => {
             if (prods.length > 0) {
@@ -340,7 +218,7 @@ router.get('/classify/:classifyID/category/:cateID', (req, res) => {
                     products: prods
                 })
             } else {
-                res.json({message: `No products found.`})
+                res.json({ message: `No products found.` })
             }
         }).catch(err => console.log(err));
 });
