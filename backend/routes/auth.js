@@ -69,6 +69,7 @@ router.post('/login', bodyParser.json(), async (req, res, next) => {
             id: user.id,
             lastname: user.lastname,
             firstname: user.firstname,
+            role: user.role,
             email: result.email,
         })
     } catch (error) {

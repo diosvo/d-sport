@@ -7,6 +7,7 @@ import { CartModelServer } from 'src/app/models/cart.model';
 import { UserService } from 'src/app/services/user.service';
 import { map } from 'rxjs/operators';
 import { UserModelServer } from 'src/app/models/user.model';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-checkout',
@@ -21,8 +22,19 @@ export class CheckoutComponent implements OnInit {
   constructor(private cartService: CartService,
     private spinner: NgxSpinnerService,
     private userService: UserService, 
-    private router: Router) {
+    private router: Router,
+    private fb: FormBuilder) {
   }
+
+  checkoutForm = this.fb.group(
+    {
+      firstname: ["", [Validators.required]],
+      lastname: ["", [Validators.required]],
+      email: ["", [Validators.required]],
+      phone: ["", [Validators.required]],
+      address: ["", [Validators.required]],
+    }
+  );
 
   ngOnInit(): void {
     this.cartService.cartData$.subscribe(data => this.cartData = data);
@@ -47,7 +59,24 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  selectProduct(id: Number) {
-    return this.router.navigate(['/product', id]).then();
+  get firstname() {
+    return this.checkoutForm.get('firstname')
   }
+
+  get lastname() {
+    return this.checkoutForm.get('lastname')
+  }
+
+  get address() {
+    return this.checkoutForm.get('address')
+  }
+
+  get email() {
+    return this.checkoutForm.get('email')
+  }
+  
+  get phone() {
+    return this.checkoutForm.get('phone')
+  }
+  
 }

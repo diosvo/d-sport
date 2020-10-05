@@ -6,7 +6,6 @@ import { map, switchMap } from 'rxjs/operators';
 import { timer, Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ValidationService {
   private SERVER_URL = environment.SERVER_URL
 
-  constructor(private http: HttpClient,
-    private toastr: ToastrService) { }
+  constructor(private http: HttpClient) { }
 
   /* PASSWORD */
   passwordMatchValidator(password: string, confirmPassword: string) {

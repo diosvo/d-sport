@@ -12,23 +12,13 @@
     }
 
     .shipping-details {
-        padding: 2rem 1rem;
+        padding: 2rem 1rem .2rem .5rem;
         border : 0.5px solid #e5e5e5;
 
-        #name input, #info input {
-            width: 285px;
-
-            &:first-child {
-                margin-right: .85rem;
-            }
-        }
-
-        #country input {
-            width: 184px;
-
-            &:nth-child(2) {
-                margin: 0 1rem;
-            }
+        #name .form-group,
+        #info .form-group {
+            width      : 50%;
+            margin-left: 0.5rem;
         }
 
         input,
@@ -82,35 +72,22 @@
     }
 }
 
+.btn-checkout {
+    width: 100%;
+    padding: 0.35rem 1.75rem;
+
+    background   : black;
+    color  : white;
+
+    border-radius: 3.5rem;
+    border       : none;
+    outline      : none;
+}
+
 @media only screen and (max-width: 768px) {
-
-    #shipping-info {
-        .shipping-details {
-            #name input, #info input {
-                width: 398px;
-
-                &:first-child {
-                    margin-right : 0;
-                    margin-bottom: 1rem;
-                }
-            }
-
-            #country input {
-                width: 398px;
-
-                &:nth-child(2) {
-                    margin: 1rem 0;
-                }
-            }
-        }
-
-    }
-
     #cart-resume {
         .cart-details {
             padding: 2rem;
         }
-
     }
-
 }

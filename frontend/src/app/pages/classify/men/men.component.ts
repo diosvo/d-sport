@@ -14,8 +14,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 export class MenComponent implements OnInit {
   products: ProductModelServer[] = [];
 
-  constructor(private productService: ProductService,
-    private router: Router) { }
+  constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
     this.productService.getMenProducts().subscribe((prods: ServerResponse) => {

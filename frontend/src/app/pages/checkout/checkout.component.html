@@ -1,5 +1,5 @@
-<ngx-spinner bdColor="rgba(9,9,9,0.8)" size="large" color="#ffffff" type="ball-atom" [fullScreen]="true">
-  <p style="color: white"> Booking order.. </p>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="fire" [fullScreen]="true">
+  <p style="color: white"> Booking order... </p>
 </ngx-spinner>
 
 <section id="checkout" class="my-5">
@@ -26,37 +26,55 @@
         </div>
 
         <div class="shipping-details">
-          <form id="name" class="px-1 form-inline mb-4">
-            <div>
-              <input type="text" class="form-control" placeholder="First Name">
-              <input type="text" class="form-control" placeholder="Last Name">
+          <form [formGroup]="checkoutForm">
+            <div id="name" class="d-flex">
+              <div class="form-group">
+                <input type="text" formControlName="firstname" class="form-control" placeholder="First Name"
+                  [ngClass]="{'is-invalid':firstname.errors && firstname.touched}">
+                <div class="invalid-feedback mt-1 font-13" *ngIf="firstname.hasError('required')">
+                  First name is required
+                </div>
+              </div>
+
+              <div class="form-group">
+                <input type="text" formControlName="lastname" class="form-control" placeholder="Last Name"
+                  [ngClass]="{'is-invalid':lastname.errors && lastname.touched}">
+                <div class="invalid-feedback mt-1 font-13" *ngIf="lastname.hasError('required')">
+                  Last name is required
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group ml-2">
+              <input type="text" formControlName="address" class="form-control" placeholder="Address"
+                [ngClass]="{'is-invalid':address.errors && address.touched}">
+              <div class="invalid-feedback mt-1 font-13" *ngIf="address.hasError('required')">
+                Address is required
+              </div>
+            </div>
+
+            <div id="info" class="d-flex">
+              <div class="form-group">
+                <input type="email" formControlName="email" class="form-control" placeholder="Email"
+                  [ngClass]="{'is-invalid':email.errors && email.touched}">
+                <div class="invalid-feedback mt-1 font-13" *ngIf="email.hasError('required')">
+                  Email is required
+                </div>
+              </div>
+
+              <div class="form-group">
+                <input type="tel" formControlName="phone" class="form-control" placeholder="Phone Number"
+                  [ngClass]="{'is-invalid':phone.errors && phone.touched}">
+                <div class="invalid-feedback mt-1 font-13" *ngIf="phone.hasError('required')">
+                  Phone number is required
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group ml-2">
+              <textarea class="form-control" rows="2" placeholder="Order Notes"></textarea>
             </div>
           </form>
-
-          <form id="address" class="px-1 mb-4">
-            <div width=100%>
-              <input type="text" class="form-control" placeholder="Address">
-            </div>
-          </form>
-
-          <form id="country" class="px-1 form-inline mb-4">
-            <div>
-              <input type="text" class="form-control" placeholder="City">
-              <input type="text" class="form-control" placeholder="Country">
-              <input type="number" class="form-control" placeholder="Postal Code">
-            </div>
-          </form>
-
-          <form id="info" class="px-1 form-inline mb-4">
-            <div>
-              <input type="email" class="form-control" placeholder="Email">
-              <input type="number" class="form-control" placeholder="Phone Number" max=10 min=0>
-            </div>
-          </form>
-
-          <div class="px-1 form-group">
-            <textarea class="form-control" rows="2" placeholder="Order Notes"></textarea>
-          </div>
         </div>
       </div>
 
@@ -72,7 +90,7 @@
               <p>
                 <span>{{c.numInCart}}</span>
                 <span class="mx-2">x</span>
-                <span (click)="selectProduct(c.product?.id)" style="cursor: pointer;">{{c.product?.title}}</span>
+                <span [routerLink]="['/product', c.product?.id]" style="cursor: pointer;">{{c.product?.title}}</span>
               </p>
               <p>{{(c.product?.price * c.numInCart) | currency:'USD' : 'symbol-narrow':'.2'}}</p>
             </div>
@@ -87,7 +105,9 @@
             <p style="color: orangered">{{cartTotal| currency:'USD' : 'symbol-narrow':'.2'}}</p>
           </div>
 
-          <div class="btn-shop__bgBlack py-3 font-17 text-center mt-4" (click)="checkOut()">Checkout</div>
+          <button style="font-family: Oswald, sans-serif" type="submit" [disabled]="checkoutForm.invalid"
+            [class.disable]="checkoutForm.invalid" class="btn-checkout py-3 font-17 text-center mt-4"
+            (click)="checkOut()">Checkout</button>
         </div>
       </div>
     </div>

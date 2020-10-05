@@ -153,9 +153,16 @@ input[type=search]::-webkit-search-cancel-button {
     transition: 0.4s ease-in-out;
 }
 
-// .ngx-pagination
+// ngx-pagination
 .ngx-pagination .current {
-    background: var(--bgColor)!important;
+    background: #ff4b1f!important;
+}
+
+// invalid form
+.disable {
+    cursor: not-allowed;
+    background: red!important;
+    opacity: .7;
 }
 
 @media only screen and (max-width: 768px) {

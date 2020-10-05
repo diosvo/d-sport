@@ -21,7 +21,7 @@ export class Interceptor implements HttpInterceptor {
         if (accessToken) {
             req = this.addToken(req, accessToken);
         }
-        return next.handle(req).pipe(catchError(x => this.handleAuthError(x))); //here use an arrow function, otherwise you may get "Cannot read property 'navigate' of undefined" on angular 4.4.2/net core 2/webpack 2.70
+        return next.handle(req).pipe(catchError(x => this.handleAuthError(x)));
     }
 
     private handleAuthError(err: HttpErrorResponse): Observable<any> {
