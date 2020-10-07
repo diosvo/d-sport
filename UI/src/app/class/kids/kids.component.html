@@ -1,0 +1,143 @@
+<app-promotions></app-promotions>
+
+<section id="kids" class="container px-3">
+    <div id="inner-wrapper" class="py-2">
+        <div class="kids-title">
+            <h3 class="py-2 mb-0">Kids</h3>
+        </div>
+        <div class="inner-wrapper-nav d-flex font-17 py-2">
+            <p routerLink="/kids/shoes">shoes</p>
+            <p routerLink="/kids/top">top</p>
+            <p routerLink="/kids/bottom">bottom</p>
+            <p routerLink="/kids/accessories">backpacks & accessories</p>
+        </div>
+    </div>
+
+    <!-- HERO BANNER -->
+    <div id="hero" class="mb-4">
+        <div>
+            <img loading="lazy" src="../../../assets/images/kids/kid-1.gif" width=100%>
+        </div>
+        <div class="hero--container d-flex flex-column justify-content-center align-items-center text-center">
+            <div class="hero__title mt-3">play starts here</div>
+            <div>
+                <p>Here’s your one-stop resource for kid-focused gear, content and expert advice—everything you need to
+                    launch their lifelong love of sport.</p>
+            </div>
+        </div>
+        <div class="mix-thing-up d-flex flex-column justify-content-center align-items-center text-center">
+            <div>
+                <img loading="lazy" src="../../../assets/images/kids/kid-2.jpg" width=100%>
+            </div>
+            <p class="text-capitalize font-30 my-2">mix things up</p>
+            <p class="mb-3">New prints that are just thier style...we got you</p>
+            <button class="btn btn-shop__bgBlack" routerLink="/kids/top">Shop</button>
+        </div>
+    </div>
+
+    <!-- THE MOST-WANTED KICKS -->
+    <div id="the-most-wanted" class="mb-5">
+        <div class="d-flex justify-content-between align-items-baseline">
+            <p class="text-capitalize font-20 mt-5 mb-3">the most-wanted kicks</p>
+            <p routerLink="/kids/shoes" style="cursor: pointer;">Shop All</p>
+        </div>
+
+        <!-- CAROUSEL ITEMS -->
+        <div id="products-carousel" class="mt-3">
+            <owl-carousel-o [options]="proCustomOptions">
+                <ng-container *ngFor="let p of products">
+                    <ng-template carouselSlide class="px-1">
+                        <div class="px-2">
+                            <div class="img-container">
+                                <img loading="lazy" [src]="p.image" style="cursor: pointer;"  [routerLink]="['/product-details', p.id]">
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <p class="text-capitalize mb-0 mt-1" style="cursor: pointer;"
+                                     [routerLink]="['/product-details', p.id]">
+                                    {{p.ProductName}}</p>
+                                <p class="mb-0 mt-1">{{p.price | currency: 'USD':'symbol-narrow':'.0'}}</p>
+                            </div>
+                            <p class="text-secondary font-15">{{p.another_CatName}}</p>
+                        </div>
+                    </ng-template>
+                </ng-container>
+            </owl-carousel-o>
+        </div>
+    </div>
+
+    <!-- KIDS MOVING -->
+    <div id="moving">
+        <div class="moving--container">
+            <p class="moving__title text-center">three steps to get kids moving</p>
+        </div>
+        <owl-carousel-o [options]="movingCustomOptions">
+            <ng-template carouselSlide>
+                <div  class="px-1">
+                    <img loading="lazy" src="../../../assets/images/kids/kid-16.jpg" width=100%>
+                    <p class="text-capitalize mt-2 mb-0 font-20">turn it into a game</p>
+                    <p class="pr-5">Add some simple yoga poses into bedtime toothbrushing.</p>
+                </div>
+            </ng-template>
+            <ng-template carouselSlide>
+                <div class="px-1">
+                    <img loading="lazy" src="../../../assets/images/kids/kid-17.jpg" width=100%>
+                    <p class="text-capitalize mt-2 mb-0 font-20">give them (some) control</p>
+                    <p class="pr-5">Try letting them create their own workout. Then do it together!</p>
+                </div>
+            </ng-template>
+            <ng-template carouselSlide>
+                <div class="px-1">
+                    <img loading="lazy" src="../../../assets/images/kids/kid-18.jpg" width=100%>
+                    <p class="text-capitalize mt-2 mb-0 font-20">encourage their imagination</p>
+                    <p class="pr-5">Create a scene where kids can be animals, robots, or anything that keeps them
+                        moving.</p>
+                </div>
+            </ng-template>
+        </owl-carousel-o>
+    </div>
+
+    <!-- PARENT PLAYBOOK -->
+    <div id="parent" class="mb-5">
+        <div>
+            <img loading="lazy" src="../../../assets/images/kids/kid-12.png" width=100%>
+        </div>
+        <div class="hero--container d-flex flex-column justify-content-center align-items-center text-center">
+            <div class="hero__title mt-3">
+                <p>parent playbook</p>
+            </div>
+            <div>
+                <p class="m-0">We’re here to help you keep the whole family moving, with how-tos, fun workouts and
+                    expert tips from
+                    their favorites athletes —and yours.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PICKS OF THE WEEK -->
+    <div id="pick" class="mb-5">
+        <p class="font-20 mt-5 mb-3">Picks of the Week</p>
+        <owl-carousel-o [options]="movingCustomOptions">
+            <ng-template carouselSlide>
+                <div class="px-1">
+                    <img loading="lazy" src="../../../assets/images/kids/kid-21.jpg" width=100%>
+                    <p class="text-capitalize my-2 font-20" style="cursor: pointer;" routerLink="/kids/shoes">new
+                        arrivals</p>
+                </div>
+            </ng-template>
+            <ng-template carouselSlide>
+                <div loading="lazy" class="px-1">
+                    <img src="../../../assets/images/kids/kid-22.jpg" width=100%>
+                    <p class="text-capitalize my-2 font-20" style="cursor: pointer;" routerLink="/kids/accessories">
+                        backpacks</p>
+                </div>
+            </ng-template>
+            <ng-template carouselSlide>
+                <div loading="lazy" class="px-1">
+                    <img src="../../../assets/images/kids/kid-23.jpg" width=100%>
+                    <p class="text-capitalize my-2 font-20" style="cursor: pointer;" routerLink="/kids/bottom">fleece
+                    </p>
+                </div>
+            </ng-template>
+        </owl-carousel-o>
+    </div>
+</section>

@@ -1,0 +1,77 @@
+<section id="register" class="d-flex flex-column justify-content-center align-items-center">
+    <div class="text-uppercase text-center mb-3 font-20 font-weight-bold"
+        style="font-family: Oswald, sans-serif; letter-spacing: 0.75px;">
+        <p class="mt-4 mb-1">become a d. member</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <input type="email" formControlName="email" class="form-control" id="username" placeholder="Email address"
+                [ngClass]="{'is-invalid':email.errors && email.touched}">
+            <div class="invalid-feedback mt-1 font-13" *ngIf="email.hasError('emailTaken')">
+                Email has already exist
+            </div>
+            <div class="invalid-feedback mt-1 font-13" *ngIf="email.hasError('required')">
+                Email is required
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="password" formControlName="password" class="form-control" id="password" placeholder="Password"
+                minlength="6" [ngClass]="{'is-invalid': password.errors && password.touched}">
+            <div class="invalid-feedback mt-1 font-13" *ngIf="password.hasError('required')">
+                Password is required
+            </div>
+            <div class="invalid-feedback mt-1 font-13" *ngIf="password.hasError('minlength')">
+                Password must be at least 6 characters
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="password" formControlName="cfpassword" class="form-control" id="cf-password"
+                placeholder="Confirm Password" [ngClass]="{'is-invalid': cfpassword.errors && cfpassword.touched}"
+                autocomplete>
+            <div class="invalid-feedback mt-1 font-13" *ngIf="cfpassword.hasError('passwordMismatch')">
+                Password don't match
+            </div>
+            <div class="invalid-feedback mt-1 font-13" *ngIf="cfpassword.hasError('required')">
+                Confirm password is required
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="text" formControlName="firstname" class="form-control" id="firstname" placeholder="First Name"
+                [ngClass]="{'is-invalid': registerForm.get('firstname').touched}">
+            <div class="invalid-feedback mt-1 font-13" *ngIf="firstname.hasError('required')">
+                First name is required
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="text" formControlName="lastname" class="form-control" id="lastname" placeholder="Last Name"
+                [ngClass]="{'is-invalid': registerForm.get('lastname').touched}">
+            <div class="invalid-feedback mt-1 font-13" *ngIf="lastname.hasError('required')">
+                Last name is required
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="date" formControlName="dob" class="form-control" id="dob" placeholder="Date of Birth">
+        </div>
+
+        <p class="font-12 text-secondary text-center px-1">
+            By creating an account, you agree to D's <u>Privacy Policy</u> and <u>Terms of Use</u>.
+        </p>
+
+        <button class="btn-register text-uppercase text-light font-11" style="font-family: Oswald, sans-serif"
+            type="submit" [disabled]="registerForm.invalid" [class.disable]="registerForm.invalid">register
+        </button>
+    </form>
+
+    <div class="font-12 mt-3 mb-4">
+        <p>
+            <span class="text-secondary">Already a member?</span>
+            <span class="ml-2" routerLink="/login" style="cursor: pointer;"><u>Sign In</u></span>
+        </p>
+    </div>
+</section>

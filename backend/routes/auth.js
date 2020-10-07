@@ -28,10 +28,9 @@ router.post('/register', bodyParser.json(), async (req, res, next) => {
             .insert({
                 email: result.email,
                 password: hashPw,
-                firstname: result.firstname || null,
-                lastname: result.lastname || null,
+                firstname: result.firstname,
+                lastname: result.lastname,
                 dob: result.dob || null,
-                role: null
             }).catch(err => console.log(err));
 
             res.send("Register Successfully")
@@ -69,7 +68,6 @@ router.post('/login', bodyParser.json(), async (req, res, next) => {
             id: user.id,
             lastname: user.lastname,
             firstname: user.firstname,
-            role: user.role,
             email: result.email,
         })
     } catch (error) {
