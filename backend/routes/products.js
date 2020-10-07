@@ -111,7 +111,7 @@ router.get('/category/:catName', (req, res) => {
             on: `c.id = p.category_id WHERE c.title LIKE '%${cat_title}%'`
         }])
         .withFields(['c.title as categories',
-            'p.title as name',
+            'p.title',
             'p.price',
             'p.quantity',
             'p.image',

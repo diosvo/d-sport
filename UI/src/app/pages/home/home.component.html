@@ -1,0 +1,192 @@
+<app-promotions></app-promotions>
+
+<section id="home" class="px-3">
+    <!-- INTRODUCTION -->
+    <div id="introduction">
+        <div>
+            <img src="../../../assets/images/banner.jpg" loading="lazy" alt="home banner" width=100%>
+        </div>
+        <div class="d-flex flex-column justify-content-center align-items-center py-4">
+            <p class="title mb-2">YOU CAN’T STOP SPORT.</p>
+            <p class="content text-center mb-4">If you have a body, you are an athlete*. And as athletes*, we’re never
+                alone.
+                Sport unites us. Strengthens us. Keeps us pushing ahead. No matter what happens we will always come back
+                stronger, together. You can’t stop sport. Because you can’t stop us.</p>
+            <button class="btn btn-joinus" routerLink="/register">Join Us</button>
+        </div>
+    </div>
+
+    <!-- NEXT SEASON -->
+    <div id="next-season">
+        <div class="position-relative">
+            <div class="image-container">
+                <img src="../../../assets/images/home-1.jpg" loading="lazy" width=100%>
+            </div>
+            <div class="content position-absolute">
+                <div class="content--title">
+                    <p class="mb-0">NEW FOR NEXT SEASON</p>
+                </div>
+                <div>
+                    <p>Must have for first days, first practices and more.</p>
+                </div>
+                <button class="btn btn-shop__bgWhite">Shop</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="next-season-sm">
+        <p class="text-capitalize font-20 mt-5 mb-3">everyday essentials</p>
+        <div>
+            <img src="../../../assets/images/home-14.png" loading="lazy" width=100%>
+        </div>
+        <div class="font-30" style="font-family: Bangers, sans-serif">
+            <p class="mb-0">NEW FOR NEXT <br> SEASON</p>
+        </div>
+        <div>
+            <p>Must have for first days, first practices and more.</p>
+        </div>
+        <button class="btn btn-shop__bgBlack">Shop</button>
+    </div>
+
+    <!-- BANNER -->
+    <div id="banner">
+        <div class="banner-container my-2">
+            <div class="position-relative">
+                <div class="first-banner" width=50%>
+                    <img src="../../../assets/images/home-3.jpg" loading="lazy" width=100%>
+                </div>
+                <div class="content_bottom position-absolute">
+                    <p class="font-19 text-capitalize">all day, every day layers</p>
+                    <button class="btn btn-shop__bgWhite">Shop</button>
+                </div>
+            </div>
+            <div class="position-relative">
+                <div width=50%>
+                    <img src="../../../assets/images/home-7.jpg" loading="lazy" width=100%>
+                </div>
+                <div class="content_bottom position-absolute">
+                    <p class="font-19 text-capitalize">the latest running essentials</p>
+                    <button class="btn btn-shop__bgWhite">Shop</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CAROUSEL ITEMS -->
+    <div id="products-carousel">
+        <p class="text-capitalize font-20 mt-5 mb-3">Latest and Greatest</p>
+        <owl-carousel-o [options]="proCustomOptions">
+            <ng-container *ngFor="let p of products">
+                <ng-template carouselSlide class="px-1">
+                    <div class="pr-2">
+                        <div class="img-container">
+                            <img [src]="p.image" style="cursor: pointer;" loading="lazy"
+                                [routerLink]="['/product-details', p.id]">
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p class="text-capitalize mb-0 mt-1" style="cursor: pointer;"
+                                [routerLink]="['/product-details', p.id]">
+                                {{p.name}}</p>
+                            <p class="mb-0 mt-1">{{p.price | currency: 'USD':'symbol-narrow':'.0'}}</p>
+                        </div>
+                        <p class="text-secondary font-15">{{p.another_CatName}}</p>
+                    </div>
+
+                </ng-template>
+            </ng-container>
+        </owl-carousel-o>
+    </div>
+
+    <!-- TRENDING -->
+    <div id="trending">
+        <p class="text-capitalize font-20 mt-3">trending now</p>
+        <div class="trending position-relative">
+            <div class="image-container">
+                <img src="../../../assets/images/home-2.jpg" loading="lazy" width=100%>
+            </div>
+            <div class="content position-absolute">
+                <div class="content--title text-uppercase" style="line-height: 1;">
+                    <p class="mb-0">icon clash</p>
+                    <p class="mb-0">collection</p>
+                </div>
+                <div>
+                    <p class="mt-2 font-15">Bold styles with the functionality to match.</p>
+                </div>
+                <button class="btn btn-shop__bgBlack">Shop</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="trending-sm">
+        <p class="text-capitalize font-20 mt-3">trending now</p>
+        <div class="trending position-relative">
+            <div class="image-container">
+                <img src="../../../assets/images/home-5.jpg" loading="lazy" width=100%>
+            </div>
+            <div class="content position-absolute">
+                <div class="content--title text-uppercase" style="line-height: 1;">
+                    <p class="mb-0">icon clash</p>
+                    <p class="mb-0">collection</p>
+                </div>
+                <div>
+                    <p class="mt-2 mb-4 font-15">Bold styles with the functionality to match.</p>
+                </div>
+                <button class="btn btn-shop__bgWhite">Shop</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FEATURE FOOTWEAR -->
+    <div id="feature-footwear">
+        <p class="text-capitalize font-20 mt-5">feature footwear</p>
+        <div class="ff-container my-2">
+            <div class="position-relative">
+                <div class="first-ff" width=50%>
+                    <img src="../../../assets/images/home-8.jpg" loading="lazy" width=100%>
+                </div>
+                <div class="content_bottom position-absolute">
+                    <p class="font-19 text-capitalize">vapor max 2020</p>
+                    <button class="btn btn-shop__bgWhite">Shop</button>
+                </div>
+            </div>
+            <div class="position-relative">
+                <div width=50%>
+                    <img src="../../../assets/images/home-9.jpg" loading="lazy" width=100%>
+                </div>
+                <div class="content_bottom position-absolute" style="color: black">
+                    <p class="font-19 text-capitalize">what's new. what's coming.</p>
+                    <button class="btn btn-shop__bgBlack">Shop</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BEST SELLER -->
+    <div id="best-seller">
+        <p class="text-capitalize font-20 mt-5">best seller</p>
+        <owl-carousel-o [options]="bsCustomOptions">
+            <ng-template carouselSlide>
+                <div class="pr-2">
+                    <img src="../../../assets/images/home-10.jpg" loading="lazy" width=100% style="height:486px">
+                    <p class="mt-2 font-18" style="cursor: pointer;" routerLink="/men">Men's</p>
+                </div>
+            </ng-template>
+            <ng-template carouselSlide>
+                <div class="pr-2">
+                    <img src="../../../assets/images/home-11.jpg" loading="lazy" width=100% style="height:486px">
+                    <p class="mt-2 font-18" style="cursor: pointer;" routerLink="/kids">Women's</p>
+                </div>
+            </ng-template>
+            <ng-template carouselSlide>
+                <div class="pr-2">
+                    <img src="../../../assets/images/home-12.jpg" loading="lazy" width=100% style="height:486px">
+                    <p class="mt-2 font-18" style="cursor: pointer;" routerLink="/accessories">Accessories & Equipment
+                    </p>
+                </div>
+            </ng-template>
+        </owl-carousel-o>
+    </div>
+
+    <!-- NIKE ATHLETES -->
+    <app-nike-athletes></app-nike-athletes>
+</section>

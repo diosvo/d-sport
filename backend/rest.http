@@ -10,7 +10,7 @@ Content-Type: application/json
 
 {
     "email": "1751010102nhung@ou.edu.vn",
-    "password": "1234567"
+    "password": "123456"
 }
 
 ### Register route
@@ -18,11 +18,11 @@ POST {{baseUrl}}/api/auth/register
 Content-Type: application/json
 
 {
-    "email": "vtmn1212@gmail.com",
+    "email": "vtmn12@gmail.com",
     "password": "123456",
     "firstname": "Nhung",
     "lastname": "Vo",
-    "dob": "12/12/1999"
+    "dob": "12/12/1999",
 }
 
 ### Refresh token route

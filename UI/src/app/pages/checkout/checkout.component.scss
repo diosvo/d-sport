@@ -1,0 +1,93 @@
+#shipping-info {
+    .checkout-title {
+        font-family   : 'Oswald', sans-serif;
+        letter-spacing: var(--mainSpacing);
+
+        background-color: var(--bgColor);
+
+        p {
+            color  : white;
+            padding: 1rem;
+        }
+    }
+
+    .shipping-details {
+        padding: 2rem 1rem .2rem .5rem;
+        border : 0.5px solid #e5e5e5;
+
+        #name .form-group,
+        #info .form-group {
+            width      : 50%;
+            margin-left: 0.5rem;
+        }
+
+        input,
+        textarea {
+
+            font-size: 14px;
+            padding  : 1.5rem .75rem;
+
+            border-radius: 0.1rem;
+
+            &:focus {
+                border-color: gray;
+                box-shadow  : none;
+            }
+        }
+
+        textarea {
+            padding: 1rem .75rem;
+            resize : unset;
+        }
+    }
+}
+
+#cart-resume {
+    .checkout-title {
+        font-family   : 'Oswald', sans-serif;
+        letter-spacing: var(--mainSpacing);
+
+        p {
+            color  : white;
+            padding: 1rem;
+        }
+    }
+
+    .cart-details {
+        padding: 2rem 1rem;
+        border : 0.5px solid #e5e5e5;
+    }
+
+    #cart-total {
+        font-family  : 'Oswald', sans-serif;
+        border-bottom: 0.5px solid #e5e5e5;
+
+        p {
+            font-weight: bold;
+            font-size  : 15px;
+
+            text-transform: uppercase;
+            letter-spacing: var(--mainSpacing);
+        }
+    }
+}
+
+.btn-checkout {
+    width: 100%;
+    padding: 0.35rem 1.75rem;
+
+    background   : black;
+    color  : white;
+
+    border-radius: 3.5rem;
+    border       : none;
+    outline      : none;
+}
+
+@media only screen and (max-width: 768px) {
+    #cart-resume {
+        .cart-details {
+            padding: 2rem;
+        }
+    }
+}
