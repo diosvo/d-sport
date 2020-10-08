@@ -9,10 +9,12 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './accessories.component.html',
   styleUrls: ['./accessories.component.scss']
 })
+
 export class AccessoriesComponent implements OnInit {
 
-  products: ProductModelServer[] = [];
+  products: ProductModelServer[];
   searchValue: string
+  isDisplay = true
   p: number = 1
 
   constructor(private productService: ProductService, private toastr: ToastrService) { }
@@ -20,8 +22,17 @@ export class AccessoriesComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getAccessoriesProducts().subscribe((prods: ServerResponse) => {
       this.products = prods.products
-      // console.log(this.products)
     })
+  }
+
+  sortIncreasing() {
+    this.products = this.products.sort((a, b) => a.price - b.price)
+    this.isDisplay = !this.isDisplay
+  }
+
+  sortDecreasing() {
+    this.products = this.products.sort((a, b) => b.price - a.price)
+    this.isDisplay = !this.isDisplay
   }
 
   searchProduct() {
@@ -43,4 +54,10 @@ export class AccessoriesComponent implements OnInit {
       this.ngOnInit()
     }
   }
+
+  toggleDisplay() {
+    this.isDisplay = !this.isDisplay
+    document.getElementById("icon-down").classList.toggle("icon-up");
+  }
+
 }

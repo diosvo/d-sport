@@ -46,23 +46,23 @@ router.post('/login', bodyParser.json(), async (req, res, next) => {
         const user = await database.table('users').filter({ email: result.email }).get();
 
         // Check email
-        if (!user) throw createError.NotFound('User not registered')
+        if (!user) throw createError.NotFound('User not registered') // 404
 
         // Compare password
         try {
             const isMatch = await bcrypt.compare(result.password, user.password);
-            if (!isMatch) throw createError.Unauthorized('Your email or password is incorrect')
+            if (!isMatch) throw createError.Unauthorized('Your password is incorrect') // 401
         } catch (error) {
             throw error
         }
 
         // Access token
-        const accessToken = await signAccessToken(user.id)
+        let accessToken = await signAccessToken(user.id)
 
         // Refresh token
-        const refreshToken = await signRefreshToken(user.id)
+        let refreshToken = await signRefreshToken(user.id)
 
-        res.send({
+        res.status(201).json({
             accessToken, refreshToken,
             auth: true,
             id: user.id,
@@ -71,7 +71,7 @@ router.post('/login', bodyParser.json(), async (req, res, next) => {
             email: result.email,
         })
     } catch (error) {
-        if (error.isJoi === true) return next(createError.BadRequest('Incorrect email or password type.'))
+        if (error.isJoi === true) return next(createError.BadRequest('Incorrect email or password type.')) // 400
         next(error)
     }
 })
@@ -79,13 +79,12 @@ router.post('/login', bodyParser.json(), async (req, res, next) => {
 router.post('/refresh-token', bodyParser.json(), async (req, res, next) => {
     try {
         const { refreshToken } = req.body
-        if (!refreshToken) throw createError.BadRequest()
+        if (!refreshToken || !refreshToken.includes(refreshToken)) throw createError.Unauthorized()
 
         const userID = await verifyRefreshToken(refreshToken)
         const accessToken = await signAccessToken(userID)
-        const refToken = await signRefreshToken(userID)
 
-        res.send({ accessToken: accessToken, refreshToken: refToken })
+        res.send({ accessToken: accessToken })
     } catch (err) {
         next(err)
     }

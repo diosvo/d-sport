@@ -26,7 +26,7 @@
 
     <!-- Product List -->
     <div class="product-list p-0 mb-5">
-        <div *ngFor="let p of products | paginate: { itemsPerPage: 15, currentPage: p}">
+        <div class="slide-in-bottom" *ngFor="let p of products | paginate: { itemsPerPage: 15, currentPage: p}">
             <!-- Single Product -->
             <article class="products">
                 <div class="product-img-container">

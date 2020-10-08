@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ProductModelServer, ServerResponse } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/services/product.service';
-import { Options } from 'src/app/models/option.model';
 import { ToastrService } from 'ngx-toastr';
-
 @Component({
   selector: 'app-k-shoes',
   templateUrl: './k-shoes.component.html',
@@ -13,13 +11,8 @@ export class KShoesComponent implements OnInit {
 
   products: ProductModelServer[];
   searchValue: string
-  selected: Number
-  p: number = 1 // current page
-
-  options: Options[] = [
-    { id: 1, option: 'Price: Low-High' },
-    { id: 2, option: 'Price: High-Low' },
-  ]
+  isDisplay = true
+  p: number = 1
 
   constructor(private productService: ProductService, private toastr: ToastrService) {}
 
@@ -29,19 +22,14 @@ export class KShoesComponent implements OnInit {
     })
   }
 
-  selectOptions() {
-    if (this.selected = 1) {
-      this.products = this.products.sort((a, b) => a.price - b.price)
-    } else this.products = this.products.sort((a, b) => b.price - a.price)
+  sortIncreasing() {
+    this.products = this.products.sort((a, b) => a.price - b.price)
+    this.isDisplay = !this.isDisplay
   }
 
-  sortIncreasing() {
-    // alert('hiiii');
-    if (this.selected = 0) {
-      this.products
-    } else if (this.selected = 1) {
-      this.products = this.products.sort((a, b) => a.price - b.price)
-    } else this.products = this.products.sort((a, b) => b.price - a.price)
+  sortDecreasing() {
+    this.products = this.products.sort((a, b) => b.price - a.price)
+    this.isDisplay = !this.isDisplay
   }
 
   searchProduct() {
@@ -62,6 +50,11 @@ export class KShoesComponent implements OnInit {
     } else if (this.searchValue == "") {
       this.ngOnInit()
     }
+  }
+
+  toggleDisplay() {
+    this.isDisplay = !this.isDisplay
+    document.getElementById("icon-down").classList.toggle("icon-up");
   }
 
 }

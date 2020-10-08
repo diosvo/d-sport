@@ -2,7 +2,7 @@
 
 ### Home
 GET {{baseUrl}}
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDE0NDQ2NjYsImV4cCI6MTYwMTQ0ODI2NiwiYXVkIjoiODQifQ.xqPn-9uynxJBwi96_nTU-p63qUaV8U-IMc2JHJ6VbpI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDIxNDAyMDIsImV4cCI6MTYwMjE0MDgwMiwiYXVkIjoiMjQifQ.MMJDbcKiOnoL_OZ-C5KyDuQmkQgSTC5koU4BGlp_6Fo
 
 ### Login route
 POST {{baseUrl}}/api/auth/login
@@ -30,7 +30,7 @@ POST {{baseUrl}}/api/auth/refresh-token
 Content-Type: application/json
 
 {
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTk4MjQzMzksImV4cCI6MTU5OTgyNzkzOSwiYXVkIjoiODQifQ.qi9YhdLxHrb9TY_0Or-bg4fPVgYXPa1L1o-86spIv4M"
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDIxNDAxNzgsImV4cCI6MTYwMjc0NDk3OCwiYXVkIjoiMjQifQ.eWVXhvbCQcCN7UXvL1aTiWMzFI-O91Ctl2XuN6QFLaI"
 }
 
 ### Logout route

@@ -3,7 +3,6 @@ import { ToastrService } from 'ngx-toastr';
 
 import { ProductModelServer, ServerResponse } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/services/product.service';
-
 @Component({
   selector: 'app-men-accessories',
   templateUrl: './men-accessories.component.html',
@@ -11,9 +10,10 @@ import { ProductService } from 'src/app/services/product.service';
 
 export class MenAccessoriesComponent implements OnInit {
 
-  products: ProductModelServer[] = [];
+  products: ProductModelServer[];
   searchValue: string
-  p: number = 1 // current page
+  isDisplay = true
+  p: number = 1
 
   constructor(private productService: ProductService, private toastr: ToastrService) {}
 
@@ -21,6 +21,16 @@ export class MenAccessoriesComponent implements OnInit {
     this.productService.getProdFromClassifyIdCategoryId(1, 4).subscribe((prods: ServerResponse) => {
       this.products = prods.products
     })
+  }
+
+  sortIncreasing() {
+    this.products = this.products.sort((a, b) => a.price - b.price)
+    this.isDisplay = !this.isDisplay
+  }
+
+  sortDecreasing() {
+    this.products = this.products.sort((a, b) => b.price - a.price)
+    this.isDisplay = !this.isDisplay
   }
 
   searchProduct() {
@@ -41,6 +51,11 @@ export class MenAccessoriesComponent implements OnInit {
     } else if (this.searchValue == "") {
       this.ngOnInit()
     }
+  }
+
+  toggleDisplay() {
+    this.isDisplay = !this.isDisplay
+    document.getElementById("icon-down").classList.toggle("icon-up");
   }
 
 }
