@@ -1,3 +1,4 @@
+// scale-up-ver-bottom
 @-webkit-keyframes scale-up-ver-bottom {
     0% {
         -webkit-transform       : scaleY(0.4);
@@ -30,53 +31,38 @@
     }
 }
 
+.scale-up-ver-bottom {
+	-webkit-animation: scale-up-ver-bottom 0.4s ease-in ;
+	        animation: scale-up-ver-bottom 0.4s ease-in ;
+}
 
-@keyframes backgroundAnimation {
+//slide-in-bottom
+@-webkit-keyframes slide-in-bottom {
     0% {
-        background-position: 0% 50%;
+      -webkit-transform: translateY(1000px);
+              transform: translateY(1000px);
+      opacity: 0;
     }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
     100% {
-        background-position: 0% 50%;
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
+      opacity: 1;
     }
-}
+  }
+  @keyframes slide-in-bottom {
+    0% {
+      -webkit-transform: translateY(1000px);
+              transform: translateY(1000px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
+      opacity: 1;
+    }
+  }
 
-@keyframes loadProfile {
-    from {
-        transform: translateY(100px);
-        opacity  : 0;
-    }
-
-    to {
-        transform: translateY(0px);
-        opacity  : 1;
-    }
-}
-
-@keyframes loadProfileImage {
-    from {
-        transform: translateY(50px);
-        opacity  : 0;
-    }
-
-    to {
-        transform: translateY(0px);
-        opacity  : 1;
-    }
-}
-
-@keyframes titleEffect {
-    from {
-        opacity  : 0;
-        transform: translateX(-75px);
-    }
-
-    to {
-        transform: translateX(0px);
-        opacity  : 1;
-    }
+  .slide-in-bottom {
+	-webkit-animation: slide-in-bottom 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.25s both;
+	        animation: slide-in-bottom 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.25s both;
 }

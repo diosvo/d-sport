@@ -3,23 +3,18 @@ import { ToastrService } from 'ngx-toastr';
 
 import { ProductModelServer, ServerResponse } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/services/product.service';
-import { Options } from 'src/app/models/option.model';
 
 @Component({
   selector: 'app-wm-shoes-u100',
   templateUrl: './wm-shoes-u100.component.html'
 })
+
 export class WmShoesU100Component implements OnInit {
 
   products: ProductModelServer[];
   searchValue: string
-  selected: Number
-  p: number = 1 // current page
-
-  options: Options[] = [
-    { id: 1, option: 'Price: Low-High' },
-    { id: 2, option: 'Price: High-Low' },
-  ]
+  isDisplay = true
+  p: number = 1
 
   constructor(private productService: ProductService, private toastr: ToastrService) { }
 
@@ -31,19 +26,14 @@ export class WmShoesU100Component implements OnInit {
     })
   }
 
-  selectOptions() {
-    if (this.selected = 1) {
-      this.products = this.products.sort((a, b) => a.price - b.price)
-    } else this.products = this.products.sort((a, b) => b.price - a.price)
+  sortIncreasing() {
+    this.products = this.products.sort((a, b) => a.price - b.price)
+    this.isDisplay = !this.isDisplay
   }
 
-  sortIncreasing() {
-    // alert('hiiii');
-    if (this.selected = 0) {
-      this.products
-    } else if (this.selected = 1) {
-      this.products = this.products.sort((a, b) => a.price - b.price)
-    } else this.products = this.products.sort((a, b) => b.price - a.price)
+  sortDecreasing() {
+    this.products = this.products.sort((a, b) => b.price - a.price)
+    this.isDisplay = !this.isDisplay
   }
 
   searchProduct() {
@@ -64,6 +54,11 @@ export class WmShoesU100Component implements OnInit {
     } else if (this.searchValue == "") {
       this.ngOnInit()
     }
+  }
+
+  toggleDisplay() {
+    this.isDisplay = !this.isDisplay
+    document.getElementById("icon-down").classList.toggle("icon-up");
   }
 
 }

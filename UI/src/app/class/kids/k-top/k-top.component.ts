@@ -10,8 +10,9 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class KTopComponent implements OnInit {
 
-  products: ProductModelServer[] = [];
+  products: ProductModelServer[];
   searchValue: string
+  isDisplay = true
   p: number = 1
 
   constructor(private productService: ProductService, private toastr: ToastrService) {}
@@ -20,6 +21,16 @@ export class KTopComponent implements OnInit {
     this.productService.getProdFromClassifyIdCategoryId(3, 2).subscribe((prods: ServerResponse) => {
       this.products = prods.products
     })
+  }
+
+  sortIncreasing() {
+    this.products = this.products.sort((a, b) => a.price - b.price)
+    this.isDisplay = !this.isDisplay
+  }
+
+  sortDecreasing() {
+    this.products = this.products.sort((a, b) => b.price - a.price)
+    this.isDisplay = !this.isDisplay
   }
 
   searchProduct() {
@@ -40,6 +51,11 @@ export class KTopComponent implements OnInit {
     } else if (this.searchValue == "") {
       this.ngOnInit()
     }
+  }
+
+  toggleDisplay() {
+    this.isDisplay = !this.isDisplay
+    document.getElementById("icon-down").classList.toggle("icon-up");
   }
 
 }

@@ -33,29 +33,20 @@ export class UserService {
   }
 
   loginUser(email: string, password: string) {
-    return this.http.post<UserModelServer>(`${this.SERVER_URL}/auth/login`, { email, password })
-      .pipe(
+    return this.http.post<UserModelServer>(`${this.SERVER_URL}/auth/login`, { email, password }).pipe(
         map((data: UserModelServer) => {
-          /* if (data && data.accessToken) {
-            this.auth = data.auth;
+          this.userData$.next(data)
+          if (data && data.accessToken) {
+            this.auth = data.auth
             this.tokenService.setSession(data.id, data.accessToken, data.refreshToken)
+            this.authState$.next(this.auth)
+            console.log(data);
 
-            this.authState$.next(this.auth);
-            this.userData$.next(data);
           }
-          // localStorage.setItem('current-user', JSON.stringify(data)); */
-          this.tokenService.setSession(data.id, data.accessToken, data.refreshToken)
           return data
         }),
         catchError((err: HttpErrorResponse) => of(err.error.message)))
-      .subscribe((data: UserModelServer) => {
-        if (data && data.accessToken) {
-          this.auth = data.auth;
-
-          this.authState$.next(this.auth);
-          this.userData$.next(data);
-        }
-      })
+        .subscribe()
   }
 
   logout() {

@@ -186,7 +186,6 @@ router.get('/classify/:classifyID/category/:cateID', (req, res) => {
     // Fetch
     const classify_id = req.params.classifyID;
     const cat_id = req.params.cateID;
-    console.log('classifyID:', classify_id, '- categoryID:', cat_id);
 
     database.table('products as p')
         .join([

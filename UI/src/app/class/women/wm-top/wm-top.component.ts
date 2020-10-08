@@ -11,9 +11,10 @@ import { ProductService } from 'src/app/services/product.service';
 
 export class WmTopComponent implements OnInit {
 
-  products: ProductModelServer[] = [];
+  products: ProductModelServer[];
   searchValue: string
-  p: number = 1 // current page
+  isDisplay = true
+  p: number = 1
 
   constructor(private productService: ProductService, private toastr: ToastrService) {}
 
@@ -21,6 +22,16 @@ export class WmTopComponent implements OnInit {
     this.productService.getProdFromClassifyIdCategoryId(2, 2).subscribe((prods: ServerResponse) => {
       this.products = prods.products
     })
+  }
+
+  sortIncreasing() {
+    this.products = this.products.sort((a, b) => a.price - b.price)
+    this.isDisplay = !this.isDisplay
+  }
+
+  sortDecreasing() {
+    this.products = this.products.sort((a, b) => b.price - a.price)
+    this.isDisplay = !this.isDisplay
   }
 
   searchProduct() {
@@ -41,6 +52,11 @@ export class WmTopComponent implements OnInit {
     } else if (this.searchValue == "") {
       this.ngOnInit()
     }
+  }
+
+  toggleDisplay() {
+    this.isDisplay = !this.isDisplay
+    document.getElementById("icon-down").classList.toggle("icon-up");
   }
 
 }

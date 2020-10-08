@@ -8,11 +8,11 @@ import { MenBottomComponent } from './men-bottom/men-bottom.component';
 import { MenAccessoriesComponent } from './men-accessories/men-accessories.component';
 
 const routes: Routes = [
-  { path: '', component: MenComponent },
+  { path: '', component: MenComponent, data: {title: 'Men'} },
   {
     path: 'men',
     children: [
-      { path: '', redirectTo: 'men', pathMatch: 'full' },
+      { path: '', redirectTo: 'men', pathMatch: 'full', data: {title: 'Men'} },
       { path: 'shoes', component: MenShoesComponent },
       { path: 'top', component: MenTopComponent },
       { path: 'bottom', component: MenBottomComponent },

@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const client = require('./redis');
 require('dotenv').config()
 
 module.exports = {
@@ -51,17 +50,9 @@ module.exports = {
                 if (err) {
                     console.log(err.message);
                     reject(createError.InternalServerError())
+                    return
                 }
-
-                /// Redis- TTL
-                client.SET(userID, token, 'EX', 365 * 24 * 60 * 60, (err, reply) => {
-                    if (err) {
-                        console.log(err.message);
-                        reject(createError.InternalServerError())
-                        return
-                    }
-                    resolve(token)
-                })
+                resolve(token)
 
             })
         })
@@ -76,18 +67,14 @@ module.exports = {
                     if (err) return reject(createError.Unauthorized())
                     const userID = payload.aud
 
-                    client.GET(userID, (err, result) => {
-                        console.log('UserID :', userID);
-
-                        if (err) {
-                            console.log(err.message);
-                            reject(createError.InternalServerError())
-                            return
-                        } else {
-                            if (result === refreshToken) return resolve(userID)
-                            reject(createError.Unauthorized())
-                        }
-                    })
+                    if (err) {
+                        console.log(err.message);
+                        reject(createError.InternalServerError())
+                        return
+                    } else {
+                        if (refreshToken) return resolve(userID)
+                        reject(createError.Unauthorized())
+                    }
                 })
         })
     }

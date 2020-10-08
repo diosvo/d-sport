@@ -8,19 +8,6 @@ const createError = require('http-errors');
 const compression = require('compression')
 const { verifyAccessToken } = require('./config/jwt')
 
-/* Redis */
-const { client } = require('./config/redis')
-
-const session = require('express-session')
-const RedisStore = require('connect-redis')(session)
-
-app.use(session({
-    store: new RedisStore({ client: client }),
-    secret: 'rat la secret luon ^^',
-    resave: false,
-    saveUninitialized: false
-}))
-
 /* Middleware */
 const cors = require('cors');
 app.use(cors());
@@ -36,7 +23,7 @@ app.use((req, res, next) => {
 });
 
 app.get('/', verifyAccessToken, async (req, res, next) => {
-    res.send('Hi. Im Dios V')
+    res.send('Inside protected route.')
 })
 
 /* Import Routes */
@@ -83,106 +70,6 @@ app.use(async (err, req, res, next) => {
     })
 })
 
-/* Realtime Database */
-const mysql = require('mysql');
-const http = require('http');
-const MySQLEvents = require('@rodrigogs/mysql-events');
-const server = http.createServer(app);
-const socketIO = require('socket.io');
-const io = socketIO.listen(server);
-const { database } = require('./config/helpers');
-
-// Define some array variables
-let data = Array(0);
-let currentData = Array(0);
-
-// Use IO Socket to set up connection
-io.sockets.on('connection', (socket) => {
-    database.table('products')
-        .withFields(['id', 'title', 'description', 'price', 'quantity', 'another_CatName'])
-        .sort({ id: -1 })
-        .getAll()
-        .then(prods => {
-            data = prods;
-            io.sockets.emit('initial', { prods: [...data] })
-        })
-        .catch(err => res.json(err));
-})
-
-const program = async () => {
-    const connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'diosvo',
-        password: '12121999',
-        database: 'd.sport'
-    });
-
-    // Create MySQLEvents
-    const instance = new MySQLEvents(connection, {
-        startAtEnd: true // to record only new binary logs
-    });
-
-    await instance.start();
-
-    instance.addTrigger({
-        name: 'Monitor all SQL Statements',
-        expression: 'd.sport.*',
-        statement: MySQLEvents.STATEMENTS.ALL,
-        onEvent: e => {
-            currentData = e.affectedRows;
-
-            let newData;
-            switch (e.type) {
-                case "DELETE":
-                    newData = currentData[0].before;
-                    let index = data.findIndex(p => p.id === newData.id);
-
-                    // If product is present
-                    if (index > -1) {
-                        data = data.filter(p => p.id !== newData.id);
-                        io.sockets.emit('update', { prods: [...data], type: "DELETE" });
-                    } else {
-                        return;
-                    }
-                    break;
-
-                case "UPDATE":
-                    newData = currentData[0].after;
-                    let index2 = data.findIndex(p => p.id === newData.id);
-
-                    // If product is present
-                    if (index2 > -1) {
-                        data[index2] = newData;
-                        io.sockets.emit('update', { prods: [...data], type: "DELETE" });
-                    } else {
-                        return;
-                    }
-                    break;
-
-                case "INSERT":
-                    database.table('products')
-                        .withFields(['id', 'title', 'description', 'image', 'price', 'quantity', 'another_CatName', 'image_1', 'image_2', 'image_3', 'category_id', 'classify_id'])
-                        .sort({ id: -1 })
-                        .getAll()
-                        .then(prods => {
-                            data = prods;
-                            io.sockets.emit('initial', { prods: [...data] })
-                        })
-                        .catch(err => res.json(err));
-                    break;
-
-                default:
-                    break;
-            }
-        }
-    });
-
-    instance.on(MySQLEvents.EVENTS.CONNECTION_ERROR, console.error);
-    instance.on(MySQLEvents.EVENTS.ZONGJI_ERROR, console.error);
-};
-
-program().then();
-
-server.listen(2609, () => {
+app.listen(2609, () => {
     console.log('Server running on port 2609')
 })

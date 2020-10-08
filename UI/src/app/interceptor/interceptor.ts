@@ -10,10 +10,9 @@ import { TokenStorageService } from '../services/token-storage.service';
 @Injectable()
 export class Interceptor implements HttpInterceptor {
     constructor(private token: TokenStorageService,
-        private toastr: ToastrService,
-    ) { }
+        private toastr: ToastrService) { }
 
-    accessTokenRefreshed: Subject<any> = new Subject();
+    // accessTokenRefreshed: Subject<any> = new Subject();
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const accessToken = this.token.getAccessToken()
@@ -61,6 +60,4 @@ export class Interceptor implements HttpInterceptor {
     }
 }
 
-export const AuthInterceptor = [
-    { provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true }
-]
+export const AuthInterceptor = [{ provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true }]
