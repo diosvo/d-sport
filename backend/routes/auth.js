@@ -33,7 +33,7 @@ router.post('/register', bodyParser.json(), async (req, res, next) => {
                 dob: result.dob || null,
             }).catch(err => console.log(err));
 
-            res.send("Register Successfully")
+        res.send("Register Successfully")
     } catch (error) {
         if (error.isJoi === true) error.status = 422
         next(error)
@@ -41,6 +41,11 @@ router.post('/register', bodyParser.json(), async (req, res, next) => {
 })
 
 router.post('/login', bodyParser.json(), async (req, res, next) => {
+
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
     try {
         const result = await authSchema.validateAsync(req.body)
         const user = await database.table('users').filter({ email: result.email }).get();
@@ -69,6 +74,8 @@ router.post('/login', bodyParser.json(), async (req, res, next) => {
             lastname: user.lastname,
             firstname: user.firstname,
             email: result.email,
+            month: monthNames[user.since.getMonth()],
+            year: user.since.getUTCFullYear()
         })
     } catch (error) {
         if (error.isJoi === true) return next(createError.BadRequest('Incorrect email or password type.')) // 400
