@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProfileComponent } from './profile.component';
 import { ProfileGuard } from 'src/app/guard/profile.guard';
 
-const routes: Routes = [{ path: '', component: ProfileComponent, canActivate: [ProfileGuard]}];
+const routes: Routes = [{ path: '', component: ProfileComponent, canActivate: [ProfileGuard], data: { title: 'Member Profile.' } }];
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
