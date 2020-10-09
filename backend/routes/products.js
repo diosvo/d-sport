@@ -56,7 +56,6 @@ router.get('/', function (req, res) {
 // Get [Single] products
 router.get('/:prodId', (req, res) => {
     let productId = req.params.prodId;
-    console.log('Product ID:', productId);
 
     database.table('products as p')
         .join([{

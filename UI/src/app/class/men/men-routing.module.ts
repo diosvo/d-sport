@@ -8,15 +8,15 @@ import { MenBottomComponent } from './men-bottom/men-bottom.component';
 import { MenAccessoriesComponent } from './men-accessories/men-accessories.component';
 
 const routes: Routes = [
-  { path: '', component: MenComponent, data: {title: 'Men'} },
+  { path: '', component: MenComponent, data: { title: 'Men\'s Shoes, Clothing & Accessories.' } },
   {
     path: 'men',
     children: [
-      { path: '', redirectTo: 'men', pathMatch: 'full', data: {title: 'Men'} },
-      { path: 'shoes', component: MenShoesComponent },
-      { path: 'top', component: MenTopComponent },
-      { path: 'bottom', component: MenBottomComponent },
-      { path: 'accessories', component: MenAccessoriesComponent }
+      { path: '', redirectTo: 'men', pathMatch: 'full' },
+      { path: 'shoes', component: MenShoesComponent, data: { title: 'Men\'s Shoes.' } },
+      { path: 'top', component: MenTopComponent, data: { title: 'Men\'s Top.' } },
+      { path: 'bottom', component: MenBottomComponent, data: { title: 'Men\'s Bottom.' } },
+      { path: 'accessories', component: MenAccessoriesComponent, data: { title: 'Men\'s Accessories.' } }
     ]
   },
 ];

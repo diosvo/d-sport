@@ -8,5 +8,6 @@ export interface UserModelServer {
     auth: boolean
     accessToken: string, 
     refreshToken: string,
-    photoUrl: string
+    month: string,
+    year: number
 }

@@ -64,9 +64,7 @@ export class HeaderComponent implements OnInit {
 
   onClickMenu() {
     const nav = document.querySelector('.nav')
-    document.querySelector('#btnNav').addEventListener("click", () => {
-      nav.classList.add('nav--open')
-    })
+    nav.classList.add('nav--open')
 
     document.querySelector('.nav__overlay').addEventListener("click", () => {
       nav.classList.remove('nav--open')

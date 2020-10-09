@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { ValidationService } from 'src/app/services/validation.service';
 import { UserService } from 'src/app/services/user.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -26,12 +27,13 @@ export class LoginComponent implements OnInit {
     private validation: ValidationService,
     private userService: UserService,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.userService.authState$.subscribe(authState => {
       if (authState) {
-        this.router.navigateByUrl(this.route.snapshot.queryParams['returnUrl'] || '/');
+        this.router.navigateByUrl(this.route.snapshot.queryParams['returnUrl'] || '/profile');
       } else {
         this.router.navigateByUrl('/login');
       }
@@ -43,6 +45,7 @@ export class LoginComponent implements OnInit {
       return
     }
 
+    this.spinner.show()
     this.userService.loginUser(this.email.value, this.password.value)
     this.loginForm.reset();
   }

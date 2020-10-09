@@ -45,7 +45,7 @@ export class MenComponent implements OnInit {
         items: 3
       }
     },
-    nav: true
+    nav: false
   }
 
   exploreCustomOptions: OwlOptions = {

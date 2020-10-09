@@ -8,6 +8,7 @@ import { UserModelServer } from 'src/app/models/user.model';
 import { CartModelServer } from 'src/app/models/cart.model';
 
 import { map } from 'rxjs/operators';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-profile',
@@ -43,4 +44,31 @@ export class ProfileComponent implements OnInit {
     this.token.removeTokens()
     this.cartService.cartData$.subscribe(data => this.cartData = data)
   }
+
+  benefitsOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: false,
+    navSpeed: 1000,
+    autoplay: true,
+    navText: ['', ''],
+    responsive: {
+      0: {
+        items: 2
+      },
+      400: {
+        items: 3
+      },
+      740: {
+        items: 3
+      },
+      940: {
+        items: 4
+      }
+    },
+    nav: false
+  }
+
 }

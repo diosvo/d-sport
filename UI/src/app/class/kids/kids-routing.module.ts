@@ -9,15 +9,15 @@ import { KAccessoriesComponent } from './k-accessories/k-accessories.component';
 
 
 const routes: Routes = [
-  { path: '', component: KidsComponent },
+  { path: '', component: KidsComponent, data: { title: 'D Kids.' } },
   {
     path: 'kids',
     children: [
       { path: '', redirectTo: 'kids', pathMatch: 'full' },
-      { path: 'shoes', component: KShoesComponent },
-      { path: 'top', component: KTopComponent },
-      { path: 'bottom', component: KBottomComponent },
-      { path: 'accessories', component: KAccessoriesComponent },
+      { path: 'shoes', component: KShoesComponent, data: { title: 'Kids Shoes.' } },
+      { path: 'top', component: KTopComponent, data: { title: 'Kids Top.' } },
+      { path: 'bottom', component: KBottomComponent, data: { title: 'Kids Bottom.' } },
+      { path: 'accessories', component: KAccessoriesComponent, data: { title: 'Kids Accessories.' } },
     ]
   },
 ];
