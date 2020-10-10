@@ -31,6 +31,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+   
     this.route.paramMap
       .pipe(
         map((param: ParamMap) => {
@@ -54,24 +55,32 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   }
 
   addToCart(id: number) {
-      if (this.userService.auth == true) {
-        this.userService.userData$
-          .subscribe((data: UserModelServer) => {
-            const getUserID = parseInt(this.token.getUser())
-  
-            if (data.id = getUserID) {
-              if (this.product.quantity >= 1) {
-                this.cartService.addProductToCart(id, parseInt(this.quantityInput.nativeElement.value));
-                console.log('Add to cart successfully w/ ProductID:', id, 'x', this.quantityInput.nativeElement.value);
-              } else {
-                this.oos();
-              }
-            }
-          })
-      } else {
-        return this.router.navigateByUrl('/login')
-      } 
+    /*       if (this.userService.auth == true) {
+            this.userService.userData$
+              .subscribe((data: UserModelServer) => {
+                const getUserID = parseInt(this.token.getUser())
+      
+                if (data.id = getUserID) {
+                  if (this.product.quantity >= 1) {
+                    this.cartService.addProductToCart(id, parseInt(this.quantityInput.nativeElement.value));
+                  } else {
+                    this.oos();
+                  }
+                }
+              })
+          } else {
+            return this.router.navigateByUrl('/login')
+          }  */
 
+    /* if (this.userService.authState$ && this.userService.auth == true) {
+      if (this.product.quantity >= 1) {
+        this.cartService.addProductToCart(id, parseInt(this.quantityInput.nativeElement.value));
+      } else {
+        this.oos();
+      }
+    } else {
+      return this.router.navigateByUrl('/login')
+    } */
   }
 
   Increase() {

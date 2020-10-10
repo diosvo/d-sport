@@ -4,7 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { ValidationService } from 'src/app/services/validation.service';
 import { UserService } from 'src/app/services/user.service';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -27,8 +26,7 @@ export class LoginComponent implements OnInit {
     private validation: ValidationService,
     private userService: UserService,
     private router: Router,
-    private route: ActivatedRoute,
-    private spinner: NgxSpinnerService) { }
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.userService.authState$.subscribe(authState => {
@@ -45,7 +43,6 @@ export class LoginComponent implements OnInit {
       return
     }
 
-    this.spinner.show()
     this.userService.loginUser(this.email.value, this.password.value)
     this.loginForm.reset();
   }

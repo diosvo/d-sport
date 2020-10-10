@@ -8,13 +8,12 @@ import { HttpClient } from '@angular/common/http';
 
 export class TokenStorageService {
   private SERVER_URL = environment.SERVER_URL;
-
+  redirectUrl: string;
   constructor(private http: HttpClient) { }
 
-  setSession(userId: number, accessToken: string, refreshToken: string) {
+  setData(userId: number, accessToken: string) {
     localStorage.setItem('user-id', JSON.stringify(userId));
     localStorage.setItem('x-access-token', accessToken);
-    localStorage.setItem('x-refresh-token', refreshToken);
   }
 
   getAccessToken() {
@@ -37,5 +36,21 @@ export class TokenStorageService {
 
   removeTokens() {
     window.localStorage.clear();
+  }
+
+  setSession(data) {
+    return localStorage.setItem('current-user', JSON.stringify(data))
+  }
+
+  getSession() {
+    return JSON.parse(localStorage.getItem('current-user')); // get current user
+  }
+
+  isAuthenticated(): boolean {
+    if (this.getAccessToken()) {
+      return true
+    } else {
+      return false
+    }
   }
 }

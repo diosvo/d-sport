@@ -27,29 +27,22 @@ export class CartComponent implements OnInit {
     private token: TokenStorageService) { }
 
   ngOnInit(): void {
-
-    if (this.userService.authState$) {
-      if (this.userService.auth == true) {
-        this.userService.userData$
-          .pipe(
-            map((user: UserModelServer) => {
-              return user
-            })
-          )
-          .subscribe((data: UserModelServer) => {
-            const getUserID = parseInt(this.token.getUser())
-            if (data.id = getUserID) {
-              this.cartService.cartTotal$.subscribe(total => this.cartTotal = total)
-              this.cartService.cartData$.subscribe(data => this.cartData = data)
-
-              this.userService.authState$.subscribe(authState => { this.authState = authState })
-            } else return
-          })
-      } else {
-        this.cartService.cartData$.subscribe(data => this.cartData = data)
-        this.userService.authState$.subscribe(authState => { this.authState = authState })
-      }
+    /* 
+        if (this.userService.authState$) {
+          if (this.userService.auth == true) {
+                  this.cartService.cartTotal$.subscribe(total => this.cartTotal = total)
+                  this.cartService.cartData$.subscribe(data => this.cartData = data)
+    
+                  this.userService.authState$.subscribe(authState => { this.authState = authState })
+                } else return
+          } else {
+            this.cartService.cartData$.subscribe(data => this.cartData = data)
+            this.userService.authState$.subscribe(authState => { this.authState = authState })
+          } */
+    if (this.token.isAuthenticated()) {
+      console.log(this.userService.auth)
     }
+    console.log(this.userService.auth)
 
   }
 

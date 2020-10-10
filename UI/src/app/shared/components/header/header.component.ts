@@ -28,36 +28,16 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if (this.userService.authState$) {
-      if (this.userService.auth == true) {
-        this.userService.userData$
-          .pipe(
-            map((user: UserModelServer) => {
-              return user
-            })
-          )
-          .subscribe((data: UserModelServer) => {
-            const getUserID = parseInt(this.token.getUser())
-            if (data.id = getUserID) {
-              this.cartService.cartTotal$.subscribe(total => this.cartTotal = total)
-              this.cartService.cartData$.subscribe(data => {
-                this.cartData = data
-                const number = this.cartData.data[0].numInCart
-                console.log('auth:', this.userService.auth, 'number in cart:', number)
-              })
-              this.userService.authState$.subscribe(authState => { this.authState = authState })
-            } else return
-          })
-      } else {
-        this.userService.authState$.subscribe(authState => { this.authState = authState })
-        this.cartService.cartData$.subscribe(data => {
-          this.cartData = data
-          const number = this.cartData.data[0].numInCart
-          console.log('auth:', this.userService.auth, 'number in cart:', number)
-        })
+    if (this.userService.authState$ && this.userService.auth == true) {
+      this.cartService.cartTotal$.subscribe(total => this.cartTotal = total)
+      this.cartService.cartData$.subscribe(data => { this.cartData = data })
+      this.userService.authState$.subscribe(authState => { this.authState = authState })
 
-        localStorage.removeItem('cart')
-      }
+    } else {
+      this.userService.authState$.subscribe(authState => { this.authState = authState })
+      // this.authState === false
+      this.cartService.cartData$.subscribe(data => { this.cartData = data })
+      localStorage.removeItem('cart')
     }
 
   }
@@ -77,5 +57,9 @@ export class HeaderComponent implements OnInit {
 
   selectProduct(id: Number) {
     return this.router.navigate(['/product-details', id]).then();
+  }
+
+  routerLink() {
+    this.authState === true ? this.router.navigate(['/profile']) : this.router.navigate(['/login'])
   }
 }

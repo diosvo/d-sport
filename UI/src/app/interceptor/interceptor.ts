@@ -1,22 +1,22 @@
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HTTP_INTERCEPTORS, HttpErrorResponse} from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HTTP_INTERCEPTORS, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { Observable, Subject, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { ToastrService } from 'ngx-toastr';
 import { TokenStorageService } from '../services/token-storage.service';
+import { UserService } from '../services/user.service';
 
 @Injectable()
 export class Interceptor implements HttpInterceptor {
     constructor(private token: TokenStorageService,
-        private toastr: ToastrService) { }
-
-    // accessTokenRefreshed: Subject<any> = new Subject();
+        private toastr: ToastrService,
+        private auth: UserService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const accessToken = this.token.getAccessToken()
-
+        
         if (accessToken) {
             req = this.addToken(req, accessToken);
         }
@@ -31,7 +31,7 @@ export class Interceptor implements HttpInterceptor {
                 closeButton: true
             })
         }
-        
+
         if (err.status === 401) {
             this.toastr.error('Your email or password is incorrect.', 'Please, try again!', {
                 timeOut: 2500,

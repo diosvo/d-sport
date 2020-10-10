@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { UserService } from 'src/app/services/user.service';
@@ -36,6 +35,7 @@ export class CheckoutComponent implements OnInit {
   );
 
   ngOnInit(): void {
+    this.spinner.hide()
     this.cartService.cartData$.subscribe(data => this.cartData = data);
     this.cartService.cartTotal$.subscribe(total => this.cartTotal = total);
   }
@@ -44,13 +44,7 @@ export class CheckoutComponent implements OnInit {
     this.spinner.show();
 
     if (this.userService.auth == true) {
-      this.userService.userData$
-        .pipe(
-          map((user: UserModelServer) => {
-            return user;
-          })
-        )
-        .subscribe((data: UserModelServer) => {
+      this.userService.userData$.subscribe((data: UserModelServer) => {
           this.cartService.checkoutFromCart(data.id);
         });
     }

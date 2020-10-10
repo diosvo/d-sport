@@ -28,20 +28,11 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.userData$
-      .pipe(
-        map((user: UserModelServer) => {
-          return user;
-        })
-      )
-      .subscribe((data: UserModelServer) => {
-        this.myUser = data;
-      });
+    this.myUser = this.token.getSession()
   }
 
   logout() {
     this.userService.logout();
-    this.token.removeTokens()
     this.cartService.cartData$.subscribe(data => this.cartData = data)
   }
 

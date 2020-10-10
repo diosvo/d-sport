@@ -6,7 +6,7 @@ export interface UserModelServer {
     lastname: string
     dob: Date,
     auth: boolean
-    accessToken: string, 
+    accessToken?: string, 
     refreshToken: string,
     month: string,
     year: number
