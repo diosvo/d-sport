@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
-import { UserService } from 'src/app/services/user.service';
 import { CartService } from 'src/app/services/cart.service';
 
 import { CartModelServer } from 'src/app/models/cart.model';
 import { UserModelServer } from 'src/app/models/user.model';
 
 import { NgxSpinnerService } from 'ngx-spinner';
-import { map } from 'rxjs/operators';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-checkout',
@@ -21,8 +20,8 @@ export class CheckoutComponent implements OnInit {
 
   constructor(private cartService: CartService,
     private spinner: NgxSpinnerService,
-    private userService: UserService, 
-    private fb: FormBuilder) {}
+    private authService: AuthService,
+    private fb: FormBuilder) { }
 
   checkoutForm = this.fb.group(
     {
@@ -42,12 +41,9 @@ export class CheckoutComponent implements OnInit {
 
   checkOut() {
     this.spinner.show();
-
-    if (this.userService.auth == true) {
-      this.userService.userData$.subscribe((data: UserModelServer) => {
-          this.cartService.checkoutFromCart(data.id);
-        });
-    }
+    this.authService.user.subscribe((data: UserModelServer) => {
+      this.cartService.checkoutFromCart(data.id);
+    });
   }
 
   get firstname() {
@@ -65,9 +61,9 @@ export class CheckoutComponent implements OnInit {
   get email() {
     return this.checkoutForm.get('email')
   }
-  
+
   get phone() {
     return this.checkoutForm.get('phone')
   }
-  
+
 }

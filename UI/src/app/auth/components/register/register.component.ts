@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
-import { UserService } from 'src/app/services/user.service';
-import { ValidationService } from 'src/app/services/validation.service';
 import { ToastrService } from 'ngx-toastr';
+
+import { ValidationService } from 'src/app/services/validation.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { JwtService } from 'src/app/services/jwt.service';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +22,6 @@ export class RegisterComponent implements OnInit {
       firstname: ["", [Validators.required]],
       lastname: ["", [Validators.required]],
       dob: [""],
-      photoUrl: [""],
     },
     {
       validator: this.validation.passwordMatchValidator("password", "cfpassword")
@@ -30,17 +30,24 @@ export class RegisterComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private validation: ValidationService,
-    private userService: UserService,
+    private authService: AuthService,
     private router: Router,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private token: JwtService) { }
+
+  ngOnInit(): void {
+    let isLoggedIn = this.token.isLoggedIn()
+    if (isLoggedIn) {
+      this.router.navigate(['/home'])
+    }
+  }
 
   onSubmit() {
     if (this.registerForm.invalid) {
       return;
     }
 
-    // @ts-ignore
-    this.userService.registerUser(this.registerForm.value)
+    this.authService.registerUser(this.registerForm.value).subscribe()
     this.toastr.success('Register Successfully!', '', {
       timeOut: 2000,
       positionClass: 'toast-top-left',
@@ -68,8 +75,5 @@ export class RegisterComponent implements OnInit {
 
   get lastname() {
     return this.registerForm.get('lastname')
-  }
-
-  ngOnInit(): void {
   }
 }

@@ -1,25 +1,16 @@
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HTTP_INTERCEPTORS, HttpErrorResponse } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
-import { ToastrService } from 'ngx-toastr';
-import { TokenStorageService } from '../services/token-storage.service';
-import { UserService } from '../services/user.service';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
-export class Interceptor implements HttpInterceptor {
-    constructor(private token: TokenStorageService,
-        private toastr: ToastrService,
-        private auth: UserService) { }
+export class ErrorInterceptor implements HttpInterceptor {
+    constructor(private toastr: ToastrService, private authService: AuthService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const accessToken = this.token.getAccessToken()
-        
-        if (accessToken) {
-            req = this.addToken(req, accessToken);
-        }
         return next.handle(req).pipe(catchError(x => this.handleAuthError(x)));
     }
 
@@ -33,11 +24,12 @@ export class Interceptor implements HttpInterceptor {
         }
 
         if (err.status === 401) {
-            this.toastr.error('Your email or password is incorrect.', 'Please, try again!', {
-                timeOut: 2500,
+            this.toastr.error('Please, try again!', 'Unauthorized!', {
+                timeOut: 10000,
                 positionClass: 'toast-top-right',
                 closeButton: true
             })
+            this.authService.logout()
         }
 
         if (err.status === 404) {
@@ -50,14 +42,4 @@ export class Interceptor implements HttpInterceptor {
 
         return throwError(err);
     }
-
-    private addToken(request: HttpRequest<any>, token: string) {
-        return request.clone({
-            setHeaders: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-    }
 }
-
-export const AuthInterceptor = [{ provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true }]

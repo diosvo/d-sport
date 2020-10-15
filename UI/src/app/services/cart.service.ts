@@ -8,14 +8,13 @@ import { map } from 'rxjs/operators';
 
 import { ProductService } from './product.service';
 import { OrderService } from './order.service';
-import { TokenStorageService } from './token-storage.service';
-import { UserService } from './user.service';
 
 import { CartModelPublic, CartModelServer } from '../models/cart.model';
 import { UserModelServer } from '../models/user.model';
 
 import { ToastrService } from "ngx-toastr";
 import { NgxSpinnerService } from "ngx-spinner";
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +23,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 export class CartService implements OnInit {
 
   ngOnInit() {
-    this.userService.userData$
+    this.authService.user
       .pipe(
         map((user: UserModelServer) => {
           return user;
@@ -68,9 +67,8 @@ export class CartService implements OnInit {
     private orderService: OrderService,
     private router: Router,
     private toast: ToastrService,
-    private spinner: NgxSpinnerService,
-    private token: TokenStorageService,
-    private userService: UserService) {
+    private authService: AuthService,
+    private spinner: NgxSpinnerService) {
 
 
 

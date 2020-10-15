@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const {database} = require('../config/helpers');
-const bodyParser = require('body-parser')
 
 /* GET ALL ORDERS */
 router.get('/', (req, res) => {
@@ -72,7 +71,7 @@ router.get('/:id', (req, res) => {
 });
 
 /* NEW ORDER */
-router.post('/new', bodyParser.json(), (req, res) => {
+router.post('/new', (req, res) => {
     const {userId, products} = req.body;
     console.log(userId, products);
 

@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { CartService } from 'src/app/services/cart.service';
-import { UserService } from 'src/app/services/user.service';
-import { TokenStorageService } from 'src/app/services/token-storage.service';
+
 
 import { CartModelServer } from 'src/app/models/cart.model';
 import { UserModelServer } from 'src/app/models/user.model';
 
-import { map } from 'rxjs/operators';
+import { JwtService } from 'src/app/services/jwt.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -23,8 +23,8 @@ export class CartComponent implements OnInit {
 
   constructor(public cartService: CartService,
     private router: Router,
-    private userService: UserService,
-    private token: TokenStorageService) { }
+    private authService: AuthService,
+    private token: JwtService) { }
 
   ngOnInit(): void {
     /* 
@@ -39,10 +39,6 @@ export class CartComponent implements OnInit {
             this.cartService.cartData$.subscribe(data => this.cartData = data)
             this.userService.authState$.subscribe(authState => { this.authState = authState })
           } */
-    if (this.token.isAuthenticated()) {
-      console.log(this.userService.auth)
-    }
-    console.log(this.userService.auth)
 
   }
 

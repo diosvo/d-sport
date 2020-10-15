@@ -5,9 +5,9 @@ import { map } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { ProductService } from 'src/app/services/product.service';
 import { CartService } from 'src/app/services/cart.service';
-import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { UserService } from 'src/app/services/user.service';
-import { UserModelServer } from 'src/app/models/user.model';
+import { JwtService } from 'src/app/services/jwt.service';
+import { AuthService } from 'src/app/services/auth.service';
+
 
 @Component({
   selector: 'app-product-details',
@@ -25,8 +25,8 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     private cartService: CartService,
     private route: ActivatedRoute,
     private toastr: ToastrService,
-    private token: TokenStorageService,
-    private userService: UserService,
+    private token: JwtService,
+    private authService: AuthService,
     private router: Router) {
   }
 

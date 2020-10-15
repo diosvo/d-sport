@@ -19,7 +19,7 @@
                         <p class="nav__link" routerLink="/accessories">accessories</p>
                         <p class="nav__link" routerLink="/about.d">about us</p>
                         <hr>
-                        <p class="nav__link" routerLink="/register">{{authState === false ? 'register' : ''}}</p>
+                        <p class="nav__link" routerLink="/register" *ngIf="authState === false">register</p>
                         <p class="nav__link" (click)="routerLink()">{{authState === false ? 'login' : 'my account'}}</p>
                     </div>
                 </div>

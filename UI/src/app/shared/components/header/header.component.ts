@@ -2,13 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { CartModelServer } from 'src/app/models/cart.model';
-import { UserModelServer } from 'src/app/models/user.model';
 
 import { CartService } from 'src/app/services/cart.service';
-import { UserService } from 'src/app/services/user.service';
-import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { JwtService } from 'src/app/services/jwt.service';
 
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -22,24 +20,13 @@ export class HeaderComponent implements OnInit {
   authState: boolean
 
   constructor(public cartService: CartService,
-    private userService: UserService,
+    private authService: AuthService,
     private router: Router,
-    private token: TokenStorageService) { }
+    private token: JwtService) { }
 
   ngOnInit(): void {
-
-    if (this.userService.authState$ && this.userService.auth == true) {
-      this.cartService.cartTotal$.subscribe(total => this.cartTotal = total)
-      this.cartService.cartData$.subscribe(data => { this.cartData = data })
-      this.userService.authState$.subscribe(authState => { this.authState = authState })
-
-    } else {
-      this.userService.authState$.subscribe(authState => { this.authState = authState })
-      // this.authState === false
-      this.cartService.cartData$.subscribe(data => { this.cartData = data })
-      localStorage.removeItem('cart')
-    }
-
+    this.cartService.cartTotal$.subscribe(total => this.cartTotal = total)
+    this.cartService.cartData$.subscribe(data => { this.cartData = data })
   }
 
   onClickMenu() {
