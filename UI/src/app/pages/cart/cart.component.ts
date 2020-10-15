@@ -16,30 +16,24 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
+
+  isLoggedIn: Boolean
   cartData: CartModelServer;
   cartTotal: Number;
   subTotal: Number;
-  authState: boolean
 
   constructor(public cartService: CartService,
     private router: Router,
-    private authService: AuthService,
-    private token: JwtService) { }
+    private authService: AuthService) { }
 
   ngOnInit(): void {
-    /* 
-        if (this.userService.authState$) {
-          if (this.userService.auth == true) {
-                  this.cartService.cartTotal$.subscribe(total => this.cartTotal = total)
-                  this.cartService.cartData$.subscribe(data => this.cartData = data)
-    
-                  this.userService.authState$.subscribe(authState => { this.authState = authState })
-                } else return
-          } else {
-            this.cartService.cartData$.subscribe(data => this.cartData = data)
-            this.userService.authState$.subscribe(authState => { this.authState = authState })
-          } */
-
+    this.authService.auth.subscribe(isLoggedIn => { this.isLoggedIn = isLoggedIn })
+    if(this.isLoggedIn && localStorage.getItem('cart')) {
+      this.cartService.cartTotal$.subscribe(total => {this.cartTotal = total})
+      this.cartService.cartData$.subscribe(data => { this.cartData = data })
+    }
+    this.cartService.cartTotal$.subscribe(total => this.cartTotal = total)
+    this.cartService.cartData$.subscribe(data => { this.cartData = data })
   }
 
   ChangeQty(index: number, increase: boolean) {

@@ -19,8 +19,9 @@
                         <p class="nav__link" routerLink="/accessories">accessories</p>
                         <p class="nav__link" routerLink="/about.d">about us</p>
                         <hr>
-                        <p class="nav__link" routerLink="/register" *ngIf="authState === false">register</p>
-                        <p class="nav__link" (click)="routerLink()">{{authState === false ? 'login' : 'my account'}}</p>
+                        <p class="nav__link" *ngIf="!isLoggedIn" routerLink="/login">login</p>
+                        <p class="nav__link" *ngIf="!isLoggedIn" routerLink="/register">register</p>
+                        <p class="nav__link" *ngIf="isLoggedIn" routerLink="/profile">my account</p>
                     </div>
                 </div>
                 <div class="nav__overlay"></div>
@@ -39,19 +40,19 @@
                         width=100%>
                 </div>
                 <span
-                    class="cart--items--qty">{{(cartData.data[0].numInCart !== 0 && authState === true) ? cartData.data.length : 0}}</span>
+                    class="cart--items--qty">{{(cartData.data[0].numInCart) ? cartData.data.length : 0}}</span>
             </span>
 
             <div class="qc-view">
                 <div class="cart-transparent"></div>
 
-                <div *ngIf="authState === false">
+                <div *ngIf="!isLoggedIn">
                     <div class="no-items scale-up-ver-bottom text-center">
                         <p class="m-0">You need to <u routerLink="/login" class="not-login">login</u> first</p>
                     </div>
                 </div>
 
-                <div *ngIf="authState === true">
+                <div *ngIf="isLoggedIn">
                     <div class="no-items scale-up-ver-bottom" *ngIf="cartData.data[0].numInCart === 0">
                         <p>Your cart is currently empty.</p>
                     </div>
@@ -61,7 +62,7 @@
                             <div class="d-flex mb-2">
                                 <div class="qc-img">
                                     <img [src]="c.product?.image" loading=lazy alt="pro-img"
-                                        (click)="selectProduct(c.product?.id)"width=100%>
+                                        (click)="selectProduct(c.product?.id)" width=100%>
                                 </div>
                                 <div class="px-2 mr-auto">
                                     <p class="font-15" (click)="selectProduct(c.product?.id)">
@@ -85,7 +86,7 @@
                         <div class="cart--buttons d-flex justify-content-around align-items-baseline">
                             <div class="viewcart" routerLink="/cart">View
                                 Checkout
-                                ({{(cartData.data[0].numInCart !== 0 && authState === true) ? cartData.data.length : 0}})
+                                ({{cartData.data[0].numInCart !== 0 ? cartData.data.length : 0}})
                             </div>
                             <div class="checkout" routerLink="/checkout">Checkout</div>
                         </div>

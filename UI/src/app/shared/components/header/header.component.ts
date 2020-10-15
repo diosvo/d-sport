@@ -5,8 +5,7 @@ import { CartModelServer } from 'src/app/models/cart.model';
 
 import { CartService } from 'src/app/services/cart.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { JwtService } from 'src/app/services/jwt.service';
-
+import { UserModelServer } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-header',
@@ -15,16 +14,17 @@ import { JwtService } from 'src/app/services/jwt.service';
 })
 export class HeaderComponent implements OnInit {
 
+  isLoggedIn: Boolean
   cartData: CartModelServer
   cartTotal: Number;
-  authState: boolean
 
+  
   constructor(public cartService: CartService,
     private authService: AuthService,
-    private router: Router,
-    private token: JwtService) { }
+    private router: Router) { }
 
   ngOnInit(): void {
+    this.authService.auth.subscribe(isLoggedIn => {this.isLoggedIn = isLoggedIn})
     this.cartService.cartTotal$.subscribe(total => this.cartTotal = total)
     this.cartService.cartData$.subscribe(data => { this.cartData = data })
   }
@@ -44,9 +44,5 @@ export class HeaderComponent implements OnInit {
 
   selectProduct(id: Number) {
     return this.router.navigate(['/product-details', id]).then();
-  }
-
-  routerLink() {
-    this.authState === true ? this.router.navigate(['/profile']) : this.router.navigate(['/login'])
   }
 }

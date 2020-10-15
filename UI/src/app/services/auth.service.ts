@@ -6,7 +6,7 @@ import { UserModelServer } from '../models/user.model';
 import { environment } from 'src/environments/environment';
 import { JwtService } from './jwt.service';
 
-import { BehaviorSubject, of, Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -20,12 +20,18 @@ export class AuthService {
   private userSubject: BehaviorSubject<UserModelServer>;
   public user: Observable<UserModelServer>
 
+  private authState: BehaviorSubject<boolean>;
+  public auth: Observable<boolean>
+
   constructor(private http: HttpClient,
     private token: JwtService,
     private spinner: NgxSpinnerService,
     private router: Router) {
-    this.userSubject = new BehaviorSubject<UserModelServer>(JSON.parse(localStorage.getItem('current-user')));
-    this.user = this.userSubject.asObservable();
+    this.userSubject = new BehaviorSubject<UserModelServer>(JSON.parse(localStorage.getItem('current-user')))
+    this.user = this.userSubject.asObservable()
+
+    this.authState = new BehaviorSubject<boolean>(this.token.isLoggedIn())
+    this.auth = this.authState.asObservable()
   }
 
   public get userValue(): UserModelServer {
@@ -49,6 +55,7 @@ export class AuthService {
             this.token.tokenStorage(user.accessToken, user.refreshToken)
             this.token.setUser(user)
             this.userSubject.next(user)
+            this.authState.next(true)
             window.location.reload()
           }
           return user
@@ -61,7 +68,7 @@ export class AuthService {
     this.token.removeTokens()
     this.userSubject.next(null)
 
-    // window.location.reload()
+    window.location.reload()
     this.router.navigate(['/login'])
   }
 }

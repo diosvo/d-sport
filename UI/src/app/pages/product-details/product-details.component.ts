@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./product-details.component.scss']
 })
 export class ProductDetailsComponent implements OnInit, AfterViewInit {
-
+  isLoggedIn: Boolean
   id: number;
   product;
 
@@ -31,7 +31,6 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-   
     this.route.paramMap
       .pipe(
         map((param: ParamMap) => {
@@ -46,41 +45,27 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       });
   }
 
-  oos() {
-    this.toastr.error('Sorry, this product is currently out of stock!', '', {
-      timeOut: 2000,
-      positionClass: 'toast-top-full-width',
-      closeButton: true
-    })
-  }
+
 
   addToCart(id: number) {
-    /*       if (this.userService.auth == true) {
-            this.userService.userData$
-              .subscribe((data: UserModelServer) => {
-                const getUserID = parseInt(this.token.getUser())
-      
-                if (data.id = getUserID) {
-                  if (this.product.quantity >= 1) {
-                    this.cartService.addProductToCart(id, parseInt(this.quantityInput.nativeElement.value));
-                  } else {
-                    this.oos();
-                  }
-                }
-              })
-          } else {
-            return this.router.navigateByUrl('/login')
-          }  */
-
-    /* if (this.userService.authState$ && this.userService.auth == true) {
+    this.authService.auth.subscribe(isLoggedIn => {this.isLoggedIn = isLoggedIn})
+    if(this.isLoggedIn) {
       if (this.product.quantity >= 1) {
         this.cartService.addProductToCart(id, parseInt(this.quantityInput.nativeElement.value));
       } else {
         this.oos();
       }
     } else {
-      return this.router.navigateByUrl('/login')
-    } */
+      return this.router.navigate(['/login'])
+    }
+  }
+
+  private oos() {
+    this.toastr.error('Sorry, this product is currently out of stock!', '', {
+      timeOut: 2000,
+      positionClass: 'toast-top-full-width',
+      closeButton: true
+    })
   }
 
   Increase() {

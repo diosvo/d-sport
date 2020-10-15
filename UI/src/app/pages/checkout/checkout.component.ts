@@ -15,6 +15,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit {
+  isLoggedIn: Boolean
   cartTotal: Number;
   cartData: CartModelServer;
 
@@ -35,8 +36,9 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.hide()
-    this.cartService.cartData$.subscribe(data => this.cartData = data);
-    this.cartService.cartTotal$.subscribe(total => this.cartTotal = total);
+    this.authService.auth.subscribe(isLoggedIn => { this.isLoggedIn = isLoggedIn })
+    this.cartService.cartTotal$.subscribe(total => this.cartTotal = total)
+    this.cartService.cartData$.subscribe(data => { this.cartData = data })
   }
 
   checkOut() {
