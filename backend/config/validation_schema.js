@@ -6,6 +6,7 @@ const authSchema = joi.object({
     lastname: joi.string(),
     firstname: joi.string(),
     dob: joi.date(),
+    role: joi.string().max(50)
 })
 
 module.exports = {

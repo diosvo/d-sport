@@ -4,12 +4,12 @@ const {database} = require('../config/helpers');
 
 router.get('/', function (req, res) {
     database.table('users')
-        .withFields([ 'username' , 'email', 'fname', 'lname', 'age', 'role', 'id' ])
+        .withFields(['username', 'email', 'fname', 'lname', 'age', 'role', 'id'])
         .getAll().then((list) => {
         if (list.length > 0) {
             res.json({users: list});
         } else {
-            res.json({message: 'No use found'});
+            res.json({message: 'No user found'});
         }
     }).catch(err => res.json(err));
 });

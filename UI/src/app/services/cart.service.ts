@@ -4,35 +4,25 @@ import { Router, NavigationExtras } from '@angular/router';
 
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { ProductService } from './product.service';
 import { OrderService } from './order.service';
-import { TokenStorageService } from './token-storage.service';
-import { UserService } from './user.service';
 
 import { CartModelPublic, CartModelServer } from '../models/cart.model';
-import { UserModelServer } from '../models/user.model';
 
 import { ToastrService } from "ngx-toastr";
 import { NgxSpinnerService } from "ngx-spinner";
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class CartService implements OnInit {
+  isLoggedIn: Boolean
 
   ngOnInit() {
-    this.userService.userData$
-      .pipe(
-        map((user: UserModelServer) => {
-          return user;
-        })
-      )
-      .subscribe((data: UserModelServer) => {
-        console.log(data.id)
-      });
+    this.authService.auth.subscribe(isLoggedIn => { this.isLoggedIn = isLoggedIn })
   }
 
   private SERVER_URL = environment.SERVER_URL
@@ -68,54 +58,8 @@ export class CartService implements OnInit {
     private orderService: OrderService,
     private router: Router,
     private toast: ToastrService,
-    private spinner: NgxSpinnerService,
-    private token: TokenStorageService,
-    private userService: UserService) {
-
-
-
-
-
-      // this.cartTotal$.next(this.cartDataServer.total);
-      //       this.cartData$.next(this.cartDataServer);
-  
-      //       // Get information from local storage
-      //       const info: CartModelPublic = JSON.parse(localStorage.getItem('cart'));
-  
-      //       /* Check if it is null or has some data in it */
-      //       if (info !== null && info !== undefined && info.prodsData[0].inCart !== 0) {
-  
-      //         // Not empty and has some information
-      //         this.cartDataClient = info;
-  
-      //         // Put it in cartDataServer object
-      //         this.cartDataClient.prodsData.forEach(product => {
-      //           this.productService.getSingleProduct(product.id).subscribe((actualProductInfo) => {
-      //             if (this.cartDataServer.data[0].numInCart === 0) {
-      //               this.cartDataServer.data[0].numInCart = product.inCart;
-      //               this.cartDataServer.data[0].product = actualProductInfo;
-  
-      //               this.total();
-      //               this.cartDataClient.total = this.cartDataServer.total;
-      //               localStorage.setItem('cart', JSON.stringify(this.cartDataClient))
-      //             } else {
-  
-      //               // Cart data has some entry in it
-      //               this.cartDataServer.data.push({
-      //                 numInCart: product.inCart,
-      //                 product: actualProductInfo
-      //               });
-  
-      //               this.total();
-      //               this.cartDataClient.total = this.cartDataServer.total;
-      //               localStorage.setItem('cart', JSON.stringify(this.cartDataClient))
-      //             }
-      //             this.cartData$.next({ ...this.cartDataServer });
-      //           })
-      //         });
-      //       }
-
-  }
+    private authService: AuthService,
+    private spinner: NgxSpinnerService) { }
 
   addProductToCart(id: number, quantity?: number) {
     this.productService.getSingleProduct(id).subscribe(prod => {
