@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
-import { UserModelServer } from '../models/user.model';
+import { ServerResponse, UserModelServer } from '../models/user.model';
 import { environment } from 'src/environments/environment';
 import { TokenStorageService } from './token-storage.service';
 
@@ -56,6 +56,15 @@ export class UserService {
     this.userData$.next(null)
     return this.http.post<any>(`${this.SERVER_URL}/logout`, {
       'refreshToken': this.tokenService.getRefreshToken()
+    })
+  }
+
+  /* Get users for admin-user page */
+  getUsers(numberOfResults = 10): Observable<ServerResponse> {
+    return this.http.get<ServerResponse>(this.SERVER_URL + '/users', {
+      params: {
+        limit: numberOfResults.toString()
+      }
     })
   }
 }

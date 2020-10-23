@@ -14,7 +14,9 @@ const routes: Routes = [
   { path: 'women', loadChildren: () => import('./class/women/women.module').then(m => m.WomenModule) },
   { path: 'kids', loadChildren: () => import('./class/kids/kids.module').then(m => m.KidsModule) },
   { path: 'accessories', loadChildren: () => import('./class/accessories/accessories.module').then(m => m.AccessoriesModule) },
-]
+
+  { path: 'admin', loadChildren: ()=> import('./pages/admin/admin.module').then(m => m.AdminModule) },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

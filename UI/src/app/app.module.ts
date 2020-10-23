@@ -17,6 +17,7 @@ import { ProductDetailsModule } from './pages/product-details/product-details.mo
 import { CheckoutModule } from './pages/checkout/checkout.module';
 import { CartModule } from './pages/cart/cart.module';
 import { ProfileModule } from './pages/profile/profile.module';
+import { AdminModule } from './pages/admin/admin.module';
 
 import { MenModule } from './class/men/men.module';
 import { WomenModule } from './class/women/women.module';
@@ -42,6 +43,7 @@ import { Interceptor } from './interceptor/interceptor';
     ThankyouModule,
     CheckoutModule,
     ProfileModule,
+    AdminModule,
 
     MenModule,
     WomenModule,
