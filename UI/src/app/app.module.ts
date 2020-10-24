@@ -23,7 +23,9 @@ import { MenModule } from './class/men/men.module';
 import { WomenModule } from './class/women/women.module';
 import { KidsModule } from './class/kids/kids.module';
 import { AccessoriesModule } from './class/accessories/accessories.module';
-import { Interceptor } from './interceptor/interceptor';
+
+import { ErrorInterceptor } from './interceptor/error.interceptor';
+import { JwtInterceptor } from './interceptor/jwt.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -52,11 +54,10 @@ import { Interceptor } from './interceptor/interceptor';
 
     ToastrModule.forRoot(),
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS, 
-    useClass: Interceptor, 
-    multi: true
-  }],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 

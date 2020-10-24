@@ -2,7 +2,7 @@
 
 ### Home
 GET {{baseUrl}}
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDIxNDAyMDIsImV4cCI6MTYwMjE0MDgwMiwiYXVkIjoiMjQifQ.MMJDbcKiOnoL_OZ-C5KyDuQmkQgSTC5koU4BGlp_6Fo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDI1NzAzMjIsImV4cCI6MTYwMjU3MDkyMiwiYXVkIjoiMjQifQ.BILmEixsgYOVt85H-muzHL9dfrk1tVFBchtpcvDUdBI
 
 ### Login route
 POST {{baseUrl}}/api/auth/login
@@ -18,7 +18,7 @@ POST {{baseUrl}}/api/auth/register
 Content-Type: application/json
 
 {
-    "email": "vtmn12@gmail.com",
+    "email": "1751010102nhung@ou.edu.vn",
     "password": "123456",
     "firstname": "Nhung",
     "lastname": "Vo",

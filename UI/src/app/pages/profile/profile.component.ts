@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
-import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { UserService } from 'src/app/services/user.service';
 import { CartService } from 'src/app/services/cart.service';
 
-import { UserModelServer } from 'src/app/models/user.model';
 import { CartModelServer } from 'src/app/models/cart.model';
 
-import { map } from 'rxjs/operators';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { AuthService } from 'src/app/services/auth.service';
+import { JwtService } from 'src/app/services/jwt.service';
 
 @Component({
   selector: 'app-profile',
@@ -22,26 +20,17 @@ export class ProfileComponent implements OnInit {
   cartData: CartModelServer
 
   constructor(
-    private userService: UserService,
-    private token: TokenStorageService,
+    private authService: AuthService,
+    private token: JwtService,
     private cartService: CartService) {
   }
 
   ngOnInit(): void {
-    this.userService.userData$
-      .pipe(
-        map((user: UserModelServer) => {
-          return user;
-        })
-      )
-      .subscribe((data: UserModelServer) => {
-        this.myUser = data;
-      });
+    this.myUser = JSON.parse(localStorage.getItem('current-user'))
   }
 
   logout() {
-    this.userService.logout();
-    this.token.removeTokens()
+    this.authService.logout();
     this.cartService.cartData$.subscribe(data => this.cartData = data)
   }
 

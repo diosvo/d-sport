@@ -1,12 +1,12 @@
 <section id="cart-page" class="container py-5">
     <!-- Not Login -->
-    <div class="text-center not-login" style="margin: 0 auto; padding: 0.8rem 0" *ngIf="authState === false">
+    <div class="text-center not-login" style="margin: 0 auto; padding: 0.8rem 0" *ngIf="!isLoggedIn">
         <h1 style="font-family: Bangers, sans-serif">You must login first</h1>
         <span routerLink="/login"> <u>Login here</u></span>
     </div>
 
     <!-- Logged in -->
-    <div *ngIf="authState === true">
+    <div *ngIf="isLoggedIn">
 
         <!-- The cart is empty -->
         <div class="text-center" style="margin: 0 auto;" *ngIf="cartData.data[0].numInCart === 0">

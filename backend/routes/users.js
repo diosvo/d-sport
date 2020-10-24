@@ -9,7 +9,7 @@ router.get('/', function (req, res) {
         if (list.length > 0) {
             res.json({users: list});
         } else {
-            res.json({message: 'No use found'});
+            res.json({message: 'No user found'});
         }
     }).catch(err => res.json(err));
 });

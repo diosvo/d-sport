@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { first } from 'rxjs/operators';
 
-import { ValidationService } from 'src/app/services/validation.service';
-import { UserService } from 'src/app/services/user.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { JwtService } from 'src/app/services/jwt.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { Role } from 'src/app/models/role.model';
 
 @Component({
   selector: 'app-login',
@@ -13,31 +14,29 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class LoginComponent implements OnInit {
 
+  loading = false
+  returnUrl: string
+
   loginForm = this.fb.group(
     {
       email: ["", [Validators.required]],
       password: ["", [Validators.required]],
-    },
-    {
-      validator: this.validation.passwordMatchValidator("password", "cfpassword")
     }
   );
 
   constructor(private fb: FormBuilder,
-    private validation: ValidationService,
-    private userService: UserService,
+    private token: JwtService,
+    private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute,
-    private spinner: NgxSpinnerService) { }
+    private route: ActivatedRoute) { 
+      if (this.authService.userValue) this.router.navigate(['/profile'])
+    }
 
   ngOnInit(): void {
-    this.userService.authState$.subscribe(authState => {
-      if (authState) {
-        this.router.navigateByUrl(this.route.snapshot.queryParams['returnUrl'] || '/profile');
-      } else {
-        this.router.navigateByUrl('/login');
-      }
-    })
+    let isLoggedIn = this.token.isLoggedIn()
+    if (isLoggedIn) {
+      this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/profile';
+    }
   }
 
   onSubmit() {
@@ -45,8 +44,19 @@ export class LoginComponent implements OnInit {
       return
     }
 
-    this.spinner.show()
-    this.userService.loginUser(this.email.value, this.password.value)
+    this.loading = true
+    this.authService.loginUser(this.email.value, this.password.value)
+      .pipe(first())
+      .subscribe(res => {
+        if (res.role === Role.Admin) {
+          this.router.navigate(['/admin'])
+        } else if (res.role === Role.Customer) {
+          this.router.navigate(['/profile'])
+        }
+      }, error => {
+        this.loading = false
+      })
+
     this.loginForm.reset();
   }
 
