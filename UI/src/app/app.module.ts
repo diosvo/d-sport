@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 
 import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './auth/auth.module';
+import { Page404Module } from './pages/page-404/page-404.module';
 
 import { HomeModule } from './pages/home/home.module';
 import { AboutUsModule } from './pages/about-us/about-us.module';
@@ -17,6 +18,7 @@ import { ProductDetailsModule } from './pages/product-details/product-details.mo
 import { CheckoutModule } from './pages/checkout/checkout.module';
 import { CartModule } from './pages/cart/cart.module';
 import { ProfileModule } from './pages/profile/profile.module';
+import { AdminModule } from './pages/admin/admin.module';
 
 import { MenModule } from './class/men/men.module';
 import { WomenModule } from './class/women/women.module';
@@ -36,6 +38,7 @@ import { JwtInterceptor } from './interceptor/jwt.interceptor';
 
     SharedModule,
     AuthModule,
+    Page404Module,
 
     HomeModule,
     AboutUsModule,
@@ -44,6 +47,7 @@ import { JwtInterceptor } from './interceptor/jwt.interceptor';
     ThankyouModule,
     CheckoutModule,
     ProfileModule,
+    AdminModule,
 
     MenModule,
     WomenModule,

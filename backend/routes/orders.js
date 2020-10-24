@@ -19,7 +19,13 @@ router.get('/', (req, res) => {
                 on: 'u.id = o.user_id'
             }
         ])
-        .withFields(['o.id', 'p.title as name', 'p.description', 'p.price', 'p.quantity', 'u.username'])
+        .withFields(['o.id',
+            'o.order_date',
+            'o.ship_address',
+            'o.receiver',
+            'o.receiver_phone',
+            'SUM(od.quantity*p.price) as total',
+            'u.email as orderer'])
         .sort({id: 1})
         .getAll()
         .then(orders => {

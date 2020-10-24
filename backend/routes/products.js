@@ -35,6 +35,10 @@ router.get('/', function (req, res) {
             'p.price',
             'p.quantity',
             'p.image',
+            'p.image_1',
+            'p.image_2',
+            'p.image_3',
+            'p.description',
             'p.another_CatName',
             'p.id'
         ])
@@ -154,7 +158,7 @@ router.get('/classify/:classifyName', (req, res) => {
     database.table('products as p')
         .join([{
             table: 'classify as cl',
-            on: `cl.id = p.classify_id WHERE cl.name LIKE '%${classify_name}%'`
+            on: `cl.id = p.classify_id WHERE cl.name = '${classify_name.toLowerCase()}'`
         }])
         .withFields(['cl.name as ClassifyName',
             'p.title as ProductName',

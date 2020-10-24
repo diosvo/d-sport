@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-
-import { CartService } from 'src/app/services/cart.service';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 
 import { CartModelServer } from 'src/app/models/cart.model';
 
-import { OwlOptions } from 'ngx-owl-carousel-o';
 import { AuthService } from 'src/app/services/auth.service';
 import { JwtService } from 'src/app/services/jwt.service';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-profile',

@@ -3,11 +3,11 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 import { map } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+
 import { ProductService } from 'src/app/services/product.service';
 import { CartService } from 'src/app/services/cart.service';
 import { JwtService } from 'src/app/services/jwt.service';
 import { AuthService } from 'src/app/services/auth.service';
-
 
 @Component({
   selector: 'app-product-details',
@@ -44,8 +44,6 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
         })
       });
   }
-
-
 
   addToCart(id: number) {
     this.authService.auth.subscribe(isLoggedIn => {this.isLoggedIn = isLoggedIn})

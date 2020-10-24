@@ -6,13 +6,15 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NikeAthletesComponent } from './layouts/nike-athletes/nike-athletes.component';
 import { PromotionsComponent } from './layouts/promotions/promotions.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
     HeaderComponent, 
     FooterComponent,
     NikeAthletesComponent,
-    PromotionsComponent
+    PromotionsComponent,
+    SidebarComponent,
   ],
   imports: [
     CommonModule,
@@ -22,7 +24,8 @@ import { PromotionsComponent } from './layouts/promotions/promotions.component';
     HeaderComponent,
     FooterComponent,
     NikeAthletesComponent,
-    PromotionsComponent
+    PromotionsComponent,
+    SidebarComponent,
   ],
 })
 export class SharedModule { }

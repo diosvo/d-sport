@@ -4,7 +4,7 @@ const {database} = require('../config/helpers');
 
 router.get('/', function (req, res) {
     database.table('users')
-        .withFields(['username', 'email', 'fname', 'lname', 'age', 'role', 'id'])
+        .withFields([ 'id' , 'email', 'password', 'lastname', 'firstname', 'dob', 'gender', 'role' ])
         .getAll().then((list) => {
         if (list.length > 0) {
             res.json({users: list});
@@ -18,7 +18,7 @@ router.get('/', function (req, res) {
 router.get('/:userId', (req, res) => {
     let userId = req.params.userId;
     database.table('users').filter({id: userId})
-        .withFields(['email', 'firstname', 'lastname', 'password', 'dob', 'id'])
+        .withFields(['email', 'firstname', 'lastname', 'password', 'dob', 'gender', 'id'])
         .get().then(user => {
         if (user) {
             res.json({user});
