@@ -7,12 +7,12 @@ import { BehaviorSubject } from 'rxjs';
 
 import { ProductService } from './product.service';
 import { OrderService } from './order.service';
+import { AuthService } from './auth.service';
 
 import { CartModelPublic, CartModelServer } from '../models/cart.model';
 
 import { ToastrService } from "ngx-toastr";
 import { NgxSpinnerService } from "ngx-spinner";
-import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'

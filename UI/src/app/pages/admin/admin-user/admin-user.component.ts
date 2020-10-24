@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServerResponse, UserModelServer } from 'src/app/models/user.model';
-import { UserService } from 'src/app/services/user.service';
+import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
   selector: 'app-admin-user',
@@ -10,12 +10,11 @@ export class AdminUserComponent implements OnInit {
 
   users: UserModelServer[] = [];
 
-  constructor(private userService: UserService) { }
+  constructor(private adminService: AdminService) { }
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe((user: ServerResponse) => {
+    this.adminService.getUsers().subscribe((user: ServerResponse) => {
       this.users = user.users
     })
   }
-
 }

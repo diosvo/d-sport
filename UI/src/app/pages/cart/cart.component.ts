@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { CartService } from 'src/app/services/cart.service';
-
-
 import { CartModelServer } from 'src/app/models/cart.model';
-import { UserModelServer } from 'src/app/models/user.model';
 
-import { JwtService } from 'src/app/services/jwt.service';
+import { CartService } from 'src/app/services/cart.service';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
