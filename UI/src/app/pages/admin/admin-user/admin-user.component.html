@@ -18,9 +18,9 @@
           <div class="col-5">
             <div class="content-top d-flex font-14">
               <a href="#">
-                Trang chủ >
+                Home >
             </a>
-            <div class="ml-1">Danh sách > Người dùng</div>
+            <div class="ml-1">Management > User</div>
             </div>
           </div>
           <div class="col-7 input-group">
@@ -38,7 +38,7 @@
           <div class="card-body">
             <div class="table-responsive">
               <p *ngIf="!users"><em>Loading...</em></p>
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead class="font-15">
                   <tr>
                     <th class="text-center">#</th> 
@@ -66,24 +66,6 @@
                 </tbody>
               </table>
             </div>
-          </div>
-
-          <!-- Pagination -->
-
-          <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
-            <ul class="pagination m-0 d-flex justify-content-end">
-              <li class="paginate_button page-item previous ">
-                <a href="javascript:
-                            void(0);" aria-controls="dataTable" data-dt-idx="0" tabindex="0"
-                  class="page-link">Trước</a>
-              </li>
-              <li class="paginate_button page-item active">
-                <a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a>
-              <li class="paginate_button page-item next">
-                <a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="4"
-                  tabindex="0" class="page-link">Sau</a>
-              </li>
-            </ul>
           </div>
         </div>
       </div>

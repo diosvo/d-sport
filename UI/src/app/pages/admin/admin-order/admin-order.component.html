@@ -18,38 +18,25 @@
                   <div class="col-5">
                       <div class="content-top d-flex font-14">
                         <a href="#">
-                          Trang chủ >
+                          Home >
                       </a>
-                      <div class="ml-1">Danh sách > Đơn hàng</div>
+                      <div class="ml-1">Management > Order</div>
                       </div>
                   </div>
-                  <div class="col-7 input-group">
-                    <input class="form-control" name="kw" type="search"
-                        placeholder="Tìm kiếm theo mã đơn hàng hoặc mã người dùng" aria-label="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm
-                            kiếm</button>
-                    </div>
-                  </div>
+                  
               </div>
 
               <!-- Data Tables-->
               <div class="card shadow my-4">
-                <div class="row card-header d-flex align-items-baseline m-0 py-0 px-2">
-                    <p class="col-md-5 font-13">* Đơn vị Giá sản phẩm: 1.000 VND</p>
-                    <div class="col-md-7 py-3 d-flex justify-content-end">
-                        <button type="button" class="btn btn-success px-4" data-toggle="modal" data-target="#Modal">
-                            Tạo mới
-                        </button>
-                    </div>
-                </div>
+                
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <p *ngIf="!orders"><em>Loading...</em></p>
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered display" #dataTable width="100%" cellspacing="0">
                             <thead>
                                 <tr class="font-14">
                                     <th class="text-center">#</th>
-                                    <th class="text-center">Orderer</th>
+                                    <th class="text-center">Orderer ID</th>
                                     <th class="text-center">Receiver</th>
                                     <th class="text-center">Receiver Phone</th>
                                     <th class="text-center">Order Date</th>
@@ -61,43 +48,45 @@
                             <tbody class="font-13">
                                 <tr *ngFor="let o of orders">
                                     <td class="text-center">{{ o.id }}</td>
-                                    <td>{{ o.orderer }}</td>
+                                    <td class="text-center">{{ o.user_id }}</td>
                                     <td >{{ o.receiver }}</td>
                                     <td class="text-center">{{ o.receiver_phone }}</td>
-                                    <td class="text-center">{{ o.order_date| date:'dd-MM-yyyy' }}</td>
+                                    <td class="text-center">{{ o.order_date| date:'short' }}</td>
                                     <td >{{ o.ship_address }}</td>
-                                    <td class="text-center">{{ o.total | currency: 'VND':'symbol-narrow':'.0' }}
-                                    </td>
+                                    <td class="text-right">{{ o.total | currency:"$":'symbol-narrow':'.0'}}</td>
                                     <td class="text-center">
-                                        
-                                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                data-target="#exampleModal">
-                                                <i class="fas fa-edit"></i></button>
-                                            
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" onclick="openModal()"
+                                            data-target="#exampleModal" >
+                                            <i class="fas fa-info-circle"></i></button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-
-                <div class="card-footer dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
-                    <ul class="pagination  m-0 d-flex justify-content-end">
-                        <li class="paginate_button page-item previous ">
-                            <a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="0"
-                                 tabindex="0" class="page-link">Trước</a>
-                        </li>
-                        <li class="paginate_button page-item active">
-                            <a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0"
-                                class="page-link">meo</a>
-                        <li class="paginate_button page-item next">
-                            <a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="4"
-                                 tabindex="0" class="page-link">Sau</a>
-                        </li>
-                    </ul>
-                </div>
             </div>
           </div>
       </div>
   </div>
 </div>
+
+<!-- See Detail Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="order_detail">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
