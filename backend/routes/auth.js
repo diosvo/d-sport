@@ -8,7 +8,7 @@ const {signAccessToken, signRefreshToken, verifyRefreshToken} = require('../conf
 require('dotenv').config()
 
 router.post('/register', async (req, res, next) => {
-    let customer = 'customer'
+    let customer = 'Customer'
     try {
         const result = await authSchema.validateAsync(req.body)
 

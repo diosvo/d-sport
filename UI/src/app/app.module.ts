@@ -47,12 +47,13 @@ import { JwtInterceptor } from './interceptor/jwt.interceptor';
     ThankyouModule,
     CheckoutModule,
     ProfileModule,
-    AdminModule,
 
     MenModule,
     WomenModule,
     KidsModule,
     AccessoriesModule,
+
+    AdminModule,
 
     ToastrModule.forRoot(),
   ],

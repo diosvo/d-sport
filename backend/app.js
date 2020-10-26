@@ -32,12 +32,14 @@ const productsRoute = require('./routes/products');
 const ordersRoute = require('./routes/orders');
 const usersRoute = require('./routes/users');
 const authRoute = require('./routes/auth');
+const ordersDetailsRoute = require('./routes/orders_details');
 
 /* Use Routes */
 app.use('/api/products', productsRoute);
 app.use('/api/orders', ordersRoute);
 app.use('/api/users', usersRoute);
 app.use('/api/auth', authRoute);
+app.use('/api/orders_details', ordersDetailsRoute);
 
 app.use(logger('dev'));
 app.use(express.json());

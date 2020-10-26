@@ -11,6 +11,7 @@ import { AdminProductComponent } from './admin-product/admin-product.component';
 import { AdminOrderComponent } from './admin-order/admin-order.component';
 import { AdminUserComponent } from './admin-user/admin-user.component';
 import { AdminRoutingModule } from './admin-routing.module';
+import { DataTablesModule } from 'angular-datatables';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { AdminRoutingModule } from './admin-routing.module';
     CarouselModule,
     NgxPaginationModule,
     SharedModule,
+    DataTablesModule
   ],
   exports: [AdminComponent],
 })

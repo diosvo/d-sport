@@ -16,15 +16,23 @@ export class OrderService {
     constructor(private http: HttpClient) {
     }
 
-    // get orders for admin-order page
     getOrders(numberOfResults = 10): Observable<ServerResponse> {
-        return this.http.get<ServerResponse>(this.SERVER_URL + '/orders', {
-          params: {
-            limit: numberOfResults.toString()
-          }
-        })
-      }
-    
+      return this.http.get<ServerResponse>(this.SERVER_URL + '/orders', {
+        params: {
+          limit: numberOfResults.toString()
+        }
+      })
+    }
+
+    // get orders for admin-order page
+    getAllOrders(): Observable<ServerResponse> {
+      return this.http.get<ServerResponse>(this.SERVER_URL + '/orders/all')
+    }
+
+    getSingleProduct(id: Number): Observable<ProductModelServer> {
+      return this.http.get<ProductModelServer>(this.SERVER_URL + '/products/' + id)
+    }
+
     getSingleOrdered(orderId: number) {
         return this.http.get<ProductModelServer[]>(this.SERVER_URL + '/orders/' + orderId).toPromise()
     }
