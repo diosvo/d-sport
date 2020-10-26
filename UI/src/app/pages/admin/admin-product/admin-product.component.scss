@@ -1,0 +1,9 @@
+.prod-img-container {
+    display              : grid;
+    grid-template-columns: auto auto;;
+    grid-column-gap      : .25rem;
+    grid-row-gap         : .25rem;
+  }
+.col-md-8 {
+    padding: 0;
+}

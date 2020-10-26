@@ -15,6 +15,11 @@ export class ProductService {
   constructor(private http: HttpClient,     private route: ActivatedRoute, private router: Router) {
   }
 
+  // Get All product for admin page
+  getAllProduct(): Observable<ServerResponse> {
+    return this.http.get<ServerResponse>(this.SERVER_URL + '/products/all')
+  }
+
   /* Get products for home page */
   getHomeProducts(numberOfResults = 10): Observable<ServerResponse> {
     return this.http.get<ServerResponse>(this.SERVER_URL + '/products', {

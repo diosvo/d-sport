@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 import { ServerResponse, UserModelServer } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 
@@ -9,13 +10,26 @@ import { UserService } from 'src/app/services/user.service';
 export class AdminUserComponent implements OnInit {
 
   users: UserModelServer[] = [];
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<UserModelServer> = new Subject();
 
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 2
+    };
+
     this.userService.getUsers().subscribe((user: ServerResponse) => {
       this.users = user.users
+      this.dtTrigger.next()
     })
+  }
+
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
   }
 
 }

@@ -27,11 +27,54 @@ router.get('/', (req, res) => {
             'o.receiver_phone',
             'SUM(od.quantity*p.price) as total',
             'u.email as orderer'])
-        .sort({id: 1})
         .getAll()
         .then(orders => {
             if (orders.length > 0) {
-                res.status(200).json(orders);
+                res.status(200).json({
+                    orders: orders
+                })
+            } else {
+                res.json({message: 'No orders found.'})
+            }
+        }).catch(err => console.log(err));
+});
+
+// router.get('/all', (req, res) => {
+//     database.table('orders as o')
+//         .join([
+//         {
+//             table: 'orders_details as od',
+//             on: 'o.id = od.order_id'
+//         }
+//     ])
+//         .withFields(['o.id',
+//             'o.user_id',
+//             'o.receiver',
+//             'o.receiver_phone',
+//             'o.order_date',
+//             'o.ship_address',
+//             'SUM(od.price*od.quantity) as total'
+//             ])
+//
+//         .getAll()
+//         .then(orders => {
+//             if (orders.length > 0) {
+//                 res.status(200).json({
+//                     orders: orders
+//                 })
+//             } else {
+//                 res.json({message: 'No orders found.'})
+//             }
+//         }).catch(err => console.log(err));
+// });
+
+router.get('/all', (req, res) => {
+    database.query('select o.*, SUM(od.quantity * od.price) as total from orders o inner join orders_details od on o.id = od.order_id group by o.id')
+        .then(orders => {
+            if (orders.length > 0) {
+                res.status(200).json({
+                    orders: orders
+                })
             } else {
                 res.json({message: 'No orders found.'})
             }
