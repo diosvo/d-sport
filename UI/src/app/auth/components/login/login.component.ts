@@ -45,17 +45,16 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true
-    this.authService.loginUser(this.email.value, this.password.value)
-      .pipe(first())
-      .subscribe(res => {
-        if (res.role === Role.Admin) {
-          this.router.navigate(['/admin'])
-        } else if (res.role === Role.Customer) {
-          this.router.navigate(['/profile'])
-        }
-      }, error => {
-        this.loading = false
-      })
+    this.authService.loginUser(this.email.value, this.password.value).subscribe(res => {
+      if (res.role === Role.Admin) {
+        this.router.navigate(['/admin'])
+      } else if (res.role === Role.Customer) {
+        this.router.navigate(['/profile'])
+      }
+    }, error => {
+      this.loading = false
+    })
+      
 
     this.loginForm.reset();
   }

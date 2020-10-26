@@ -4,7 +4,6 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { CartModelServer } from 'src/app/models/cart.model';
 
 import { AuthService } from 'src/app/services/auth.service';
-import { JwtService } from 'src/app/services/jwt.service';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -20,7 +19,6 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private token: JwtService,
     private cartService: CartService) {
   }
 

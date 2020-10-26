@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 
 export class AccessoriesComponent implements OnInit {
 
-  products: ProductModelServer[];
+  products: ProductModelServer[]
   searchValue: string
   isDisplay = true
   p: number = 1
