@@ -1,7 +1,13 @@
 const express = require('express');
 const app = express();
+const cookieParser = require('cookie-parser');
 const createError = require('http-errors');
 const compression = require('compression')
+const logger = require('morgan');
+const bodyParser = require('body-parser')
+app.use(bodyParser.json())
+
+const {verifyAccessToken} = require('./config/jwt')
 
 /* Middleware */
 const cors = require('cors');
@@ -37,7 +43,9 @@ app.use('/api/orders_details', ordersDetailsRoute);
 
 app.use(logger('dev'));
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
+app.use(compression({level: 9}));
 
 app.use(async (req, res, next) => {
     next(createError.NotFound());
@@ -53,4 +61,7 @@ app.use(async (err, req, res, next) => {
     })
 })
 
+const port = process.env.PORT || 2609
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`)
 })
