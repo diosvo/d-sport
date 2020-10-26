@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 
-import { UserService } from 'src/app/services/user.service';
 import { CartService } from 'src/app/services/cart.service';
 
 import { CartModelServer } from 'src/app/models/cart.model';
 import { UserModelServer } from 'src/app/models/user.model';
 
 import { NgxSpinnerService } from 'ngx-spinner';
-import { map } from 'rxjs/operators';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-checkout',
@@ -17,13 +15,14 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit {
+  isLoggedIn: Boolean
   cartTotal: Number;
   cartData: CartModelServer;
 
   constructor(private cartService: CartService,
     private spinner: NgxSpinnerService,
-    private userService: UserService, 
-    private fb: FormBuilder) {}
+    private authService: AuthService,
+    private fb: FormBuilder) { }
 
   checkoutForm = this.fb.group(
     {
@@ -36,24 +35,17 @@ export class CheckoutComponent implements OnInit {
   );
 
   ngOnInit(): void {
-    this.cartService.cartData$.subscribe(data => this.cartData = data);
-    this.cartService.cartTotal$.subscribe(total => this.cartTotal = total);
+    this.spinner.hide()
+    this.authService.auth.subscribe(isLoggedIn => { this.isLoggedIn = isLoggedIn })
+    this.cartService.cartTotal$.subscribe(total => this.cartTotal = total)
+    this.cartService.cartData$.subscribe(data => { this.cartData = data })
   }
 
   checkOut() {
     this.spinner.show();
-
-    if (this.userService.auth == true) {
-      this.userService.userData$
-        .pipe(
-          map((user: UserModelServer) => {
-            return user;
-          })
-        )
-        .subscribe((data: UserModelServer) => {
-          this.cartService.checkoutFromCart(data.id);
-        });
-    }
+    this.authService.user.subscribe((data: UserModelServer) => {
+      this.cartService.checkoutFromCart(data.id);
+    });
   }
 
   get firstname() {
@@ -71,9 +63,9 @@ export class CheckoutComponent implements OnInit {
   get email() {
     return this.checkoutForm.get('email')
   }
-  
+
   get phone() {
     return this.checkoutForm.get('phone')
   }
-  
+
 }

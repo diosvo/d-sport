@@ -3,11 +3,11 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 import { map } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+
 import { ProductService } from 'src/app/services/product.service';
 import { CartService } from 'src/app/services/cart.service';
-import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { UserService } from 'src/app/services/user.service';
-import { UserModelServer } from 'src/app/models/user.model';
+import { JwtService } from 'src/app/services/jwt.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-product-details',
@@ -15,7 +15,7 @@ import { UserModelServer } from 'src/app/models/user.model';
   styleUrls: ['./product-details.component.scss']
 })
 export class ProductDetailsComponent implements OnInit, AfterViewInit {
-
+  isLoggedIn: Boolean
   id: number;
   product;
 
@@ -25,8 +25,8 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     private cartService: CartService,
     private route: ActivatedRoute,
     private toastr: ToastrService,
-    private token: TokenStorageService,
-    private userService: UserService,
+    private token: JwtService,
+    private authService: AuthService,
     private router: Router) {
   }
 
@@ -45,33 +45,25 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       });
   }
 
-  oos() {
+  addToCart(id: number) {
+    this.authService.auth.subscribe(isLoggedIn => {this.isLoggedIn = isLoggedIn})
+    if(this.isLoggedIn) {
+      if (this.product.quantity >= 1) {
+        this.cartService.addProductToCart(id, parseInt(this.quantityInput.nativeElement.value));
+      } else {
+        this.oos();
+      }
+    } else {
+      return this.router.navigate(['/login'])
+    }
+  }
+
+  private oos() {
     this.toastr.error('Sorry, this product is currently out of stock!', '', {
       timeOut: 2000,
       positionClass: 'toast-top-full-width',
       closeButton: true
     })
-  }
-
-  addToCart(id: number) {
-      if (this.userService.auth == true) {
-        this.userService.userData$
-          .subscribe((data: UserModelServer) => {
-            const getUserID = parseInt(this.token.getUser())
-  
-            if (data.id = getUserID) {
-              if (this.product.quantity >= 1) {
-                this.cartService.addProductToCart(id, parseInt(this.quantityInput.nativeElement.value));
-                console.log('Add to cart successfully w/ ProductID:', id, 'x', this.quantityInput.nativeElement.value);
-              } else {
-                this.oos();
-              }
-            }
-          })
-      } else {
-        return this.router.navigateByUrl('/login')
-      } 
-
   }
 
   Increase() {
