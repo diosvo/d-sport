@@ -33,6 +33,8 @@ const ordersRoute = require('./routes/orders');
 const usersRoute = require('./routes/users');
 const authRoute = require('./routes/auth');
 const ordersDetailsRoute = require('./routes/orders_details');
+const categoriesRoute = require('./routes/categories');
+const classifyRoute = require('./routes/classify');
 
 /* Use Routes */
 app.use('/api/products', productsRoute);
@@ -40,6 +42,8 @@ app.use('/api/orders', ordersRoute);
 app.use('/api/users', usersRoute);
 app.use('/api/auth', authRoute);
 app.use('/api/orders_details', ordersDetailsRoute);
+app.use('/api/categories', categoriesRoute);
+app.use('/api/classify', classifyRoute);
 
 app.use(logger('dev'));
 app.use(express.json());

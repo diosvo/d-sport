@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { OrderModelServer, ServerResponse } from 'src/app/models/order.model';
+import { OrderDetailModelServer, OrderDetailServerResponse } from 'src/app/models/order_detail.model';
 import { OrderService } from 'src/app/services/order.service';
 declare var $:any;
 
@@ -10,38 +11,72 @@ declare var $:any;
 })
 export class AdminOrderComponent implements OnInit {
 
-  orders: OrderModelServer[] = [];
-  dtOptions: DataTables.Settings = {};
-  // We use this trigger because fetching the list of persons can be quite long,
-  // thus we ensure the data is fetched before rendering
-  dtTrigger: Subject<OrderModelServer> = new Subject();
+  orders_details: OrderDetailModelServer[] = [];
+
+  orders: any = {
+    page: 1,
+    size: 5,
+    totalPage: 0,
+    count: 0,
+    orders: []
+  };
+
+  kw = '';
 
   constructor(private orderService: OrderService) { }
 
   ngOnInit(): void {
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      lengthMenu: [
-        [5, 10, 25, 50, -1],
-        [5, 10, 25, 50, 'All'],
-      ],
-    };
-
-    this.orderService.getAllOrders().subscribe((orders: ServerResponse) => {
-      this.orders = orders.orders
-      console.log(orders)
-      this.dtTrigger.next()
-    })
-
+    this.searchOrder(1);
   };
 
-  ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
-    this.dtTrigger.unsubscribe();
+  searchOrder(cPage) {
+    let page = cPage;
+    let size = 5;
+    let keyword = this.kw;
+
+    this.orderService.getAllOrders(page, size, keyword).subscribe((orders: any) => {
+      this.orders = orders;
+      console.log(orders);
+    });
+  }
+  
+  searchPrevious() {
+    if (this.orders.page > 1) {
+      let nextPage = this.orders.page - 1;
+      
+      let page = nextPage;
+      let size = 5;
+      let keyword = this.kw;
+
+      this.orderService.getAllOrders(page, size, keyword).subscribe((orders: any) => {
+        this.orders = orders;
+      });
+    } else {
+      alert("You're in the first page");
+    }
   }
 
-  openModal(){
-    $('#order_detail').modal('show')
+  searchNext() {
+    if (this.orders.page < this.orders.totalPage) {
+      let nextPage = this.orders.page + 1;
+
+      let page = nextPage;
+      let size = 5;
+      let keyword = this.kw;
+      this.orderService.getAllOrders(page, size, keyword).subscribe((orders: any) => {
+        this.orders = orders;
+      });
+    }
+    else{
+      alert("You're in the last page");
+    }
+  }
+
+  getOrderDetail(id: number):void{
+    this.orderService.getOrderDetail(id).subscribe((order_detail: OrderDetailServerResponse) =>{
+      this.orders_details = order_detail.orders_details
+      console.log(this.orders_details)
+    })
   }
 
 }

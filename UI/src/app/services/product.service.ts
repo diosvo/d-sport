@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ServerResponse, ProductModelServer } from '../models/product.model';
 import { Observable } from 'rxjs';
+import { ClassifyServerResponse } from '../models/classify.model';
+import { CategoryServerResponse } from '../models/category.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,11 +14,11 @@ export class ProductService {
 
   private SERVER_URL = environment.SERVER_URL
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // Get All product for admin page
-  getAllProduct(): Observable<ServerResponse> {
-    return this.http.get<ServerResponse>(this.SERVER_URL + '/products/all')
+  getAllProduct(cPage: Number, size: Number, keyword: string): Observable<ServerResponse> {
+    return this.http.get<ServerResponse>(this.SERVER_URL + '/products/page/' + cPage + '/size/' + size + '/keyword/' + keyword)
   }
 
   /* Get products for home page */
@@ -70,4 +72,11 @@ export class ProductService {
     return this.http.get<ServerResponse>(this.SERVER_URL + '/products/classify/' + ClassId + '/category/' + CateId)
   }
 
+  getCategoryList(): Observable<CategoryServerResponse> {
+    return this.http.get<CategoryServerResponse>(this.SERVER_URL + '/categories')
+  }
+
+  getClassifyList(): Observable<ClassifyServerResponse> {
+    return this.http.get<ClassifyServerResponse>(this.SERVER_URL + '/classify')
+  }
 }

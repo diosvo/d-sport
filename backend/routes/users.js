@@ -2,16 +2,102 @@ var express = require('express');
 var router = express.Router();
 const {database} = require('../config/helpers');
 
-router.get('/', function (req, res) {
-    database.table('users')
-        .withFields([ 'id' , 'email', 'password', 'lastname', 'firstname', 'dob', 'gender', 'role' ])
-        .getAll().then((list) => {
-        if (list.length > 0) {
-            res.json({users: list});
-        } else {
-            res.json({message: 'No user found'});
-        }
-    }).catch(err => res.json(err));
+// router.get('/', function (req, res) {
+//     database.table('users')
+//         .withFields([ 'id' , 'email', 'password', 'lastname', 'firstname', 'dob', 'gender', 'role' ])
+//         .getAll().then((list) => {
+//         if (list.length > 0) {
+//             res.json({users: list});
+//         } else {
+//             res.json({message: 'No user found'});
+//         }
+//     }).catch(err => res.json(err));
+// });
+
+// Get all user with pagination
+router.get('/page/:page/size/:size/keyword', function (req, res) {
+    let page = req.params.page;
+    let size = req.params.size;
+    let start = size*(page-1);
+    let limit = size;
+    let totalRecord=0;
+    let sql ='';
+
+    database.query('SELECT * FROM users').then(result =>
+        totalRecord = result.length
+    );
+
+    sql = `SELECT ROW_NUMBER() OVER (ORDER BY u.email) AS item_number, u.* FROM users u LIMIT ${start},${limit}`;
+    database.query(sql)
+        .then(data => {
+            if (data.length > 0) {
+                res.status(200).json({
+                    count: totalRecord, //totalRecord
+                    totalPage: Math.ceil(totalRecord/size),
+                    page: parseInt(page),
+                    size: parseInt(size),
+                    users: data,
+                })
+            } else {
+                res.json({
+                    count: 0, //totalRecord
+                    totalPage: 0,
+                    page: parseInt(page),
+                    size: parseInt(size),
+                    users: []
+                    //sql: sql
+                })
+            }
+        })
+        .catch(err => console.log(err));
+});
+
+// Get all user with pagination and keyword
+router.get('/page/:page/size/:size/keyword/:keyword', function (req, res) {
+    let page = req.params.page;
+    let size = req.params.size;
+    let keyword = req.params.keyword;
+    let start = size*(page-1);
+    let limit = size;
+    let totalRecord=0;
+    let sql ='';
+
+    database.query('SELECT * FROM users').then(result =>
+        totalRecord = result.length
+    );
+
+    if(keyword.trim()=="" || keyword==null || keyword==undefined){
+        sql = `SELECT ROW_NUMBER() OVER (ORDER BY u.email) AS item_number, u.* FROM users u LIMIT ${start},${limit}`;
+    }else {
+        sql = `SELECT ROW_NUMBER() OVER (ORDER BY u.email) AS item_number, u.* FROM users u
+                WHERE email LIKE '%${keyword}%'
+                        OR lastname LIKE '%${keyword}%'
+                        OR firstname LIKE '%${keyword}%'
+                LIMIT ${start},${limit}`;
+    }
+
+    database.query(sql)
+        .then(data => {
+            if (data.length > 0) {
+                res.status(200).json({
+                    count: totalRecord, //totalRecord
+                    totalPage: Math.ceil(totalRecord/size),
+                    page: parseInt(page),
+                    size: parseInt(size),
+                    users: data,
+                })
+            } else {
+                res.json({
+                    count: 0, //totalRecord
+                    totalPage: 0,
+                    page: parseInt(page),
+                    size: parseInt(size),
+                    users: []
+                    //sql: sql
+                })
+            }
+        })
+        .catch(err => console.log(err));
 });
 
 /* User by ID */

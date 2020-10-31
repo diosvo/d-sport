@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-import { ServerResponse, UserModelServer } from 'src/app/models/user.model';
 import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
@@ -9,27 +7,63 @@ import { AdminService } from 'src/app/services/admin.service';
 })
 export class AdminUserComponent implements OnInit {
 
-  users: UserModelServer[] = [];
-  dtOptions: DataTables.Settings = {};
-  dtTrigger: Subject<UserModelServer> = new Subject();
-
+  users: any = {
+    page: 0,
+    size: 10,
+    totalPage: 0,
+    count: 0,
+    users: []
+  };
+  kw = '';
+  
   constructor(private adminService: AdminService) { }
 
   ngOnInit(): void {
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 2
-    };
+    this.searchUser(1);
 
-    this.adminService.getUsers().subscribe((user: ServerResponse) => {
-      this.users = user.users
-      this.dtTrigger.next()
-    })
   }
 
-  ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
-    this.dtTrigger.unsubscribe();
+  searchUser(cPage) {
+    let page = cPage;
+    let size = 5;
+    let keyword = this.kw;
+
+    this.adminService.getUsers(page,size,keyword).subscribe((user: any) => {
+      this.users = user;
+      console.log(user);
+    });
+  }
+  
+  searchPrevious() {
+    if (this.users.page > 1) {
+      let nextPage = this.users.page - 1;
+      
+      let page = nextPage;
+      let size = 5;
+      let keyword = this.kw;
+
+      this.adminService.getUsers(page,size,keyword).subscribe((user: any) => {
+        this.users = user
+      });
+    } else {
+      alert("You're in the first page");
+    }
+  }
+
+  searchNext() {
+    if (this.users.page < this.users.totalPage) {
+      let nextPage = this.users.page + 1;
+
+      let page = nextPage;
+      let size = 5;
+      let keyword = this.kw;
+      this.adminService.getUsers(page,size,keyword).subscribe((user: any) => {
+        this.users = user
+      });
+    }
+    else{
+      alert("You're in the last page");
+    }
   }
 
 }

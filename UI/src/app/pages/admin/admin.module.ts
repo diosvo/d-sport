@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CarouselModule } from 'ngx-owl-carousel-o';
@@ -12,6 +12,8 @@ import { AdminOrderComponent } from './admin-order/admin-order.component';
 import { AdminUserComponent } from './admin-user/admin-user.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { DataTablesModule } from 'angular-datatables';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -24,7 +26,7 @@ import { DataTablesModule } from 'angular-datatables';
     CarouselModule,
     NgxPaginationModule,
     SharedModule,
-    DataTablesModule
+    DataTablesModule,
   ],
   exports: [AdminComponent],
 })

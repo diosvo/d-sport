@@ -9,6 +9,10 @@ export interface ProductModelServer {
     price: number;
     quantity: number;
     another_CatName: string;
+    categoryName:string;
+    category_id:number;
+    classify_id:number;
+    classify_name:string;
 }
 
 export interface ServerResponse {

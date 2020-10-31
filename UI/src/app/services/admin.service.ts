@@ -15,11 +15,7 @@ export class AdminService {
   constructor(private http: HttpClient) { }
 
   /* Get users for admin-user page */
-  getUsers(numberOfResults = 10): Observable<ServerResponse> {
-    return this.http.get<ServerResponse>(this.SERVER_URL + '/users', {
-      params: {
-        limit: numberOfResults.toString()
-      }
-    })
+  getUsers(cPage: Number, size: Number, keyword: string): Observable<ServerResponse> {
+    return this.http.get<ServerResponse>(this.SERVER_URL + '/users/page/' + cPage + '/size/' + size + '/keyword/' + keyword)
   }
 }

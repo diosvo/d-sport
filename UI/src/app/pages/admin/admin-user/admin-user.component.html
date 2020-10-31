@@ -24,11 +24,10 @@
             </div>
           </div>
           <div class="col-7 input-group">
-            <input class="form-control" name="kw" type="search"
-                placeholder="Tìm kiếm theo Username" aria-label="Search">
+            <input class="form-control" [(ngModel)]="kw" type="search"
+                placeholder="Search by Username or First name or Last name" aria-label="Search">
             <div class="input-group-append">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm
-                    kiếm</button>
+                <button class="btn btn-outline-success my-2 my-sm-0" (click)="searchUser(1)" type="submit">Search</button>
             </div>
           </div>
         </div>
@@ -37,8 +36,8 @@
         <div class="card shadow my-4">
           <div class="card-body">
             <div class="table-responsive">
-              <p *ngIf="!users"><em>Loading...</em></p>
-              <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <p *ngIf="!users.users"><em>Loading...</em></p>
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead class="font-15">
                   <tr>
                     <th class="text-center">#</th> 
@@ -52,8 +51,8 @@
                   </tr>
                 </thead>
                 <tbody class="font-14">
-                  <tr *ngFor="let u of users">
-                    <td class="text-center">{{u.id}}</td>
+                  <tr *ngFor="let u of users.users">
+                    <td class="text-center">{{u.item_number}}</td>
                     <td>{{u.email}}</td>
                     <td>{{u.password | slice:0:20}}</td>
                     <td>{{u.firstname}}</td>
@@ -61,12 +60,26 @@
                     <td class="text-center">{{u.dob| date:'dd-MM-yyyy' }}</td>
                     <td>{{u.gender}}</td>
                     <td class="text-center">{{u.role}}</td>
-                    
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
+          <div class="card-footer dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+            <ul class="pagination  m-0 d-flex justify-content-end">
+                <li class="paginate_button page-item previous ">
+                    <a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="0"
+                        (click)="searchPrevious()" tabindex="0" class="page-link">Previous</a>
+                </li>
+                <li class="paginate_button page-item active">
+                    <a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0"
+                        class="page-link">{{ users.page }}</a>
+                <li class="paginate_button page-item next">
+                    <a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="4"
+                        (click)="searchNext()" tabindex="0" class="page-link">Next</a>
+                </li>
+            </ul>
+        </div>
         </div>
       </div>
     </div>
