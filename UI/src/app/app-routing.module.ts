@@ -17,11 +17,13 @@ const routes: Routes = [
   { path: 'kids', loadChildren: () => import('./class/kids/kids.module').then(m => m.KidsModule) },
   { path: 'accessories', loadChildren: () => import('./class/accessories/accessories.module').then(m => m.AccessoriesModule) },
 
-  { path: 'admin', loadChildren: ()=> import('./pages/admin/admin.module').then(m => m.AdminModule) },
+  { path: 'admin', loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule) },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    scrollPositionRestoration: 'enabled'
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

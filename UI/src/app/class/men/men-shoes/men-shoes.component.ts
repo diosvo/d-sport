@@ -1,3 +1,4 @@
+import { templateJitUrl } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
@@ -16,7 +17,8 @@ export class MenShoesComponent implements OnInit {
   isDisplay = true
   p: number = 1
 
-  constructor(private productService: ProductService, private toastr: ToastrService) { }
+  constructor(private productService: ProductService, private toastr: ToastrService) {
+  }
 
   ngOnInit(): void {
     this.productService.getProdFromClassifyIdCategoryId(1, 1).subscribe((prods: ServerResponse) => {

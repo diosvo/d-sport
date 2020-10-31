@@ -28,7 +28,8 @@
             <!-- Single Product -->
             <article class="products">
                 <div class="product-img-container">
-                    <img loading="lazy" class="product-img" [src]="p?.image" alt={{p?.CategoryName}} [routerLink]="['/product-details', p.id]">
+                    <img loading="lazy" class="product-img" [src]="p?.image" alt={{p?.CategoryName}}
+                        [routerLink]="['/product-details', p.id]">
                     <div class="d-flex justify-content-between align-items-baseline">
                         <div class=" mt-2">
                             <p class="product-name mb-0" [routerLink]="['/product-details', p.id]">{{p?.title}}</p>
@@ -44,6 +45,7 @@
     </div>
 
     <div class="d-flex justify-content-end">
-        <pagination-controls (pageChange)="p = $event" responsive="true" previousLabel="" nextLabel=""></pagination-controls>
+        <pagination-controls (pageChange)="p = $event" responsive="true" previousLabel="" nextLabel="" [autoHide]=true>
+        </pagination-controls>
     </div>
 </section>

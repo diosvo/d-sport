@@ -20,7 +20,7 @@ export class ProductService {
   }
 
   /* Get products for home page */
-  getHomeProducts(numberOfResults = 10): Observable<ServerResponse> {
+  getHomeProducts(numberOfResults = 1000): Observable<ServerResponse> {
     return this.http.get<ServerResponse>(this.SERVER_URL + '/products', {
       params: {
         limit: numberOfResults.toString()
@@ -29,8 +29,8 @@ export class ProductService {
   }
 
   /* Get products for Men page */
-  getMenProducts(numberOfResults = 12): Observable<ServerResponse> {
-    return this.http.get<ServerResponse>(this.SERVER_URL + '/products/classify/man', {
+  getMenProducts(numberOfResults = 1000): Observable<ServerResponse> {
+    return this.http.get<ServerResponse>(this.SERVER_URL + '/products/classify/men', {
       params: {
         limit: numberOfResults.toString()
       }
@@ -38,7 +38,7 @@ export class ProductService {
   }
 
   /* Get products for Kids page */
-  getKidsProducts(numberOfResults = 12): Observable<ServerResponse> {
+  getKidsProducts(numberOfResults = 1000): Observable<ServerResponse> {
     return this.http.get<ServerResponse>(this.SERVER_URL + '/products/classify/kids', {
       params: {
         limit: numberOfResults.toString()
@@ -47,7 +47,7 @@ export class ProductService {
   }
 
   /* Get products for Accessories page */
-  getAccessoriesProducts(numberOfResults = 12): Observable<ServerResponse> {
+  getAccessoriesProducts(numberOfResults = 1000): Observable<ServerResponse> {
     return this.http.get<ServerResponse>(this.SERVER_URL + '/products/category/accessories', {
       params: {
         limit: numberOfResults.toString()

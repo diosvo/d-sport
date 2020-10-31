@@ -27,7 +27,7 @@ export class MenComponent implements OnInit {
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,
-    dots: true,
+    dots: false,
     navSpeed: 700,
     autoplay: true,
     navText: ['', ''],
@@ -70,6 +70,6 @@ export class MenComponent implements OnInit {
         items: 3
       }
     },
-    nav: true
+    nav: false
   }
 }
