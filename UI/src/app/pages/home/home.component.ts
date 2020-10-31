@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,
-    dots: true,
+    dots: false,
     navSpeed: 700,
     autoplay: true,
     navText: ['<i class="fas fa-long-arrow-alt-left"></i>', '<i class="fas fa-long-arrow-alt-right"></i>'],
@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
         items: 4
       }
     },
-    nav: true
+    nav: false
   }
 
   bsCustomOptions: OwlOptions = {
@@ -68,6 +68,6 @@ export class HomeComponent implements OnInit {
         items: 3
       }
     },
-    nav: true
+    nav: false
   }
 }

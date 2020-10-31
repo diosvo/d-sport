@@ -131,7 +131,7 @@ router.get('/:prodId', (req, res) => {
 // BY CATEGORY
 router.get('/category/:catName', (req, res) => {
     let page = (req.query.page !== undefined && req.query.page !== 0) ? req.query.page : 1; // set the current page number
-    const limit = (req.query.limit !== undefined && req.query.limit !== 0) ? req.query.limit : 12; // set the limit of items per page
+    const limit = (req.query.limit !== undefined && req.query.limit !== 0) ? req.query.limit : 24; // set the limit of items per page
 
     let startValue;
     let endValue;
@@ -141,7 +141,7 @@ router.get('/category/:catName', (req, res) => {
         endValue = page * limit;
     } else {
         startValue = 0;
-        endValue = 12;
+        endValue = 24;
     }
 
     // Fetch the category name from the URL

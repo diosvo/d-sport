@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router, Event } from '@angular/router';
 
 import { CartModelServer } from 'src/app/models/cart.model';
 
 import { CartService } from 'src/app/services/cart.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { UserModelServer } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-header',
@@ -16,18 +15,25 @@ export class HeaderComponent implements OnInit {
 
   isLoggedIn: Boolean
   cartData: CartModelServer
-  cartTotal: Number;
+  cartTotal: Number
 
-  
   constructor(public cartService: CartService,
     private authService: AuthService,
-    private router: Router) { }
+    private router: Router) {
+    router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        const nav = document.querySelector('.nav')
+        nav.classList.remove('nav--open')
+      }
+    })
+  }
 
   ngOnInit(): void {
-    this.authService.auth.subscribe(isLoggedIn => {this.isLoggedIn = isLoggedIn})
+    this.authService.auth.subscribe(isLoggedIn => { this.isLoggedIn = isLoggedIn })
     this.cartService.cartTotal$.subscribe(total => this.cartTotal = total)
     this.cartService.cartData$.subscribe(data => { this.cartData = data })
   }
+
 
   onClickMenu() {
     const nav = document.querySelector('.nav')

@@ -44,7 +44,7 @@ export class KidsComponent implements OnInit {
         items: 4
       }
     },
-    nav: true
+    nav: false
   }
 
   movingCustomOptions: OwlOptions = {
@@ -68,7 +68,7 @@ export class KidsComponent implements OnInit {
         items: 3
       }
     },
-    nav: true
+    nav: false
   }
 
 }
