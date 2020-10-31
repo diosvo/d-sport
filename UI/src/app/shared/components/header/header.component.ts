@@ -1,5 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router, Event } from '@angular/router';
 
 import { CartModelServer } from 'src/app/models/cart.model';
 
@@ -17,12 +17,15 @@ export class HeaderComponent implements OnInit {
   cartData: CartModelServer
   cartTotal: Number
 
-  @ViewChild('appDrawer') appDrawer: ElementRef
-
   constructor(public cartService: CartService,
     private authService: AuthService,
     private router: Router) {
-
+    router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        const nav = document.querySelector('.nav')
+        nav.classList.remove('nav--open')
+      }
+    })
   }
 
   ngOnInit(): void {
