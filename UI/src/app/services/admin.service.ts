@@ -18,4 +18,8 @@ export class AdminService {
   getUsers(cPage: Number, size: Number, keyword: string): Observable<ServerResponse> {
     return this.http.get<ServerResponse>(this.SERVER_URL + '/users/page/' + cPage + '/size/' + size + '/keyword/' + keyword)
   }
+
+  deleteUser(userId){
+    return this.http.delete(this.SERVER_URL + '/users/' + userId)
+  }
 }

@@ -151,8 +151,6 @@ router.get('/page/:page/size/:size/keyword/:keyword', function (req, res) {
         .catch(err => console.log(err));
 });
 
-
-
 /* GET SINGLE ORDER */
 router.get('/:id', (req, res) => {
     const orderId = req.params.id;

@@ -57,7 +57,7 @@ router.get('/', function (req, res) {
         }).catch(err => console.log(err));
 });
 
-// Get all product with pagination
+/* === Get all product with pagination === */
 router.get('/page/:page/size/:size/keyword', function (req, res) {
     let page = req.params.page;
     let size = req.params.size;
@@ -75,8 +75,6 @@ router.get('/page/:page/size/:size/keyword', function (req, res) {
                 INNER JOIN categories c ON p.category_id = c.id 
             INNER JOIN classify cl ON p.classify_id = cl.id 
             LIMIT ${start},${limit}`;
-
-
     database.query(sql)
         .then(prods => {
             if (prods.length > 0) {
@@ -101,7 +99,7 @@ router.get('/page/:page/size/:size/keyword', function (req, res) {
         .catch(err => console.log(err));
 });
 
-// Get all product with pagination adn keyword
+/* === Get all product with pagination and keyword === */
 router.get('/page/:page/size/:size/keyword/:keyword', function (req, res) {
     let page = req.params.page;
     let size = req.params.size;
@@ -114,8 +112,6 @@ router.get('/page/:page/size/:size/keyword/:keyword', function (req, res) {
     database.query('SELECT * FROM products').then(result =>
         totalRecord = result.length
     );
-    console.log("keyword:",keyword);
-    console.log(typeof keyword);
     if(keyword.trim()=="" || keyword==null || keyword==undefined){
         sql = `SELECT p.*, c.title as category_name, cl.name as classify_name 
                 FROM products p
@@ -131,7 +127,6 @@ router.get('/page/:page/size/:size/keyword/:keyword', function (req, res) {
                         OR p.another_CatName LIKE '%${keyword}%'
                 LIMIT ${start},${limit}`;
     }
-
     database.query(sql)
         .then(prods => {
             if (prods.length > 0) {
@@ -154,6 +149,85 @@ router.get('/page/:page/size/:size/keyword/:keyword', function (req, res) {
             }
         })
         .catch(err => console.log(err));
+});
+
+/* === CREATE PRODUCT === */
+router.post('/create', (req, res) => {
+    let product = req.body.product;
+    let sql = `INSERT INTO products (title, image, image_1, image_2, image_3, description
+                                    , price, quantity, another_CatName, category_id, classify_id)
+                VALUES("${product.title}", "${product.image}", "${product.image_1}", "${product.image_2}",
+                        "${product.image_3}", "${product.description}", ${product.price}, ${product.quantity},
+                         "${product.another_CatName}", ${product.category_id}, ${product.classify_id});`;
+    database.query(sql)
+        .then(result => {
+            console.log(result);
+            if(result.insertId > 0){
+                res.json({
+                    success: true,
+                    message: "Product created successfully"
+                })
+            }else{
+                res.json({
+                    success: true,
+                    message: "No product has been created"
+                })
+            }
+        }).catch(err => console.log(err));
+})
+
+
+/* === UPDATE PRODUCT === */
+router.post('/update', (req, res) => {
+    let product = req.body.product;
+    let sql = `UPDATE products
+                SET title = "${product.title}",
+                    image = "${product.image}",
+                    image_1 = "${product.image_1}",
+                    image_2 = "${product.image_2}",
+                    image_3 = "${product.image_3}",
+                    description = "${product.description}",
+                    price = ${product.price},
+                    quantity = ${product.quantity},
+                    another_CatName = "${product.another_CatName}",
+                    category_id = ${product.category_id},
+                    classify_id = ${product.classify_id}
+                WHERE id =${product.id}`;
+    database.query(sql)
+        .then(result => {
+            console.log(result);
+            if(result.changedRows > 0){
+                res.json({
+                    success: true,
+                    message: "Product updated successfully"
+                })
+            }else{
+                res.json({
+                    success: true,
+                    message: "Product updated with no change"
+                })
+            }
+        }).catch(err => console.log(err));
+})
+
+/* === DELETE PRODUCT === */
+router.delete('/:id', (req,res)=>{
+    let product_id = req.params.id;
+    let sql= `DELETE FROM products WHERE id=${product_id}`;
+    database.query(sql)
+        .then(result => {
+            if(result.affectedRows == 0){
+                res.json({
+                    success: false,
+                    message: `The product with the given ID ${product_id} was not found`
+                })
+            }else{
+                res.json({
+                    success: true,
+                    message: "Product deleted successfully"
+                })
+            }
+        }).catch(err => console.log(err));
 });
 
 // Get [Single] products

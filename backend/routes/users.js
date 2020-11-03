@@ -2,18 +2,6 @@ var express = require('express');
 var router = express.Router();
 const {database} = require('../config/helpers');
 
-// router.get('/', function (req, res) {
-//     database.table('users')
-//         .withFields([ 'id' , 'email', 'password', 'lastname', 'firstname', 'dob', 'gender', 'role' ])
-//         .getAll().then((list) => {
-//         if (list.length > 0) {
-//             res.json({users: list});
-//         } else {
-//             res.json({message: 'No user found'});
-//         }
-//     }).catch(err => res.json(err));
-// });
-
 // Get all user with pagination
 router.get('/page/:page/size/:size/keyword', function (req, res) {
     let page = req.params.page;
@@ -156,6 +144,26 @@ router.patch('/:userId', async (req, res) => {
             age: age !== undefined ? age : user.age
         }).then(result => res.json('User updated successfully')).catch(err => res.json(err));
     }
+});
+
+/* === DELETE user === */
+router.delete('/:userId', (req,res)=>{
+    let user_id = req.params.userId;
+    let sql= `DELETE FROM users WHERE id=${user_id}`;
+    database.query(sql)
+        .then(result => {
+            if(result.affectedRows == 0){
+                res.json({
+                    success: false,
+                    message: `The user with the given ID ${user_id} was not found`
+                })
+            }else{
+                res.json({
+                    success: true,
+                    message: "User deleted successfully"
+                })
+            }
+        }).catch(err => console.log(err));
 });
 
 module.exports = router;

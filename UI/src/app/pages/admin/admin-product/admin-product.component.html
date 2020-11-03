@@ -32,7 +32,7 @@
                 </div>
               </div>
 
-              <!-- Data Tables-->
+              <!-- Data-->
               <div class="card shadow my-4">
                 <div class="row card-header d-flex align-items-baseline m-0 py-0 px-2">
                     <div class="col py-3 d-flex justify-content-end">
@@ -53,7 +53,7 @@
                                     <th class="text-center align-middle">Price</th>
                                     <th class="text-center align-middle">Qty</th>
                                     <th class="text-center align-middle">Category</th>
-                                    <th class="text-center align-middle">Edit</th>
+                                    <th class="text-center align-middle">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="font-13">
@@ -76,11 +76,9 @@
                                     <td>{{ p.another_CatName }}</td>
                                     <td class="text-center">
                                         <div class="btn-group" role="group">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                data-target="#myModal" (click)="openModal(false,p)">
+                                            <button type="button" class="btn btn-primary" (click)="openModal(false,p)">
                                                 <i class="fas fa-edit"></i></button>
-                                            <button id="delete" class="btn btn-danger" data-toggle="modal"
-                                            data-target="#deleteModal"><i
+                                            <button id="delete" class="btn btn-danger" (click)="deleteModal(p.id)"><i
                                                     class="fas fa-trash-alt"></i></button>
                                         </div>
                                     </td>
@@ -152,32 +150,50 @@
                 <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Category Description</label>
                     <div class="col-sm-8">
-                        <input class="form-control" [(ngModel)]='product.another_CatName' name="another_CatName" required>
+                        <input class="form-control" [(ngModel)]='product.another_CatName' name="another_CatName">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Price</label>
                     <div class="col-sm-8">
-                        <input type="number" class="form-control" [(ngModel)]='product.price' name="price">
+                        <input type="number" class="form-control" [(ngModel)]='product.price' name="price" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Quantity</label>
                     <div class="col-sm-8">
-                        <input type="number" class="form-control" [(ngModel)]='product.quantity' name="quantity">
+                        <input type="number" class="form-control" [(ngModel)]='product.quantity' name="quantity" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="description" class="col-sm-4 col-form-label">Description</label>
                     <div class="col-sm-8">
-                        <textarea id="description" class="form-control" name="description" rows="4" cols="50" 
-                        [(ngModel)]='product.description' name="description"></textarea>
+                        <textarea id="description" class="form-control" rows="4" cols="50" 
+                        [(ngModel)]='product.description' name="description" required></textarea>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Image</label>
+                    <label class="col-sm-4 col-form-label">Image 1</label>
                     <div class="col-sm-8">
-                        <input type="file"  [(ngModel)]='product.image' name="image">
+                        <input type="text"  class="form-control" [(ngModel)]='product.image' name="image" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Image 2</label>
+                    <div class="col-sm-8">
+                        <input type="text"  class="form-control" [(ngModel)]='product.image_1' name="image_1">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Image 3</label>
+                    <div class="col-sm-8">
+                        <input type="text"  class="form-control" [(ngModel)]='product.image_2' name="image_2">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Image 4</label>
+                    <div class="col-sm-8">
+                        <input type="text"  class="form-control" [(ngModel)]='product.image_3' name="image_3">
                     </div>
                 </div>
             </form>
@@ -185,7 +201,7 @@
 
         <!-- Modal footer -->
         <div class="modal-footer">
-            <button type="submit" (click)="addProduct()" *ngIf="!isEdit" class="btn btn-success">Create</button>
+            <button type="submit" (click)="createProduct()" *ngIf="!isEdit" class="btn btn-success">Create</button>
             <button type="submit" (click)="updateProduct()" *ngIf="isEdit" class="btn btn-primary">Save</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         </div>
@@ -216,4 +232,4 @@
         </div>
       </div>
     </div>
-  </div>
+</div>

@@ -79,4 +79,16 @@ export class ProductService {
   getClassifyList(): Observable<ClassifyServerResponse> {
     return this.http.get<ClassifyServerResponse>(this.SERVER_URL + '/classify')
   }
+
+  deleteProduct(productId){
+    return this.http.delete(this.SERVER_URL + '/products/' + productId)
+  }
+
+  updateProduct(product){
+    return this.http.post(this.SERVER_URL + '/products/update', {product})
+  }
+
+  createProduct(product){
+    return this.http.post(this.SERVER_URL + '/products/create', {product})
+  }
 }

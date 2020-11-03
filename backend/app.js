@@ -35,6 +35,7 @@ const authRoute = require('./routes/auth');
 const ordersDetailsRoute = require('./routes/orders_details');
 const categoriesRoute = require('./routes/categories');
 const classifyRoute = require('./routes/classify');
+const statisticRoute = require('./routes/statistic');
 
 /* Use Routes */
 app.use('/api/products', productsRoute);
@@ -44,6 +45,7 @@ app.use('/api/auth', authRoute);
 app.use('/api/orders_details', ordersDetailsRoute);
 app.use('/api/categories', categoriesRoute);
 app.use('/api/classify', classifyRoute);
+app.use('/api/statistic', statisticRoute);
 
 app.use(logger('dev'));
 app.use(express.json());

@@ -34,6 +34,12 @@
 
         <!-- Data -->
         <div class="card shadow my-4">
+          <div class="row card-header d-flex align-items-baseline m-0 py-0 px-2">
+            <div class="col py-3 d-flex justify-content-end">
+                <button type="button" class="btn btn-success px-4" data-toggle="modal"
+                data-target="#myModal">Create New User</button>
+            </div>
+          </div>
           <div class="card-body">
             <div class="table-responsive">
               <p *ngIf="!users.users"><em>Loading...</em></p>
@@ -48,6 +54,7 @@
                     <th class="text-center">DOB</th>
                     <th class="text-center">Gender</th>
                     <th class="text-center">Role</th>
+                    <th class="text-center align-middle">Actions</th>
                   </tr>
                 </thead>
                 <tbody class="font-14">
@@ -60,6 +67,14 @@
                     <td class="text-center">{{u.dob| date:'dd-MM-yyyy' }}</td>
                     <td>{{u.gender}}</td>
                     <td class="text-center">{{u.role}}</td>
+                    <td class="text-center">
+                      <div class="btn-group" role="group">
+                          <button type="button" class="btn btn-primary">
+                              <i class="fas fa-edit"></i></button>
+                          <button id="delete" class="btn btn-danger" (click)="deleteModal(u.id)"><i
+                                  class="fas fa-trash-alt"></i></button>
+                      </div>
+                  </td>
                   </tr>
                 </tbody>
               </table>
@@ -84,4 +99,29 @@
       </div>
     </div>
   </div>
+</div>
+
+  <!-- Modal Delete-->
+  <div class="modal fade" id="deleteModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Delete</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+            <h5>Do you certain to delete this user?</h5>
+            <p>The user was deleted can't be restore!</p>
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="deleteUser()">Delete</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
 </div>

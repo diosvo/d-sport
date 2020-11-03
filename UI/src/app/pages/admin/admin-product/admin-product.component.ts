@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
 import { CategoryModelServer } from 'src/app/models/category.model';
 import { ClassifyModelServer } from 'src/app/models/classify.model';
-import { ProductModelServer, ServerResponse } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/services/product.service';
 
 declare var $: any;
@@ -43,6 +41,8 @@ export class AdminProductComponent implements OnInit {
   isEdit: boolean = true;
   kw = '';
 
+  productId = 0;
+
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
@@ -60,14 +60,13 @@ export class AdminProductComponent implements OnInit {
 
     this.productService.getAllProduct(page, size, keyword).subscribe((prod: any) => {
       this.products = prod
-      console.log(this.products);
     });
   }
-  
+
   searchPrevious() {
     if (this.products.page > 1) {
       let nextPage = this.products.page - 1;
-      
+
       let page = nextPage;
       let size = 5;
       let keyword = this.kw;
@@ -91,7 +90,7 @@ export class AdminProductComponent implements OnInit {
         this.products = prod
       });
     }
-    else{
+    else {
       alert("You're in the last page");
     }
   }
@@ -131,30 +130,48 @@ export class AdminProductComponent implements OnInit {
       this.isEdit = true;
       this.product = index;
     }
+    $('#myModal').modal("show");
   }
 
-  // Thêm
-  addProduct() {
 
+  createProduct() {
+    this.productService.createProduct(this.product).subscribe(result=>{
+        var res:any = result;
+        if(res.success){
+          this.isEdit = true;
+          alert(res.message);
+          $('#Modal').modal("hide");
+          location.reload();
+        }
+      }, error => console.error(error));
   }
 
-  // Cập nhật
   updateProduct() {
-
+    this.productService.updateProduct(this.product).subscribe(result => {
+      var res: any = result;
+      if (res.success) {
+        this.isEdit = true;
+        alert(res.message);
+        $('#myModal').modal("hide");
+        location.reload();
+      }
+    }, error => console.error(error))
   }
 
-  // Xóa
   deleteProduct() {
-
+    this.productService.deleteProduct(this.productId).subscribe(result => {
+      var res: any = result;
+      if (res.success) {
+        alert(res.message);
+        $('#deleteModal').modal("hide");
+        location.reload();
+      }
+    })
   }
 
-
-  ///// Initalizing ADD PRODUCT properties
-
-
+  deleteModal(id) {
+    $('#deleteModal').modal("show");
+    this.productId = id;
+  }
 
 }
-
-
-
-

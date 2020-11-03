@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from 'src/app/services/admin.service';
 
+declare var $: any;
+
 @Component({
   selector: 'app-admin-user',
   templateUrl: './admin-user.component.html',
@@ -15,6 +17,7 @@ export class AdminUserComponent implements OnInit {
     users: []
   };
   kw = '';
+  userId = 0;
   
   constructor(private adminService: AdminService) { }
 
@@ -64,6 +67,22 @@ export class AdminUserComponent implements OnInit {
     else{
       alert("You're in the last page");
     }
+  }
+
+  deleteUser() {
+    this.adminService.deleteUser(this.userId).subscribe(result => {
+      var res: any = result;
+      if (res.success) {
+        alert(res.message);
+        $('#deleteModal').modal("hide");
+        location.reload();
+      }
+    })
+  }
+
+  deleteModal(id) {
+    $('#deleteModal').modal("show");
+    this.userId = id;
   }
 
 }
