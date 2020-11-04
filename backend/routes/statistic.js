@@ -57,7 +57,7 @@ router.get('/num-of-orders-was-sold/:day', (req, res) => {
         .then(data => {
             if (data.length > 0) {
                 res.status(200).json({
-                    data: data
+                    data: data,
                 })
             } else {
                 res.json({message: 'No data found.'})
@@ -68,6 +68,7 @@ router.get('/num-of-orders-was-sold/:day', (req, res) => {
 /* GET number of products was sold in a day */
 router.get('/num-of-products-was-sold/:day', (req, res) => {
     const day = req.params.day;
+    console.log(day);
     const sql = `SELECT SUM(od.quantity) AS num FROM orders o 
                     INNER JOIN orders_details od
                     ON o.id = od.order_id
@@ -76,12 +77,14 @@ router.get('/num-of-products-was-sold/:day', (req, res) => {
                     AND YEAR(order_date) = YEAR('${day}')`;
     database.query(sql)
         .then(data => {
-            if (data.length > 0) {
+            console.log(data[0].num);
+            if (data[0].num != null) {
                 res.status(200).json({
-                    data: data
+                    data: data,
                 })
             } else {
-                res.json({message: 'No data found.'})
+                data[0].num = 0;
+                res.json({data: data})
             }
         }).catch(err => console.log(err));
 });
@@ -97,13 +100,13 @@ router.get('/revenue-in-day/:day', (req, res) => {
                     AND YEAR(order_date) = YEAR('${day}')`;
     database.query(sql)
         .then(data => {
-            console.log(data);
-            if (data.length > 0) {
+            if (data[0].revenue != null) {
                 res.status(200).json({
                     data: data
                 })
             } else {
-                res.json({message: 'No data found.'})
+                data[0].revenue = 0;
+                res.json({data: data})
             }
         }).catch(err => console.log(err));
 });
@@ -175,5 +178,22 @@ router.get('/list-product-fastest-sell/:from_date/:to_date', (req, res) => {
         }).catch(err => console.log(err));
 });
 
+/* GET list of year when the order was sold */
+router.get('/list-of-year', (req, res) => {
+    const sql = `SELECT YEAR(order_date) AS year_of_orders 
+                    FROM orders
+                    GROUP BY YEAR(order_date)
+                    ORDER BY YEAR(order_date)`;
+    database.query(sql)
+        .then(data => {
+            if (data.length > 0) {
+                res.status(200).json({
+                    data: data,
+                })
+            } else {
+                res.json({message: 'No data found.'})
+            }
+        }).catch(err => console.log(err));
+});
 
 module.exports = router;

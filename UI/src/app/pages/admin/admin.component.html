@@ -1,40 +1,48 @@
 <div id="wrapper" class="d-flex">
-  <app-sidebar class=" bg-gradient-primary"></app-sidebar>
+  <app-sidebar class="bg-gradient-primary"></app-sidebar>
   <div id="content-wrapper" class="d-flex flex-column">
-      <!-- Main Content -->
-      <div id="content">
-          <nav class="navbar navbar-expand-lg bg-white shadow d-flex justify-content-end px-5">
-              <div class="d-flex justify-content-end align-items-center">
-                  <img src="../../../assets/images/admin-avatar.png" alt="admin avatar" style="width: 5%;">
-                  <span class="font-13 ml-2">Admin</span>
-              </div>
-          </nav>
-          <!-- End of Topbar -->
+    <!-- Main Content -->
+    <div id="content">
+      <nav
+        class="navbar navbar-expand-lg bg-white shadow d-flex justify-content-end px-5"
+      >
+        <div class="d-flex justify-content-end align-items-center">
+          <img
+            src="../../../assets/images/admin-avatar.png"
+            alt="admin avatar"
+            style="width: 5%"
+          />
+          <span class="font-13 ml-2">Admin</span>
+        </div>
+      </nav>
+      <!-- End of Topbar -->
 
-          <!-- Begin Page Content -->
-          <div class="container mt-4">
-              <!-- Page Heading -->
-              <div class="row d-flex align-items-baseline pl-3 pr-4">
-                  <div class="col-5">
-                      <div class="content-top d-flex font-14">
-                        Home
-                      </div>
-                  </div>
-              </div>
+      <!-- Begin Page Content -->
+      <div class="container mt-4">
+        <!-- Page Heading -->
+        <div class="row d-flex align-items-baseline pl-3 pr-4">
+          <div class="col-5">
+            <div class="content-top d-flex font-14">Home</div>
+          </div>
+        </div>
 
-              <!-- Chart -->
-              <div class="chart">
-                  <span>chart o day nha! 2 cai</span>
-                  <div class="row">
-                    <div class="col-12">
-                        <div id="chart_div" style="width: 500px; height: 500px;"></div>
-                    </div>
-                    <!-- <div class="col-6">
-                        <div id="barchart" style="width: 500px; height: 500px;"></div>
-                    </div> -->
-                </div>
+        <!-- Chart -->
+        <div class="chart">
+          <div class="row">
+              <div class="col-4">{{numProductSoldByDay[0].num}} products was sold today!</div>
+              <div class="col-4">{{numOrderSoldByDay[0].num}} new order</div>
+              <div class="col-4">Revenue is {{revenueInDay[0].revenue}}$ for now</div>
+            <div class="col-12">
+              <div id="col_chart" style="width: 950px; height: 400px"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+                <div id="pie_chart" style="width: 950px; height: 400px"></div>
               </div>
           </div>
+        </div>
       </div>
+    </div>
   </div>
 </div>
