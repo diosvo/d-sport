@@ -1,41 +1,194 @@
 <div id="wrapper" class="d-flex">
-    <app-sidebar class="bg-gradient-primary"></app-sidebar>
-    <div id="content-wrapper" class="d-flex flex-column">
-      <!-- Main Content -->
-      <div id="content">
-        <nav
-          class="navbar navbar-expand-lg bg-white shadow d-flex justify-content-end px-5"
-        >
-          <div class="d-flex justify-content-end align-items-center">
-            <img
-              src="../../../assets/images/admin-avatar.png"
-              alt="admin avatar"
-              style="width: 5%"
-            />
-            <span class="font-13 ml-2">Admin</span>
-          </div>
-        </nav>
-        <!-- End of Topbar -->
-  
-        <!-- Begin Page Content -->
-        <div class="container mt-4">
-          <!-- Page Heading -->
-          <div class="row d-flex align-items-baseline pl-3 pr-4">
-            <div class="col-5">
-              <div class="content-top d-flex font-14">
-                <a href="#">
-                  Home >
-              </a>
+  <app-sidebar class="bg-gradient-primary"></app-sidebar>
+  <div id="content-wrapper" class="d-flex flex-column">
+    <!-- Main Content -->
+    <div id="content">
+      <nav
+        class="navbar navbar-expand-lg bg-white shadow d-flex justify-content-end px-5"
+      >
+        <div class="d-flex justify-content-end align-items-center">
+          <img
+            src="../../../assets/images/admin-avatar.png"
+            alt="admin avatar"
+            style="width: 5%"
+          />
+          <span class="font-13 ml-2">Admin</span>
+        </div>
+      </nav>
+      <!-- End of Topbar -->
+
+      <!-- Begin Page Content -->
+      <div class="container mt-4">
+        <!-- Page Heading -->
+        <div class="row d-flex align-items-baseline pl-3 pr-4">
+          <div class="col-5">
+            <div class="content-top d-flex font-14">
+              <a href="#" routerLink="/admin"> Home > </a>
               <div class="ml-1">Management > Statistic</div>
-              </div>
+            </div>
           </div>
-  
+
           <!-- Chart -->
+          <!-- order in among time -->
+          <div class="row mt-5">
+            <div class="col-12"><h5>List order in among time</h5></div>
+            <div class="col-3">Please choose the time</div>
+            <div class="col-3">
+              <input
+                [(ngModel)]="date_from_order"
+                type="date"
+                class="form-control"
+              />
+            </div>
+            <div class="col-3">
+              <input
+                [(ngModel)]="date_to_order"
+                type="date"
+                class="form-control"
+              />
+            </div>
+            <div class="col-3">
+              <button class="btn btn-info" (click)="getListOrderInTime()">
+                Search
+              </button>
+            </div>
+          </div>
+          <table class="table table-bordered" id="table_order">
+            <thead>
+              <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">Order ID</th>
+                <th class="text-center">Orderer ID</th>
+                <th class="text-center">Receiver</th>
+                <th class="text-center">Receiver Phone</th>
+                <th class="text-center">Order Date</th>
+                <th class="text-center">Ship Address</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let o of lstOrderInTime.data">
+                <td class="text-center">{{ o.item_number }}</td>
+                <td class="text-center">{{ o.id }}</td>
+                <td>{{ o.user_id }}</td>
+                <td>{{ o.receiver }}</td>
+                <td class="text-center">{{ o.receiver_phone }}</td>
+                <td class="text-center">{{ o.order_date | date: "short" }}</td>
+                <td>{{ o.ship_address }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- end order in among time -->
+          <!-- fastest product -->
+          <div class="row mt-5">
+            <div class="col-12"><h5>Fastest product in among time</h5></div>
+            <div class="col-3">Please choose the time</div>
+            <div class="col-3">
+              <input
+                [(ngModel)]="date_from_product"
+                type="date"
+                class="form-control"
+              />
+            </div>
+            <div class="col-3">
+              <input
+                [(ngModel)]="date_to_product"
+                type="date"
+                class="form-control"
+              />
+            </div>
+            <div class="col-3">
+              <button class="btn btn-info" (click)="getFastestSellProduct()">
+                Search
+              </button>
+            </div>
+          </div>
+            <table class="table table-bordered" id="table_product">
+              <thead>
+                <tr>
+                  <th class="text-center align-middle">ID</th>
+                  <th class="text-center align-middle">Product Name</th>
+                  <th class="text-center align-middle">Image</th>
+                  <th class="text-center align-middle">Description</th>
+                  <th class="text-center align-middle">Price</th>
+                  <th class="text-center align-middle">Qty</th>
+                  <th class="text-center align-middle">Category</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let p of lstFastestSellProduct.data">
+                  <td class="text-center">{{ p.id }}</td>
+                  <td>{{ p.title }}</td>
+                  <td class="text-center product-image">
+                    <div class="col-md-8 prod-img-container">
+                      <ng-container *ngIf="p?.image">
+                        <img
+                          [src]="p?.image"
+                          width="100px"
+                          alt="image-1"
+                          loading="lazy"
+                        />
+                      </ng-container>
+                    </div>
+                  </td>
+                  <td>{{ p.description | slice: 0:120 }}...</td>
+                  <td class="text-right">
+                    {{ p.price | currency: "$":"symbol-narrow":".0" }}
+                  </td>
+                  <td class="text-center">{{ p.quantity }}</td>
+                  <td>{{ p.another_CatName }}</td>
+                </tr>
+              </tbody>
+            </table>
+          <!-- end fastest product -->
+
+          <!-- revenue in among time -->
+          <div class="row mt-5">
+            <div class="col-12"><h5>Revenue in among time</h5></div>
+            <div class="col-3">Please choose the time</div>
+            <div class="col-3">
+              <input
+                [(ngModel)]="date_from_revenue"
+                type="date"
+                class="form-control"
+              />
+            </div>
+            <div class="col-3">
+              <input
+                [(ngModel)]="date_to_revenue"
+                type="date"
+                class="form-control"
+              />
+            </div>
+            <div class="col-3">
+              <button class="btn btn-info" (click)="getRevenueInTime()">
+                Search
+              </button>
+            </div>
+          </div>
           <div class="row">
-            meo
+            <div class="col-4">
+              <table class="table table-bordered" id="table_revenue">
+                <thead>
+                  <tr>
+                    <th class="text-center">Month</th>
+                    <th class="text-center">Revenue</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let r of lstRevenueInTime.data">
+                    <td class="text-center">{{ r.mon }}</td>
+                    <td class="text-right">{{ r.revenue | currency: "$":"symbol-narrow":".0" }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-8">
+              <div id="col_chart" style="width: 600px; height: 500px"></div>
+            </div>
+          </div>
+          <!-- end revenue in among time -->
           </div>
         </div>
       </div>
     </div>
   </div>
-  

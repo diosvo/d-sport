@@ -72,7 +72,7 @@ router.get('/page/:page/size/:size/keyword', function (req, res) {
 
     sql = `SELECT ROW_NUMBER() OVER (ORDER BY p.title) AS item_number, p.*, c.title as category_name, cl.name as classify_name 
             FROM products p
-                INNER JOIN categories c ON p.category_id = c.id 
+            INNER JOIN categories c ON p.category_id = c.id 
             INNER JOIN classify cl ON p.classify_id = cl.id 
             LIMIT ${start},${limit}`;
     database.query(sql)

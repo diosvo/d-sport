@@ -17,19 +17,19 @@ export class AdminProductComponent implements OnInit {
   classify: ClassifyModelServer[] = [];
 
   product: any = {
-    title: "",
-    image: "",
-    image_1: "",
-    image_2: "",
-    image_3: "",
-    description: "",
+    title: '',
+    image: '',
+    image_1: '',
+    image_2: '',
+    image_3: '',
+    description: '',
     price: 0,
     quantity: 0,
-    another_CatName: "",
-    categoryName: "",
-    category_id: "",
-    classify_id: "",
-    classify_name: "",
+    another_CatName: '',
+    categoryName: '',
+    category_id: '',
+    classify_id: '',
+    classify_name: '',
   };
   products: any = {
     page: 1,
@@ -42,11 +42,13 @@ export class AdminProductComponent implements OnInit {
   kw = '';
 
   productId = 0;
+  message = '';
 
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
     //display product
+
     this.searchProduct(1);
     this.getCategoryList();
     this.getClassifyList();
@@ -75,7 +77,7 @@ export class AdminProductComponent implements OnInit {
         this.products = prod
       });
     } else {
-      alert("You're in the first page");
+      this.showWarning("You're in the first page");
     }
   }
 
@@ -91,7 +93,7 @@ export class AdminProductComponent implements OnInit {
       });
     }
     else {
-      alert("You're in the last page");
+      this.showWarning("You're in the last page");
     }
   }
 
@@ -135,36 +137,44 @@ export class AdminProductComponent implements OnInit {
 
 
   createProduct() {
-    this.productService.createProduct(this.product).subscribe(result=>{
-        var res:any = result;
-        if(res.success){
+    if(this.validateData()){
+      this.productService.createProduct(this.product).subscribe(result => {
+        var res: any = result;
+        if (res.success) {
           this.isEdit = true;
-          alert(res.message);
-          $('#Modal').modal("hide");
-          location.reload();
+          $('#myModal').modal("hide");
+          this.showMessage(res.message);
         }
       }, error => console.error(error));
+    }
+    else{
+      this.showWarning("Please enter all of the required input");
+    }
   }
 
   updateProduct() {
-    this.productService.updateProduct(this.product).subscribe(result => {
-      var res: any = result;
-      if (res.success) {
-        this.isEdit = true;
-        alert(res.message);
-        $('#myModal').modal("hide");
-        location.reload();
-      }
-    }, error => console.error(error))
+    if(this.validateData()){
+      this.productService.updateProduct(this.product).subscribe(result => {
+        var res: any = result;
+        if (res.success) {
+          this.isEdit = true;
+          $('#myModal').modal("hide");
+          this.showMessage(res.message);
+        }
+      }, error => console.error(error))
+    }
+    else{
+      this.showWarning("Please enter all of the required input");
+    }
+    
   }
 
   deleteProduct() {
     this.productService.deleteProduct(this.productId).subscribe(result => {
       var res: any = result;
       if (res.success) {
-        alert(res.message);
         $('#deleteModal').modal("hide");
-        location.reload();
+        this.showMessage(res.message);
       }
     })
   }
@@ -174,4 +184,29 @@ export class AdminProductComponent implements OnInit {
     this.productId = id;
   }
 
+  showMessage(message) {
+    this.message = message;
+    $("#successModal").modal("show");
+    setTimeout(function () { $("#successModal").modal("hide"); }, 1500);
+    setTimeout(function () { location.reload(); }, 1500);
+  }
+
+  showWarning(message) {
+    this.message = message;
+    $("#warningModal").modal("show");
+    setTimeout(function () { $("#warningModal").modal("hide"); }, 1500);
+  }
+
+  validateData() {
+    if (this.product.title == '' ||
+      this.product.image == '' ||
+      this.product.description == '' ||
+      this.product.category_id == '' ||
+      this.product.classify_id == '') {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
 }

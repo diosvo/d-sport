@@ -17,7 +17,7 @@
         <div class="row d-flex align-items-baseline pl-3 pr-4">
           <div class="col-5">
             <div class="content-top d-flex font-14">
-              <a href="#">
+              <a href="#" routerLink="/admin">
                 Home >
             </a>
             <div class="ml-1">Management > User</div>
@@ -124,4 +124,30 @@
         </div>
       </div>
     </div>
+</div>
+
+<!-- Modal Success-->
+<div class="modal fade" id="successModal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">        
+      <!-- Modal body -->
+      <div class="modal-body text-center">
+          <i class="fas fa-check-circle success"></i>
+          <p class="text-center">{{message}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Notification-->
+<div class="modal fade" id="warningModal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">        
+      <!-- Modal body -->
+      <div class="modal-body text-center">
+          <i class="fas fa-exclamation-triangle warning"></i>
+          <p class="text-center">{{message}}</p>
+      </div>
+    </div>
+  </div>
 </div>

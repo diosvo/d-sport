@@ -17,7 +17,7 @@
               <div class="row d-flex align-items-baseline pl-3 pr-4">
                   <div class="col-5">
                       <div class="content-top d-flex font-14">
-                        <a href="#">
+                        <a href="#" routerLink="/admin">
                           Home >
                       </a>
                       <div class="ml-1">Management > Order</div>
@@ -129,6 +129,19 @@
       <!-- Modal footer -->
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Notification-->
+<div class="modal fade" id="warningModal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">        
+      <!-- Modal body -->
+      <div class="modal-body text-center">
+          <i class="fas fa-exclamation-triangle mb-3" style="color: rgb(255, 207, 74); font-size: 60px;"></i>
+          <p class="text-center">{{message}}</p>
       </div>
     </div>
   </div>

@@ -52,7 +52,7 @@ router.get('/', (req, res) => {
 // });
 
 
-// Get all user with pagination
+// Get all order with pagination
 router.get('/page/:page/size/:size/keyword', function (req, res) {
     let page = req.params.page;
     let size = req.params.size;
@@ -95,7 +95,7 @@ router.get('/page/:page/size/:size/keyword', function (req, res) {
         .catch(err => console.log(err));
 });
 
-// Get all user with pagination and keyword
+// Get all order with pagination and keyword
 router.get('/page/:page/size/:size/keyword/:keyword', function (req, res) {
     let page = req.params.page;
     let size = req.params.size;

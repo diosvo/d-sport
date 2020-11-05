@@ -22,6 +22,7 @@ export class AdminOrderComponent implements OnInit {
   };
 
   kw = '';
+  message ='';
 
   constructor(private orderService: OrderService) { }
 
@@ -36,7 +37,6 @@ export class AdminOrderComponent implements OnInit {
 
     this.orderService.getAllOrders(page, size, keyword).subscribe((orders: any) => {
       this.orders = orders;
-      console.log(orders);
     });
   }
   
@@ -52,7 +52,7 @@ export class AdminOrderComponent implements OnInit {
         this.orders = orders;
       });
     } else {
-      alert("You're in the first page");
+      this.showWarning("You're in the first page");
     }
   }
 
@@ -68,15 +68,20 @@ export class AdminOrderComponent implements OnInit {
       });
     }
     else{
-      alert("You're in the last page");
+      this.showWarning("You're in the last page");
     }
   }
 
   getOrderDetail(id: number):void{
     this.orderService.getOrderDetail(id).subscribe((order_detail: OrderDetailServerResponse) =>{
       this.orders_details = order_detail.orders_details
-      console.log(this.orders_details)
     })
+  }
+
+  showWarning(message){
+    this.message = message;
+    $("#warningModal").modal("show");
+    setTimeout(function(){ $("#warningModal").modal("hide"); }, 1500);
   }
 
 }

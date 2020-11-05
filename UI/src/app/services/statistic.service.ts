@@ -20,6 +20,11 @@ export class StatisticService {
     return this.http.get(this.SERVER_URL + '/statistic/num-of-orders-was-sold-each-month/' + year)
   }
 
+  /* GET number of product each month of the year => draw chart */
+  getNumOfProductByYear(year){
+    return this.http.get(this.SERVER_URL + '/statistic/num-of-products-was-sold-each-month/' + year)
+  }
+
   /* GET number of products was sold in a day */
   getOrderSoldByDay(day){
     return this.http.get(this.SERVER_URL + '/statistic/num-of-orders-was-sold/' + day)

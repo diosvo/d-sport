@@ -6,7 +6,7 @@ const {database} = require('../config/helpers');
 router.get('/revenue/:year', (req, res) => {
     const year = req.params.year;
     const sql = `WITH s AS(
-                            SELECT MONTH(o.order_date) AS mon, SUM(od.quantity * od.price) AS total
+                            SELECT LEFT({fn MONTHNAME(o.order_date)}, 3) AS mon, SUM(od.quantity * od.price) AS total
                             FROM orders o 
                             INNER JOIN orders_details od ON o.id = od.order_id
                             WHERE YEAR(o.order_date) = ${year}
@@ -30,7 +30,28 @@ router.get('/revenue/:year', (req, res) => {
 /* GET number of orders was sold each month of the year => draw chart */
 router.get('/num-of-orders-was-sold-each-month/:year', (req, res) => {
     const year = req.params.year;
-    const sql = `SELECT MONTH(order_date) AS mon, COUNT(id ) AS num FROM orders o 
+    const sql = `SELECT LEFT({fn MONTHNAME(o.order_date)}, 3) AS mon, COUNT(id ) AS num FROM orders o 
+                    WHERE YEAR(order_date) = ${year}
+                    GROUP BY MONTH(order_date)
+                    ORDER BY MONTH(order_date)`;
+    database.query(sql)
+        .then(data => {
+            if (data.length > 0) {
+                res.status(200).json({
+                    data: data
+                })
+            } else {
+                res.json({message: 'No data found.'})
+            }
+        }).catch(err => console.log(err));
+});
+
+/* GET number of products was sold each month of the year => draw chart */
+router.get('/num-of-products-was-sold-each-month/:year', (req, res) => {
+    const year = req.params.year;
+    const sql = `SELECT  {fn MONTHNAME(o.order_date)} AS mon, SUM(quantity) AS num 
+                    FROM orders o 
+                    INNER JOIN orders_details od ON o.id = od.order_id
                     WHERE YEAR(order_date) = ${year}
                     GROUP BY MONTH(order_date)
                     ORDER BY MONTH(order_date)`;
@@ -68,7 +89,6 @@ router.get('/num-of-orders-was-sold/:day', (req, res) => {
 /* GET number of products was sold in a day */
 router.get('/num-of-products-was-sold/:day', (req, res) => {
     const day = req.params.day;
-    console.log(day);
     const sql = `SELECT SUM(od.quantity) AS num FROM orders o 
                     INNER JOIN orders_details od
                     ON o.id = od.order_id
@@ -138,11 +158,14 @@ router.get('/revenue-in-time/:from_date/:to_date', (req, res) => {
     const from_date = req.params.from_date;
     const to_date = req.params.to_date;
 
-    const sql = `SELECT SUM(quantity*price) AS revenue FROM orders o 
+    const sql = `SELECT LEFT({fn MONTHNAME(o.order_date)}, 3) AS mon ,SUM(quantity*price) AS revenue 
+                    FROM orders o 
                     INNER JOIN orders_details od
                     ON o.id = od.order_id
                     WHERE order_date >= '${from_date}'
-                    AND order_date <= '${to_date}'`;
+                    AND order_date <= '${to_date}'
+                    GROUP BY MONTH(order_date)
+                    ORDER BY MONTH(order_date)`;
     database.query(sql)
         .then(data => {
             if (data.length > 0) {
@@ -165,7 +188,8 @@ router.get('/list-product-fastest-sell/:from_date/:to_date', (req, res) => {
                     INNER JOIN orders o ON o.id = od.order_id
                     WHERE order_date >= '${from_date}'
                     AND order_date <= '${to_date}'
-                    ORDER BY od.quantity DESC`;
+                    ORDER BY od.quantity DESC
+                    LIMIT 10`;
     database.query(sql)
         .then(data => {
             if (data.length > 0) {

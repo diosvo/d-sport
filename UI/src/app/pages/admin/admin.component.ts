@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { StatisticService } from 'src/app/services/statistic.service';
+import {formatDate} from './utils.js';
 declare var google: any;
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
+  styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
 
@@ -13,6 +15,10 @@ export class AdminComponent implements OnInit {
   };
 
   lstOrderSoldByYear: any = {
+    data: []
+  };
+
+  lstProductSoldByYear: any = {
     data: []
   };
 
@@ -28,53 +34,42 @@ export class AdminComponent implements OnInit {
     data:[]
   };
 
+  numOrder = 0;
+  numProduct = 0;
+  revenue = 0;
+
   date = new Date();
 
   constructor(private statisticService: StatisticService) { }
 
   ngOnInit(): void {
+    this.getRevenueByYear();
+    this.getOrderSoldByYear();
+    this.getProductSoldByYear();
     this.getOrderSoldToDay();
     this.getProductSoldToDay();
     this.getRevenueToDay();
-    this.getRevenueByYear();
-    this.getOrderSoldByYear();
-  }
-
-  formatDate(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
-
-    return [year, month, day].join('-');
   }
 
   getOrderSoldToDay(){
-    this.statisticService.getOrderSoldByDay(this.formatDate(this.date)).subscribe(result => {
+    this.statisticService.getOrderSoldByDay(formatDate(this.date)).subscribe(result => {
       var res: any = result;
-      this.numOrderSoldByDay = res.data;
-      console.log(this.numOrderSoldByDay);
+      this.numOrder = res.data[0].num;
     }, error => console.error(error));
   }
 
   getProductSoldToDay(){
-    this.statisticService.getProductSoldByDay(this.formatDate(this.date)).subscribe(result => {
+    this.statisticService.getProductSoldByDay(formatDate(this.date)).subscribe(result => {
       var res: any = result;
-      this.numProductSoldByDay = res.data;
-      console.log(this.numProductSoldByDay);
+      this.numProduct = res.data[0].num;
     }, error => console.error(error));
   }
+  
 
   getRevenueToDay(){
-    this.statisticService.getRevenueInDay(this.formatDate(this.date)).subscribe(result => {
+    this.statisticService.getRevenueInDay(formatDate(this.date)).subscribe(result => {
       var res: any = result;
-      this.revenueInDay = res.data;
-      console.log(this.revenueInDay);
+      this.revenue = res.data[0].revenue;
     }, error => console.error(error));
   }
 
@@ -94,6 +89,14 @@ export class AdminComponent implements OnInit {
     }, error => console.error(error));
   }
 
+  getProductSoldByYear() {
+    this.statisticService.getNumOfProductByYear(this.date.getFullYear()).subscribe(result => {
+      var res: any = result;
+      this.lstProductSoldByYear = res.data;
+      this.drawPieChart(res.data);
+    }, error => console.error(error));
+  }
+
   drawColChart(chartData) {
     var arrData = [['Month', 'Revenue']];
     chartData.forEach(element => {
@@ -108,9 +111,6 @@ export class AdminComponent implements OnInit {
       title: "Revenue of year per month",
       bar: { groupWidth: "75%" },
       legend: 'none',
-      hAxis: {
-        title: 'Month',
-      },
       vAxis: {
         title: 'Revenue($)'
       }
@@ -135,16 +135,34 @@ export class AdminComponent implements OnInit {
       title: "Number of orders was sold in year per month",
       legend: 'none',
       bar: { groupWidth: "75%" },
-      hAxis: {
-        title: 'Month',
-      },
       vAxis: {
         title: 'Number of orders'
       }
     };
     var chart = new google.visualization.LineChart(
+      document.getElementById('line_chart'));
+
+    chart.draw(data, options);
+  }
+
+  drawPieChart(chartData) {
+    var arrData = [['Month', 'Number']];
+    chartData.forEach(element => {
+      var item = [];
+      item.push(element.mon);
+      item.push(element.num);
+      arrData.push(item);
+    });
+    var data = google.visualization.arrayToDataTable(arrData);
+
+    var options = {
+      title: "Number of product was sold in year per month",
+      is3D: true,
+    };
+    var chart = new google.visualization.PieChart(
       document.getElementById('pie_chart'));
 
     chart.draw(data, options);
   }
+  
 }

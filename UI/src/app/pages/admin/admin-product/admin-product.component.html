@@ -17,7 +17,7 @@
               <div class="row d-flex align-items-baseline pl-3 pr-4">
                 <div class="col-5">
                   <div class="content-top d-flex font-14">
-                      <a href="#">
+                      <a href="#" routerLink="/admin">
                           Home >
                       </a>
                       <div class="ml-1">Management > Product</div>
@@ -124,13 +124,13 @@
         <div class="modal-body">
             <form>
                 <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Product Name</label>
+                    <label class="col-sm-4 col-form-label">Product Name <span class="input-required">(*)</span></label>
                     <div class="col-sm-8">
                         <input class="form-control" [(ngModel)]='product.title' name="title" required>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Category</label>
+                    <label class="col-sm-4 col-form-label">Category <span class="input-required">(*)</span></label>
                     <div class="col-sm-8">
                         <select class="form-control" [(ngModel)]='product.category_id' name="category">
                             <option></option>
@@ -139,7 +139,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Classify</label>
+                    <label class="col-sm-4 col-form-label">Classify <span class="input-required">(*)</span></label>
                     <div class="col-sm-8">
                         <select class="form-control" [(ngModel)]='product.classify_id' name="classify">
                             <option></option>
@@ -154,26 +154,26 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Price</label>
+                    <label class="col-sm-4 col-form-label">Price <span class="input-required">(*)</span></label>
                     <div class="col-sm-8">
-                        <input type="number" class="form-control" [(ngModel)]='product.price' name="price" required>
+                        <input type="number" min="0" class="form-control" [(ngModel)]='product.price' name="price" required>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Quantity</label>
+                    <label class="col-sm-4 col-form-label">Quantity <span class="input-required">(*)</span></label>
                     <div class="col-sm-8">
-                        <input type="number" class="form-control" [(ngModel)]='product.quantity' name="quantity" required>
+                        <input type="number" min="0" class="form-control" [(ngModel)]='product.quantity' name="quantity" required>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="description" class="col-sm-4 col-form-label">Description</label>
+                    <label for="description" class="col-sm-4 col-form-label">Description <span class="input-required">(*)</span></label>
                     <div class="col-sm-8">
                         <textarea id="description" class="form-control" rows="4" cols="50" 
                         [(ngModel)]='product.description' name="description" required></textarea>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Image 1</label>
+                    <label class="col-sm-4 col-form-label">Image 1 <span class="input-required">(*)</span></label>
                     <div class="col-sm-8">
                         <input type="text"  class="form-control" [(ngModel)]='product.image' name="image" required>
                     </div>
@@ -229,6 +229,32 @@
         <div class="modal-footer">
             <button type="button" class="btn btn-danger" (click)="deleteProduct()">Delete</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Modal Success-->
+<div class="modal fade" id="successModal">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">        
+        <!-- Modal body -->
+        <div class="modal-body text-center">
+            <i class="fas fa-check-circle success"></i>
+            <p class="text-center">{{message}}</p>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Modal Notification-->
+<div class="modal fade" id="warningModal">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">        
+        <!-- Modal body -->
+        <div class="modal-body text-center">
+            <i class="fas fa-exclamation-triangle warning"></i>
+            <p class="text-center">{{message}}</p>
         </div>
       </div>
     </div>

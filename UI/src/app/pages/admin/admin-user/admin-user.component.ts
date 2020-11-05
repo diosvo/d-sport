@@ -6,6 +6,7 @@ declare var $: any;
 @Component({
   selector: 'app-admin-user',
   templateUrl: './admin-user.component.html',
+  styleUrls: ['./admin-user.component.scss']
 })
 export class AdminUserComponent implements OnInit {
 
@@ -18,6 +19,7 @@ export class AdminUserComponent implements OnInit {
   };
   kw = '';
   userId = 0;
+  message ='';
   
   constructor(private adminService: AdminService) { }
 
@@ -33,7 +35,6 @@ export class AdminUserComponent implements OnInit {
 
     this.adminService.getUsers(page,size,keyword).subscribe((user: any) => {
       this.users = user;
-      console.log(user);
     });
   }
   
@@ -49,7 +50,7 @@ export class AdminUserComponent implements OnInit {
         this.users = user
       });
     } else {
-      alert("You're in the first page");
+      this.showWarning("You're in the first page");
     }
   }
 
@@ -65,7 +66,7 @@ export class AdminUserComponent implements OnInit {
       });
     }
     else{
-      alert("You're in the last page");
+      this.showWarning("You're in the last page");
     }
   }
 
@@ -73,9 +74,8 @@ export class AdminUserComponent implements OnInit {
     this.adminService.deleteUser(this.userId).subscribe(result => {
       var res: any = result;
       if (res.success) {
-        alert(res.message);
         $('#deleteModal').modal("hide");
-        location.reload();
+        this.showMessage(res.message);
       }
     })
   }
@@ -83,6 +83,19 @@ export class AdminUserComponent implements OnInit {
   deleteModal(id) {
     $('#deleteModal').modal("show");
     this.userId = id;
+  }
+
+  showMessage(message){
+    this.message = message;
+    $("#successModal").modal("show");
+    setTimeout(function(){ $("#successModal").modal("hide"); }, 1500);
+    setTimeout(function(){ location.reload(); }, 1500);
+  }
+
+  showWarning(message){
+    this.message = message;
+    $("#warningModal").modal("show");
+    setTimeout(function(){ $("#warningModal").modal("hide"); }, 1500);
   }
 
 }
