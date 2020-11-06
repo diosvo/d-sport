@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StatisticService } from 'src/app/services/statistic.service';
-import {formatDate} from '../utils.js'
+import {formatDate} from '../utils.js';
+
 declare var google: any;
 declare var $:any;
 
@@ -22,7 +23,7 @@ export class AdminStatisticComponent implements OnInit {
     data:[]
   };
 
-  lstFastestSellProduct:any={
+  lstBestSellingProduct:any={
     data:[]
   };
 
@@ -46,16 +47,20 @@ export class AdminStatisticComponent implements OnInit {
 
   date_from_product: any;
   date_to_product:any;
+  year:any;
+  
   constructor(private statisticService: StatisticService) { }
 
   ngOnInit(): void {
-    //this.getListYear();
+    this.getListYear();
     $("#table_order").hide();
     $("#table_product").hide();
     $("#table_revenue").hide();
+    $("#table_revenue").hide();
+    $("#table_revenue_in_year").hide();
+    $("#table_order_in_year").hide();
+    $("#table_product_in_year").hide();
   }
-
-  
 
   getListYear(){
     this.statisticService.getListYear().subscribe(result => {
@@ -84,40 +89,41 @@ export class AdminStatisticComponent implements OnInit {
     }, error => console.error(error));
   }
 
-  getFastestSellProduct(){
+  getBestSellingProduct(){
     $("#table_product").show();
-    this.statisticService.getFastestSellProduct(formatDate(this.date_from_product), formatDate(this.date_to_product)).subscribe(result => {
+    this.statisticService.getBestSellingProduct(formatDate(this.date_from_product), formatDate(this.date_to_product)).subscribe(result => {
       var res: any = result;
-      this.lstFastestSellProduct = res;
-      console.log(this.lstFastestSellProduct);
+      this.lstBestSellingProduct = res;
+      console.log(this.lstBestSellingProduct);
     }, error => console.error(error));
   }
 
-  // getRevenueByYear(year) {
-  //   this.statisticService.getRevenueByYear(year).subscribe(result => {
-  //     var res: any = result;
-  //     this.lstRevenueByYear = res.data;
-  //     // console.log(this.lstRevenueByYear);
-  //     //this.drawColChart(res.data);
-  //   }, error => console.error(error));
-  // }
+  getRevenueByYear() {
+    $("#table_revenue_in_year").show();
+    this.statisticService.getRevenueByYear(this.year).subscribe(result => {
+      var res: any = result;
+      this.lstRevenueByYear = res;
+      this.drawBarChart(res.data);
+    }, error => console.error(error));
+  }
 
-  // getOrderSoldByYear(year) {
-  //   this.statisticService.getOrderSoldByYear(year).subscribe(result => {
-  //     var res: any = result;
-  //     this.lstOrderSoldByYear = res.data;
-  //     // console.log(this.lstOrderSoldByYear);
-  //     // this.drawLineChart(res.data);
-  //   }, error => console.error(error));
-  // }
+  getOrderSoldByYear() {
+    $("#table_order_in_year").show();
+    this.statisticService.getOrderSoldByYear(this.year).subscribe(result => {
+      var res: any = result;
+      this.lstOrderSoldByYear = res;
+      this.drawLineChart(res.data);
+    }, error => console.error(error));
+  }
 
-  // getProductSoldByYear(year) {
-  //   this.statisticService.getNumOfProductByYear(year).subscribe(result => {
-  //     var res: any = result;
-  //     this.lstProductSoldByYear = res.data;
-  //     //this.drawPieChart(res.data);
-  //   }, error => console.error(error));
-  // }
+  getProductSoldByYear() {
+    $("#table_product_in_year").show();
+    this.statisticService.getNumOfProductByYear(this.year).subscribe(result => {
+      var res: any = result;
+      this.lstProductSoldByYear = res;
+      this.drawPieChart(res.data);
+    }, error => console.error(error));
+  }
 
   drawColChart(chartData) {
     var arrData = [['Month', 'Revenue']];
@@ -143,48 +149,96 @@ export class AdminStatisticComponent implements OnInit {
     chart.draw(data, options);
   }
 
-  // drawLineChart(chartData) {
-  //   var arrData = [['Month', 'Number']];
-  //   chartData.forEach(element => {
-  //     var item = [];
-  //     item.push(element.mon);
-  //     item.push(element.num);
-  //     arrData.push(item);
-  //   });
-  //   var data = google.visualization.arrayToDataTable(arrData);
+  drawBarChart(chartData) {
+    var arrData = [['Month', 'Revenue']];
+    chartData.forEach(element => {
+      var item = [];
+      item.push(element.mon);
+      item.push(element.revenue);
+      arrData.push(item);
+    });
+    var data = google.visualization.arrayToDataTable(arrData);
 
-  //   var options = {
-  //     title: "Number of orders was sold in year per month",
-  //     legend: 'none',
-  //     bar: { groupWidth: "75%" },
-  //     vAxis: {
-  //       title: 'Number of orders'
-  //     }
-  //   };
-  //   var chart = new google.visualization.LineChart(
-  //     document.getElementById('line_chart'));
+    var options = {
+      title: "Revenue of year per month",
+      bar: { groupWidth: "75%" },
+      legend: 'none',
+    };
+    var chart = new google.visualization.BarChart(
+      document.getElementById('chart_revenue_year'));
 
-  //   chart.draw(data, options);
-  // }
+    chart.draw(data, options);
+  }
 
-  // drawPieChart(chartData) {
-  //   var arrData = [['Month', 'Number']];
-  //   chartData.forEach(element => {
-  //     var item = [];
-  //     item.push(element.mon);
-  //     item.push(element.num);
-  //     arrData.push(item);
-  //   });
-  //   var data = google.visualization.arrayToDataTable(arrData);
+  drawLineChart(chartData) {
+    var arrData = [['Month', 'Number']];
+    chartData.forEach(element => {
+      var item = [];
+      item.push(element.mon);
+      item.push(element.num);
+      arrData.push(item);
+    });
+    var data = google.visualization.arrayToDataTable(arrData);
 
-  //   var options = {
-  //     title: "Number of product was sold in year per month",
-  //     is3D: true,
-  //   };
-  //   var chart = new google.visualization.PieChart(
-  //     document.getElementById('pie_chart'));
+    var options = {
+      title: "Number of orders was sold in year per month",
+      legend: 'none',
+      bar: { groupWidth: "75%" },
+      vAxis: {
+        title: 'Number of orders'
+      }
+    };
+    var chart = new google.visualization.LineChart(
+      document.getElementById('chart_order_year'));
 
-  //   chart.draw(data, options);
-  // }
+    chart.draw(data, options);
+  }
 
+  drawPieChart(chartData) {
+    var arrData = [['Month', 'Number']];
+    chartData.forEach(element => {
+      var item = [];
+      item.push(element.mon);
+      item.push(element.num);
+      arrData.push(item);
+    });
+    var data = google.visualization.arrayToDataTable(arrData);
+
+    var options = {
+      title: "Number of product was sold in year per month",
+      is3D: true,
+    };
+    var chart = new google.visualization.PieChart(
+      document.getElementById('chart_product_year'));
+
+    chart.draw(data, options);
+  }
+
+  toggleTableOrderBody(){
+    $("#table_body_order").toggle(2000);
+  }
+
+  toggleTableProductBody(){
+    $("#table_body_product").toggle(2000);
+  }
+
+  toggleTableRevenueBody(){
+    $("#table_body_revenue").toggle(2000);
+    $("#chart_revenue").toggle(2000);
+  }
+
+  toggleTableRevenueYearBody(){
+    $("#table_body_revenue_year").toggle(2000);
+    $("#chart_revenue_year").toggle(2000);
+  }
+
+  toggleTableOrderYearBody(){
+    $("#table_body_order_year").toggle(2000);
+    $("#chart_order_year").toggle(2000);
+  }
+
+  toggleTableProductYearBody(){
+    $("#table_body_product_year").toggle(2000);
+    $("#chart_product_year").toggle(2000);
+  }
 }

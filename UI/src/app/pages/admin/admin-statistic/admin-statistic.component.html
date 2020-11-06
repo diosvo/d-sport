@@ -20,7 +20,7 @@
       <!-- Begin Page Content -->
       <div class="container mt-4">
         <!-- Page Heading -->
-        <div class="row d-flex align-items-baseline pl-3 pr-4">
+        <div class="row d-flex align-items-baseline pl-3 pr-4 pb-4">
           <div class="col-5">
             <div class="content-top d-flex font-14">
               <a href="#" routerLink="/admin"> Home > </a>
@@ -53,34 +53,44 @@
               </button>
             </div>
           </div>
-          <table class="table table-bordered" id="table_order">
-            <thead>
-              <tr>
-                <th class="text-center">#</th>
-                <th class="text-center">Order ID</th>
-                <th class="text-center">Orderer ID</th>
-                <th class="text-center">Receiver</th>
-                <th class="text-center">Receiver Phone</th>
-                <th class="text-center">Order Date</th>
-                <th class="text-center">Ship Address</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let o of lstOrderInTime.data">
-                <td class="text-center">{{ o.item_number }}</td>
-                <td class="text-center">{{ o.id }}</td>
-                <td>{{ o.user_id }}</td>
-                <td>{{ o.receiver }}</td>
-                <td class="text-center">{{ o.receiver_phone }}</td>
-                <td class="text-center">{{ o.order_date | date: "short" }}</td>
-                <td>{{ o.ship_address }}</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="card shadow mt-3 mb-0" id="table_order">
+            <div class="row card-header d-flex align-items-baseline m-0 py-0 px-2">
+              <div class="col py-3 d-flex justify-content-end">
+                <button class="btn btn-success mr-2">Script CSV file</button>
+                <button class="btn btn-success" (click)="toggleTableOrderBody()">Show/Hide Table</button>
+              </div>
+            </div>
+            <div class="card-body" id="table_body_order">
+              <table class="table table-bordered mt-3" >
+                <thead>
+                  <tr>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Order ID</th>
+                    <th class="text-center">Orderer ID</th>
+                    <th class="text-center">Receiver</th>
+                    <th class="text-center">Receiver Phone</th>
+                    <th class="text-center">Order Date</th>
+                    <th class="text-center">Ship Address</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let o of lstOrderInTime.data">
+                    <td class="text-center">{{ o.item_number }}</td>
+                    <td class="text-center">{{ o.id }}</td>
+                    <td>{{ o.user_id }}</td>
+                    <td>{{ o.receiver }}</td>
+                    <td class="text-center">{{ o.receiver_phone }}</td>
+                    <td class="text-center">{{ o.order_date | date: "short" }}</td>
+                    <td>{{ o.ship_address }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
           <!-- end order in among time -->
           <!-- fastest product -->
           <div class="row mt-5">
-            <div class="col-12"><h5>Fastest product in among time</h5></div>
+            <div class="col-12"><h5>Top 10 best selling products in among time</h5></div>
             <div class="col-3">Please choose the time</div>
             <div class="col-3">
               <input
@@ -97,48 +107,58 @@
               />
             </div>
             <div class="col-3">
-              <button class="btn btn-info" (click)="getFastestSellProduct()">
+              <button class="btn btn-info" (click)="getBestSellingProduct()">
                 Search
               </button>
             </div>
           </div>
-            <table class="table table-bordered" id="table_product">
-              <thead>
-                <tr>
-                  <th class="text-center align-middle">ID</th>
-                  <th class="text-center align-middle">Product Name</th>
-                  <th class="text-center align-middle">Image</th>
-                  <th class="text-center align-middle">Description</th>
-                  <th class="text-center align-middle">Price</th>
-                  <th class="text-center align-middle">Qty</th>
-                  <th class="text-center align-middle">Category</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let p of lstFastestSellProduct.data">
-                  <td class="text-center">{{ p.id }}</td>
-                  <td>{{ p.title }}</td>
-                  <td class="text-center product-image">
-                    <div class="col-md-8 prod-img-container">
-                      <ng-container *ngIf="p?.image">
-                        <img
-                          [src]="p?.image"
-                          width="100px"
-                          alt="image-1"
-                          loading="lazy"
-                        />
-                      </ng-container>
-                    </div>
-                  </td>
-                  <td>{{ p.description | slice: 0:120 }}...</td>
-                  <td class="text-right">
-                    {{ p.price | currency: "$":"symbol-narrow":".0" }}
-                  </td>
-                  <td class="text-center">{{ p.quantity }}</td>
-                  <td>{{ p.another_CatName }}</td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="card shadow mt-3 mb-0" id="table_product">
+            <div class="row card-header d-flex align-items-baseline m-0 py-0 px-2">
+              <div class="col py-3 d-flex justify-content-end">
+                <button class="btn btn-success mr-2">Script CSV file</button>
+                <button class="btn btn-success" (click)="toggleTableProductBody()">Show/Hide Table</button>
+              </div>
+            </div>
+            <div class="card-body" id="table_body_product">
+              <table class="table table-bordered mt-3" >
+                <thead>
+                  <tr>
+                    <th class="text-center align-middle">ID</th>
+                    <th class="text-center align-middle">Product Name</th>
+                    <th class="text-center align-middle">Image</th>
+                    <th class="text-center align-middle">Description</th>
+                    <th class="text-center align-middle">Price</th>
+                    <th class="text-center align-middle">Qty</th>
+                    <th class="text-center align-middle">Category</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let p of lstBestSellingProduct.data">
+                    <td class="text-center">{{ p.id }}</td>
+                    <td>{{ p.title }}</td>
+                    <td class="text-center product-image">
+                      <div class="col-md-8 prod-img-container">
+                        <ng-container *ngIf="p?.image">
+                          <img
+                            [src]="p?.image"
+                            width="100px"
+                            alt="image-1"
+                            loading="lazy"
+                          />
+                        </ng-container>
+                      </div>
+                    </td>
+                    <td>{{ p.description | slice: 0:120 }}...</td>
+                    <td class="text-right">
+                      {{ p.price | currency: "$":"symbol-narrow":".0" }}
+                    </td>
+                    <td class="text-center">{{ p.quantity }}</td>
+                    <td>{{ p.another_CatName }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
           <!-- end fastest product -->
 
           <!-- revenue in among time -->
@@ -165,30 +185,190 @@
               </button>
             </div>
           </div>
-          <div class="row">
-            <div class="col-4">
-              <table class="table table-bordered" id="table_revenue">
-                <thead>
-                  <tr>
-                    <th class="text-center">Month</th>
-                    <th class="text-center">Revenue</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let r of lstRevenueInTime.data">
-                    <td class="text-center">{{ r.mon }}</td>
-                    <td class="text-right">{{ r.revenue | currency: "$":"symbol-narrow":".0" }}</td>
-                  </tr>
-                </tbody>
-              </table>
+          <div class="row" id="table_revenue">
+            <div class="row mt-3 ml-3 py-0 px-2">  
+                <button class="btn btn-success mr-2">Script CSV file</button>
+                <button class="btn btn-success" (click)="toggleTableRevenueBody()">Show/Hide Table</button>
             </div>
-            <div class="col-8">
-              <div id="col_chart" style="width: 600px; height: 500px"></div>
+            <div class="row">
+              <div class="col-4">
+                <div class="card shadow mt-3 ml-3 mb-0" >
+                  <div class="card-body" id="table_body_revenue">
+                    <table class="table table-bordered" >
+                      <thead>
+                        <tr>
+                          <th class="text-center">Month</th>
+                          <th class="text-center">Revenue</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let r of lstRevenueInTime.data">
+                          <td class="text-center">{{ r.mon }}</td>
+                          <td class="text-right">{{ r.revenue | currency: "$":"symbol-narrow":".0" }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="col-8 mt-4" id="chart_revenue">
+                <div id="col_chart" style="width: 750px; height: 500px"></div>
+              </div>
             </div>
           </div>
           <!-- end revenue in among time -->
+          <hr>
+          <!-- revenue in year  -->
+          <div class="row mt-5">
+            <div class="col-12"><h5>Revenue in Year</h5></div>
+            <div class="col-4">Please choose the year</div>
+            <div class="col-3">
+              <select class="form-control" [(ngModel)]='year' name="year">
+                <option *ngFor="let year of lstYear.data">{{year.year_of_orders}}</option>
+            </select>
+            </div>
+            <div class="col-3">
+              <button class="btn btn-info" (click)="getRevenueByYear()">
+                Search
+              </button>
+            </div>
+            <div class="col-2">
+            </div>
           </div>
+          <div class="row" id="table_revenue_in_year">
+            <div class="row mt-3 ml-3 py-0 px-2">  
+                <button class="btn btn-success mr-2">Script CSV file</button>
+                <button class="btn btn-success" (click)="toggleTableRevenueYearBody()">Show/Hide Table</button>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <div class="card shadow mt-3 ml-3 mb-0" >
+                  <div class="card-body" id="table_body_revenue_year">
+                    <table class="table table-bordered" >
+                      <thead>
+                        <tr>
+                          <th class="text-center">Month</th>
+                          <th class="text-center">Revenue</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let r of lstRevenueByYear.data">
+                          <td class="text-center">{{ r.mon }}</td>
+                          <td class="text-right">{{ r.revenue | currency: "$":"symbol-narrow":".0" }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="col-8 mt-4" id="chart_revenue_year">
+                <div id="col_chart" style="width: 800px; height: 500px"></div>
+              </div>
+            </div>
+          </div>
+          <!-- end revenue in year -->
+
+          <!-- number of order sold in year  -->
+          <div class="row mt-5">
+            <div class="col-12"><h5>Number of orders was sold in year</h5></div>
+            <div class="col-4">Please choose the year</div>
+            <div class="col-3">
+              <select class="form-control" [(ngModel)]='year' name="year">
+                <option *ngFor="let year of lstYear.data">{{year.year_of_orders}}</option>
+            </select>
+            </div>
+            <div class="col-3">
+              <button class="btn btn-info" (click)="getOrderSoldByYear()">
+                Search
+              </button>
+            </div>
+            <div class="col-2">
+            </div>
+          </div>
+          <div class="row" id="table_order_in_year">
+            <div class="row mt-3 ml-3 py-0 px-2">  
+                <button class="btn btn-success mr-2">Script CSV file</button>
+                <button class="btn btn-success" (click)="toggleTableOrderYearBody()">Show/Hide Table</button>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <div class="card shadow mt-3 ml-3 mb-0" >
+                  <div class="card-body" id="table_body_order_year">
+                    <table class="table table-bordered" >
+                      <thead>
+                        <tr>
+                          <th class="text-center">Month</th>
+                          <th class="text-center">Number of Orders</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let o of lstOrderSoldByYear.data">
+                          <td class="text-center">{{ o.mon }}</td>
+                          <td class="text-right">{{ o.num }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="col-8 mt-4" id="chart_order_year">
+                <div id="col_chart" style="width: 800px; height: 500px"></div>
+              </div>
+            </div>
+          </div>
+          <!-- end order in year -->
+
+          <!-- number of product sold in year  -->
+          <div class="row mt-5">
+            <div class="col-12"><h5>Number of products was sold in year</h5></div>
+            <div class="col-4">Please choose the year</div>
+            <div class="col-3">
+              <select class="form-control" [(ngModel)]='year' name="year">
+                <option *ngFor="let year of lstYear.data">{{year.year_of_orders}}</option>
+            </select>
+            </div>
+            <div class="col-3">
+              <button class="btn btn-info" (click)="getProductSoldByYear()">
+                Search
+              </button>
+            </div>
+            <div class="col-2">
+            </div>
+          </div>
+          <div class="row" id="table_product_in_year">
+            <div class="row mt-3 ml-3 py-0 px-2">  
+                <button class="btn btn-success mr-2">Script CSV file</button>
+                <button class="btn btn-success" (click)="toggleTableProductYearBody()">Show/Hide Table</button>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <div class="card shadow mt-3 ml-3 mb-0" >
+                  <div class="card-body" id="table_body_product_year">
+                    <table class="table table-bordered" >
+                      <thead>
+                        <tr>
+                          <th class="text-center">Month</th>
+                          <th class="text-center">Number of Products</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let p of lstProductSoldByYear.data">
+                          <td class="text-center">{{ p.mon }}</td>
+                          <td class="text-right">{{ p.num }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="col-8 mt-4" id="chart_product_year">
+                <div id="col_chart" style="width: 800px; height: 500px"></div>
+              </div>
+            </div>
+          </div>
+          <!-- end revenue in year -->
         </div>
       </div>
     </div>
   </div>
+</div>

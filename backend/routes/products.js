@@ -161,7 +161,6 @@ router.post('/create', (req, res) => {
                          "${product.another_CatName}", ${product.category_id}, ${product.classify_id});`;
     database.query(sql)
         .then(result => {
-            console.log(result);
             if(result.insertId > 0){
                 res.json({
                     success: true,
@@ -195,7 +194,6 @@ router.post('/update', (req, res) => {
                 WHERE id =${product.id}`;
     database.query(sql)
         .then(result => {
-            console.log(result);
             if(result.changedRows > 0){
                 res.json({
                     success: true,

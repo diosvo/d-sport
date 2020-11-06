@@ -164,5 +164,5 @@ export class AdminComponent implements OnInit {
 
     chart.draw(data, options);
   }
-  
+ 
 }

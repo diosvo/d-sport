@@ -50,9 +50,9 @@ export class StatisticService {
     return this.http.get(this.SERVER_URL + '/statistic/revenue-in-time/' + from_date + '/' + to_date)
   }
 
-  /* GET the fastest sell list of product */
-  getFastestSellProduct(from_date,to_date){
-    return this.http.get(this.SERVER_URL + '/statistic/list-product-fastest-sell/' + from_date + '/' + to_date)
+  /* GET list top 10 best selling product */
+  getBestSellingProduct(from_date,to_date){
+    return this.http.get(this.SERVER_URL + '/statistic/best-selling-product/' + from_date + '/' + to_date)
   }
 
   /* GET list of year when the order was sold  */

@@ -178,8 +178,8 @@ router.get('/revenue-in-time/:from_date/:to_date', (req, res) => {
         }).catch(err => console.log(err));
 });
 
-/* GET the fastest sell list of product */
-router.get('/list-product-fastest-sell/:from_date/:to_date', (req, res) => {
+/* GET list top 10 best selling product */
+router.get('/best-selling-product/:from_date/:to_date', (req, res) => {
     const from_date = req.params.from_date;
     const to_date = req.params.to_date;
 
