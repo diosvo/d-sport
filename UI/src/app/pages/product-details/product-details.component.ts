@@ -25,7 +25,6 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     private cartService: CartService,
     private route: ActivatedRoute,
     private toastr: ToastrService,
-    private token: JwtService,
     private authService: AuthService,
     private router: Router) {
   }

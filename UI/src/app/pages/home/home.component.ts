@@ -29,10 +29,10 @@ export class HomeComponent implements OnInit {
     dots: false,
     navSpeed: 700,
     autoplay: true,
-    navText: ['<i class="fas fa-long-arrow-alt-left"></i>', '<i class="fas fa-long-arrow-alt-right"></i>'],
+    navText: ['', ''],
     responsive: {
       0: {
-        items: 1
+        items: 2
       },
       400: {
         items: 2

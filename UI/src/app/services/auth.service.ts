@@ -8,15 +8,14 @@ import { JwtService } from './jwt.service';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ApiUrl } from '../api/api-url';
+
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-  private SERVER_URL = environment.SERVER_URL;
-
   private userSubject: BehaviorSubject<UserModelServer>;
   public user: Observable<UserModelServer>
 
@@ -41,13 +40,13 @@ export class AuthService {
   registerUser(formData: any) {
     const { firstname, lastname, email, dob, password, cfpassword } = formData;
 
-    return this.http.post(`${this.SERVER_URL}/auth/register`,
+    return this.http.post(ApiUrl.Register,
       { email, password, firstname, lastname, dob: dob || null },
       { responseType: 'text' })
   }
 
   loginUser(email: string, password: string) {
-    return this.http.post<any>(`${this.SERVER_URL}/auth/login`, { email, password })
+    return this.http.post<any>(ApiUrl.Login, { email, password })
       .pipe(
         map((user: UserModelServer) => {
           this.spinner.show()

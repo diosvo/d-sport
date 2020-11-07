@@ -38,35 +38,6 @@ router.get('/', (req, res) => {
         }).catch(err => console.log(err));
 });
 
-// router.get('/all', (req, res) => {
-//     database.table('orders as o')
-//         .join([
-//         {
-//             table: 'orders_details as od',
-//             on: 'o.id = od.order_id'
-//         }
-//     ])
-//         .withFields(['o.id',
-//             'o.user_id',
-//             'o.receiver',
-//             'o.receiver_phone',
-//             'o.order_date',
-//             'o.ship_address',
-//             'SUM(od.price*od.quantity) as total'
-//             ])
-//
-//         .getAll()
-//         .then(orders => {
-//             if (orders.length > 0) {
-//                 res.status(200).json({
-//                     orders: orders
-//                 })
-//             } else {
-//                 res.json({message: 'No orders found.'})
-//             }
-//         }).catch(err => console.log(err));
-// });
-
 router.get('/all', (req, res) => {
     database.query('select o.*, SUM(od.quantity * od.price) as total from orders o inner join orders_details od on o.id = od.order_id group by o.id')
         .then(orders => {
@@ -121,13 +92,17 @@ router.get('/:id', (req, res) => {
 
 /* NEW ORDER */
 router.post('/new', (req, res) => {
-    const {userId, products} = req.body;
-    console.log(userId, products);
+    const {userId, email, lastname, firstname, address, phone, products} = req.body;
 
     if (userId !== null && userId > 0 && !isNaN(userId)) {
         database.table('orders')
             .insert({
-                user_id: userId
+                user_id: userId,
+                lastname: lastname,
+                firstname: firstname,
+                address: address,
+                phone: phone,
+                email: email
             }).then(newOrderId => {
             if (newOrderId > 0) {
                 products.forEach(async (p) => {

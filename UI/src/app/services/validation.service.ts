@@ -5,15 +5,13 @@ import { HttpClient } from '@angular/common/http';
 import { map, switchMap } from 'rxjs/operators';
 import { timer, Observable } from 'rxjs';
 
-import { environment } from 'src/environments/environment';
+import { ApiUrl } from '../api/api-url';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class ValidationService {
-  private SERVER_URL = environment.SERVER_URL
-
   constructor(private http: HttpClient) { }
 
   /* PASSWORD */
@@ -45,7 +43,7 @@ export class ValidationService {
   searchEmail(email) {
     return timer(2000)
       .pipe(
-        switchMap(() => this.http.get(this.SERVER_URL + '/users/validate/' + email)),
+        switchMap(() => this.http.get(ApiUrl.ValidateEmail + email)),
       );
   }
 

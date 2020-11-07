@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { ProductModelServer } from '../models/product.model';
 import { ServerResponse } from '../models/order.model';
 import { Observable } from 'rxjs';
+import { ApiUrl } from '../api/api-url';
 
 @Injectable({
     providedIn: 'root'
@@ -34,6 +35,6 @@ export class OrderService {
     }
 
     getSingleOrdered(orderId: number) {
-        return this.http.get<ProductModelServer[]>(this.SERVER_URL + '/orders/' + orderId).toPromise()
+        return this.http.get<ProductModelServer[]>(ApiUrl.SingleOrder + orderId).toPromise()
     }
 }
