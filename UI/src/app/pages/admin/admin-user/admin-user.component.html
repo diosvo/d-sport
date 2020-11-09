@@ -36,7 +36,7 @@
         <div class="card shadow my-4">
           <div class="row card-header d-flex align-items-baseline m-0 py-0 px-2">
             <div class="col py-3 d-flex justify-content-end">
-                <button type="button" class="btn btn-success px-4" data-toggle="modal"
+                <button type="button" class="btn btn-success px-4" data-toggle="modal" (click)="openModal(true, '')"
                 data-target="#myModal">Create New User</button>
             </div>
           </div>
@@ -52,7 +52,7 @@
                     <th class="text-center">First Name</th>
                     <th class="text-center">Last Name</th>
                     <th class="text-center">DOB</th>
-                    <th class="text-center">Gender</th>
+                    <!-- <th class="text-center">Gender</th> -->
                     <th class="text-center">Role</th>
                     <th class="text-center align-middle">Actions</th>
                   </tr>
@@ -65,11 +65,11 @@
                     <td>{{u.firstname}}</td>
                     <td>{{u.lastname}}</td>
                     <td class="text-center">{{u.dob| date:'dd-MM-yyyy' }}</td>
-                    <td>{{u.gender}}</td>
+                    <!-- <td>{{u.gender}}</td> -->
                     <td class="text-center">{{u.role}}</td>
                     <td class="text-center">
                       <div class="btn-group" role="group">
-                          <button type="button" class="btn btn-primary">
+                          <button type="button" class="btn btn-primary" (click)="openModal(false,u)">
                               <i class="fas fa-edit"></i></button>
                           <button id="delete" class="btn btn-danger" (click)="deleteModal(u.id)"><i
                                   class="fas fa-trash-alt"></i></button>
@@ -96,6 +96,76 @@
             </ul>
         </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--MODAL CREATE USER -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <!-- Modal Header -->
+      <div class="modal-header">
+          <h4 class="modal-title" *ngIf="!isEdit">Create New User</h4>
+              <h4 class="modal-title" *ngIf="isEdit">Edit User</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      
+      <!-- Modal body -->
+      <div class="modal-body">
+          <form>
+              <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Email <span class="input-required">(*)</span></label>
+                  <div class="col-sm-8">
+                      <input class="form-control" [(ngModel)]='user.email' name="email" required>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Password <span class="input-required">(*)</span></label>
+                  <div class="col-sm-8">
+                    <input type="password" class="form-control" [(ngModel)]='user.password' name="password" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Last Name</label>
+                  <div class="col-sm-8">
+                    <input class="form-control" [(ngModel)]='user.lastname' name="lastname">
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">First Name</label>
+                  <div class="col-sm-8">
+                      <input class="form-control" [(ngModel)]='user.firstname' name="firstname">
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Date of birth</label>
+                  <div class="col-sm-8">
+                      <input type="date" class="form-control" [(ngModel)]='user.dob' name="dob">
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Role <span class="input-required">(*)</span></label>
+                  <div class="col-sm-8">
+                      <input class="form-control" [(ngModel)]='user.role' name="role" required>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="description" class="col-sm-4 col-form-label">Photo</label>
+                  <div class="col-sm-8">
+                    <input class="form-control" [(ngModel)]='user.photoUrl' name="photoUrl" required>
+                  </div>
+              </div>
+          </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+          <button type="submit" (click)="createUser()" *ngIf="!isEdit" class="btn btn-success">Create</button>
+          <button type="submit" (click)="updateUser()" *ngIf="isEdit" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>

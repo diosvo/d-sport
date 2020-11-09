@@ -22,4 +22,12 @@ export class AdminService {
   deleteUser(userId){
     return this.http.delete(this.SERVER_URL + '/users/' + userId)
   }
+
+  createUser(user){
+    return this.http.post(this.SERVER_URL + '/users/create', { user })
+  }
+
+  updateUser(user){
+    return this.http.post(this.SERVER_URL + '/users/update', { user })
+  }
 }

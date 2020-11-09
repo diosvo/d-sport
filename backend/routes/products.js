@@ -113,13 +113,13 @@ router.get('/page/:page/size/:size/keyword/:keyword', function (req, res) {
         totalRecord = result.length
     );
     if(keyword.trim()=="" || keyword==null || keyword==undefined){
-        sql = `SELECT p.*, c.title as category_name, cl.name as classify_name 
+        sql = `SELECT ROW_NUMBER() OVER (ORDER BY p.title) AS item_number, p.*, c.title as category_name, cl.name as classify_name 
                 FROM products p
-                    INNER JOIN categories c ON p.category_id = c.id 
+                INNER JOIN categories c ON p.category_id = c.id 
                 INNER JOIN classify cl ON p.classify_id = cl.id 
                 LIMIT ${start},${limit}`;
     }else {
-        sql = `SELECT p.*, c.title as category_name, cl.name as classify_name 
+        sql = `SELECT ROW_NUMBER() OVER (ORDER BY p.title) AS item_number,p.*, c.title as category_name, cl.name as classify_name 
                 FROM products p 
                     INNER JOIN categories c ON p.category_id = c.id 
                     INNER JOIN classify cl ON p.classify_id = cl.id 
@@ -130,6 +130,8 @@ router.get('/page/:page/size/:size/keyword/:keyword', function (req, res) {
     database.query(sql)
         .then(prods => {
             if (prods.length > 0) {
+                // tinh lai totalRecord, vi no phu phuoc vao danh sach sp dc tim thay
+                totalRecord = prods.length;
                 res.status(200).json({
                     count: totalRecord, //totalRecord
                     totalPage: Math.ceil(totalRecord/size),

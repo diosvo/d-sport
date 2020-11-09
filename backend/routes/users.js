@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const bcrypt = require('bcryptjs');
 const {database} = require('../config/helpers');
 
 // Get all user with pagination
@@ -92,7 +93,7 @@ router.get('/page/:page/size/:size/keyword/:keyword', function (req, res) {
 router.get('/:userId', (req, res) => {
     let userId = req.params.userId;
     database.table('users').filter({id: userId})
-        .withFields(['email', 'firstname', 'lastname', 'password', 'dob', 'gender', 'id'])
+        .withFields(['email', 'firstname', 'lastname', 'password', 'dob', 'id'])
         .get().then(user => {
         if (user) {
             res.json({user});
@@ -165,5 +166,85 @@ router.delete('/:userId', (req,res)=>{
             }
         }).catch(err => console.log(err));
 });
+
+/* === CREATE user === */
+router.post('/create', (req, res) => {
+    let user = req.body.user;
+    // Hash password
+    const salt = bcrypt.genSaltSync(10);
+
+    let hashPw = bcrypt.hashSync(user.password, salt, (err, res) => {
+       user.password = res;
+    });
+    let sql;
+    if(user.dob ==null){
+        sql = `INSERT INTO users (password, email, lastname, firstname, dob, role, photoUrl)
+                VALUES("${hashPw}", "${user.email}", "${user.lastname}", "${user.firstname}",
+                        null, "${user.role}", "${user.photoUrl}");`;
+    }else {
+        sql = `INSERT INTO users (password, email, lastname, firstname, dob, role, photoUrl)
+                VALUES("${hashPw}", "${user.email}", "${user.lastname}", "${user.firstname}",
+                        "${user.dob}", "${user.role}", "${user.photoUrl}");`;
+    }
+    database.query(sql)
+        .then(result => {
+            if(result.insertId > 0){
+                res.json({
+                    success: true,
+                    message: "User created successfully",
+                })
+            }else{
+                res.json({
+                    success: true,
+                    message: "No user has been created"
+                })
+            }
+        }).catch(err => console.log(err));
+})
+
+/* === UPDATE user === */
+router.post('/update', (req, res) => {
+    let user = req.body.user;
+    // Hash password
+    const salt = bcrypt.genSaltSync(10);
+
+    let hashPw = bcrypt.hashSync(user.password, salt, (err, res) => {
+        user.password = res;
+    });
+    let sql;
+    if(user.dob == null){
+        sql = `UPDATE users
+                SET password = "${hashPw}",
+                    lastname = "${user.lastname}",
+                    firstname = "${user.firstname}",
+                    dob = null,
+                    role = "${user.role}",
+                    photoUrl = "${user.photoUrl}"
+                WHERE id =${user.id}`;
+    }else {
+        sql = `UPDATE users
+                SET password = "${hashPw}",
+                    lastname = "${user.lastname}",
+                    firstname = "${user.firstname}",
+                    dob = "${user.dob}",
+                    role = "${user.role}",
+                    photoUrl = ${photoUrl}
+                WHERE id =${user.id}`;
+    }
+    database.query(sql)
+        .then(result => {
+            if(result.changedRows > 0){
+                res.json({
+                    success: true,
+                    message: "Product updated successfully"
+                })
+            }else{
+                res.json({
+                    success: true,
+                    message: "Product updated with no change"
+                })
+            }
+        }).catch(err => console.log(err));
+})
 
 module.exports = router;

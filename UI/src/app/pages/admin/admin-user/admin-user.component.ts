@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from 'src/app/services/admin.service';
-
+import {formatDate} from '../utils.js';
 declare var $: any;
 
 @Component({
@@ -10,6 +10,15 @@ declare var $: any;
 })
 export class AdminUserComponent implements OnInit {
 
+  user: any = {
+    password: '',
+    email: '',
+    lastname: '',
+    firstname: '',
+    dob:null,
+    role: '',
+    photoUrl: '',
+  };
   users: any = {
     page: 0,
     size: 10,
@@ -17,6 +26,7 @@ export class AdminUserComponent implements OnInit {
     count: 0,
     users: []
   };
+  isEdit: boolean = true;
   kw = '';
   userId = 0;
   message ='';
@@ -67,6 +77,76 @@ export class AdminUserComponent implements OnInit {
     }
     else{
       this.showWarning("You're in the last page");
+    }
+  }
+
+  openModal(isNew, index) {
+    if (isNew) {
+      this.isEdit = false;
+      this.user = {
+        password: '',
+        email: '',
+        lastname: '',
+        firstname: '',
+        dob:null,
+        role: '',
+        photoUrl: '',
+      };
+    }
+    else {
+      this.isEdit = true;
+      this.user = index;
+    }
+    $('#myModal').modal("show");
+  }
+
+
+  createUser() {
+    if(this.validateData()){
+      console.log(this.user.dob);
+      if(this.user.dob != null)
+        this.user.dob = formatDate(this.user.dob);
+      this.adminService.createUser(this.user).subscribe(result => {
+        var res: any = result;
+        if (res.success) {
+          this.isEdit = true;
+          $('#myModal').modal("hide");
+          this.showMessage(res.message);
+        }
+      }, error => console.error(error));
+    }
+    else{
+      this.showWarning("Please enter all of the required input");
+    }
+  }
+
+  updateUser() {
+    if(this.validateData()){
+      if(this.user.dob != null)
+        this.user.dob = formatDate(this.user.dob);
+      this.adminService.updateUser(this.user).subscribe(result => {
+        var res: any = result;
+        if (res.success) {
+          this.isEdit = true;
+          $('#myModal').modal("hide");
+          this.showMessage(res.message);
+        }
+      }, error => console.error(error))
+    }
+    else{
+      this.showWarning("Please enter all of the required input");
+    }
+    
+  }
+
+  validateData() {
+    if (this.user.password == '' ||
+      this.user.email == '' ||
+      this.user.role == '') {
+      return false;
+    }
+    else {
+      return true;
     }
   }
 

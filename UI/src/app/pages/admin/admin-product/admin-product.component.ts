@@ -62,6 +62,7 @@ export class AdminProductComponent implements OnInit {
 
     this.productService.getAllProduct(page, size, keyword).subscribe((prod: any) => {
       this.products = prod
+      console.log(this.products);
     });
   }
 
