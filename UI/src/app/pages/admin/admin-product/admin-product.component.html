@@ -17,25 +17,33 @@
               <div class="row d-flex align-items-baseline pl-3 pr-4">
                 <div class="col-5">
                   <div class="content-top d-flex font-14">
-                      <a href="#">
+                      <a href="#" routerLink="/admin">
                           Home >
                       </a>
                       <div class="ml-1">Management > Product</div>
                   </div>
                 </div>
+                <div class="col-7 input-group">
+                    <input class="form-control" [(ngModel)]="kw" type="search"
+                        placeholder="Search by Product name or Category" aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"  (click)="searchProduct(1)">Search</button>
+                    </div>
+                </div>
               </div>
 
-              <!-- Data Tables-->
+              <!-- Data-->
               <div class="card shadow my-4">
                 <div class="row card-header d-flex align-items-baseline m-0 py-0 px-2">
                     <div class="col py-3 d-flex justify-content-end">
-                        <button type="button" class="btn btn-success px-4" data-toggle="modal" data-target="#Modal">Create New Product</button>
+                        <button type="button" class="btn btn-success px-4" data-toggle="modal" (click)="openModal(true, '')"
+                        data-target="#myModal">Create New Product</button>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <p *ngIf="!products"><em>Loading...</em></p>
-                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered display" #dataTable width="100%" cellspacing="0">
+                        <p *ngIf="!products.products"><em>Loading...</em></p>
+                        <table class="table table-bordered display" #dataTable width="100%" cellspacing="0">
                             <thead>
                                 <tr class="font-14">
                                     <th class="text-center align-middle">#</th>
@@ -45,13 +53,13 @@
                                     <th class="text-center align-middle">Price</th>
                                     <th class="text-center align-middle">Qty</th>
                                     <th class="text-center align-middle">Category</th>
-                                    <th class="text-center align-middle">Edit</th>
+                                    <th class="text-center align-middle">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="font-13">
-                                <tr *ngFor="let p of products">
-                                    <td class="text-center">{{ p.id }}</td>
-                                    <td>{{ p.name }}</td>
+                                <tr *ngFor="let p of products.products">
+                                    <td class="text-center">{{ p.item_number }}</td>
+                                    <td>{{ p.title }}</td>
                                     <td class="text-center product-image">
                                         <div class="col-md-8 prod-img-container">
                                             <ng-container *ngIf="p?.image">
@@ -68,10 +76,9 @@
                                     <td>{{ p.another_CatName }}</td>
                                     <td class="text-center">
                                         <div class="btn-group" role="group">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                data-target="#exampleModal" >
+                                            <button type="button" class="btn btn-primary" (click)="openModal(false,p)">
                                                 <i class="fas fa-edit"></i></button>
-                                            <button id="delete" class="btn btn-danger"><i
+                                            <button id="delete" class="btn btn-danger" (click)="deleteModal(p.id)"><i
                                                     class="fas fa-trash-alt"></i></button>
                                         </div>
                                     </td>
@@ -80,8 +87,175 @@
                         </table>
                     </div>
                 </div>
+                <div class="card-footer dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                    <ul class="pagination  m-0 d-flex justify-content-end">
+                        <li class="paginate_button page-item previous ">
+                            <a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="0"
+                                (click)="searchPrevious()" tabindex="0" class="page-link">Previous</a>
+                        </li>
+                        <li class="paginate_button page-item active">
+                            <a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0"
+                                class="page-link">{{ products.page }}</a>
+                        <li class="paginate_button page-item next">
+                            <a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="4"
+                                (click)="searchNext()" tabindex="0" class="page-link">Next</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
           </div>
       </div>
   </div>
+</div>
+
+<!--MODAL CREATE PRODUCT -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+            <h4 class="modal-title" *ngIf="!isEdit">Create New Product</h4>
+                <h4 class="modal-title" *ngIf="isEdit">Edit Product</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+            <form>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Product Name <span class="input-required">(*)</span></label>
+                    <div class="col-sm-8">
+                        <input class="form-control" [(ngModel)]='product.title' name="title" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Category <span class="input-required">(*)</span></label>
+                    <div class="col-sm-8">
+                        <select class="form-control" [(ngModel)]='product.category_id' name="category">
+                            <option></option>
+                            <option *ngFor="let category of categories" [ngValue]="category.id">{{category.title}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Classify <span class="input-required">(*)</span></label>
+                    <div class="col-sm-8">
+                        <select class="form-control" [(ngModel)]='product.classify_id' name="classify">
+                            <option></option>
+                            <option *ngFor="let cl of classify" [ngValue]="cl.id">{{cl.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Category Description</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" [(ngModel)]='product.another_CatName' name="another_CatName">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Price <span class="input-required">(*)</span></label>
+                    <div class="col-sm-8">
+                        <input type="number" min="0" class="form-control" [(ngModel)]='product.price' name="price" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Quantity <span class="input-required">(*)</span></label>
+                    <div class="col-sm-8">
+                        <input type="number" min="0" class="form-control" [(ngModel)]='product.quantity' name="quantity" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="description" class="col-sm-4 col-form-label">Description <span class="input-required">(*)</span></label>
+                    <div class="col-sm-8">
+                        <textarea id="description" class="form-control" rows="4" cols="50" 
+                        [(ngModel)]='product.description' name="description" required></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Image 1 <span class="input-required">(*)</span></label>
+                    <div class="col-sm-8">
+                        <input type="text"  class="form-control" [(ngModel)]='product.image' name="image" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Image 2</label>
+                    <div class="col-sm-8">
+                        <input type="text"  class="form-control" [(ngModel)]='product.image_1' name="image_1">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Image 3</label>
+                    <div class="col-sm-8">
+                        <input type="text"  class="form-control" [(ngModel)]='product.image_2' name="image_2">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Image 4</label>
+                    <div class="col-sm-8">
+                        <input type="text"  class="form-control" [(ngModel)]='product.image_3' name="image_3">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <button type="submit" (click)="createProduct()" *ngIf="!isEdit" class="btn btn-success">Create</button>
+            <button type="submit" (click)="updateProduct()" *ngIf="isEdit" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Delete-->
+<div class="modal fade" id="deleteModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Delete</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+            <h5>Do you certain to delete this product?</h5>
+            <p>The product was deleted can't be restore!</p>
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="deleteProduct()">Delete</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Modal Success-->
+<div class="modal fade" id="successModal">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">        
+        <!-- Modal body -->
+        <div class="modal-body text-center">
+            <i class="fas fa-check-circle success"></i>
+            <p class="text-center">{{message}}</p>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Modal Notification-->
+<div class="modal fade" id="warningModal">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">        
+        <!-- Modal body -->
+        <div class="modal-body text-center">
+            <i class="fas fa-exclamation-triangle warning"></i>
+            <p class="text-center">{{message}}</p>
+        </div>
+      </div>
+    </div>
 </div>

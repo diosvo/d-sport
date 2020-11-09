@@ -7,7 +7,7 @@ export interface OrderDetailModelServer {
     ship_address: string;
 }
 
-export interface ServerResponse {
+export interface OrderDetailServerResponse {
     count: number;
-    orders: OrderDetailModelServer[];
+    orders_details: OrderDetailModelServer[];
 }
