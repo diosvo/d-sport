@@ -1,92 +1,149 @@
 <div id="wrapper" class="d-flex">
   <app-sidebar class=" bg-gradient-primary"></app-sidebar>
   <div id="content-wrapper" class="d-flex flex-column">
-      <!-- Main Content -->
-      <div id="content">
-          <nav class="navbar navbar-expand-lg bg-white shadow d-flex justify-content-end px-5">
-              <div class="d-flex justify-content-end align-items-center">
-                  <img src="../../../assets/images/admin-avatar.png" alt="admin avatar" style="width: 5%;">
-                  <span class="font-13 ml-2">Admin</span>
-              </div>
-          </nav>
-          <!-- End of Topbar -->
+    <!-- Main Content -->
+    <div id="content">
+      <nav class="navbar navbar-expand-lg bg-white shadow d-flex justify-content-end px-5">
+        <div class="d-flex justify-content-end align-items-center">
+          <img src="../../../assets/images/admin-avatar.png" alt="admin avatar" style="width: 5%;">
+          <span class="font-13 ml-2">Admin</span>
+        </div>
+      </nav>
+      <!-- End of Topbar -->
 
-          <!-- Begin Page Content -->
-          <div class="container mt-4">
-              <!-- Page Heading -->
-              <div class="row d-flex align-items-baseline pl-3 pr-4">
-                  <div class="col-5">
-                      <div class="content-top d-flex font-14">
-                        <a href="#">
-                          Home >
-                      </a>
-                      <div class="ml-1">Management > Order</div>
-                      </div>
-                  </div>
-                  
-              </div>
-
-              <!-- Data Tables-->
-              <div class="card shadow my-4">
-                
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <p *ngIf="!orders"><em>Loading...</em></p>
-                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered display" #dataTable width="100%" cellspacing="0">
-                            <thead>
-                                <tr class="font-14">
-                                    <th class="text-center">#</th>
-                                    <th class="text-center">Orderer ID</th>
-                                    <th class="text-center">Receiver</th>
-                                    <th class="text-center">Receiver Phone</th>
-                                    <th class="text-center">Order Date</th>
-                                    <th class="text-center">Ship Address</th>
-                                    <th class="text-center">Total Price</th>
-                                    <th class="text-center">See Detail</th>
-                                </tr>
-                            </thead>
-                            <tbody class="font-13">
-                                <tr *ngFor="let o of orders">
-                                    <td class="text-center">{{ o.id }}</td>
-                                    <td class="text-center">{{ o.user_id }}</td>
-                                    <td >{{ o.receiver }}</td>
-                                    <td class="text-center">{{ o.receiver_phone }}</td>
-                                    <td class="text-center">{{ o.order_date| date:'short' }}</td>
-                                    <td >{{ o.ship_address }}</td>
-                                    <td class="text-right">{{ o.total | currency:"$":'symbol-narrow':'.0'}}</td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" onclick="openModal()"
-                                            data-target="#exampleModal" >
-                                            <i class="fas fa-info-circle"></i></button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+      <!-- Begin Page Content -->
+      <div class="container mt-4">
+        <!-- Page Heading -->
+        <div class="row d-flex align-items-baseline pl-3 pr-4">
+          <div class="col-5">
+            <div class="content-top d-flex font-14">
+              <a href="#" routerLink="/admin">
+                Home >
+              </a>
+              <div class="ml-1">Management > Order</div>
             </div>
           </div>
-      </div>
-  </div>
-</div>
+          <div class="col-7 input-group">
+            <input class="form-control" [(ngModel)]="kw" type="search" placeholder="Search by Order Id"
+              aria-label="Search">
+            <div class="input-group-append">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit"
+                (click)="searchOrder(1)">Search</button>
+            </div>
+          </div>
+        </div>
 
-<!-- See Detail Modal -->
-<div class="modal" tabindex="-1" role="dialog" id="order_detail">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>Modal body text goes here.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Save changes</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- Data Tables-->
+        <div class="card shadow my-4">
+
+          <div class="card-body">
+            <div class="table-responsive">
+              <p *ngIf="!orders.orders"><em>Loading...</em></p>
+              <table class="table table-bordered display" #dataTable width="100%" cellspacing="0">
+                <thead>
+                  <tr class="font-14">
+                    <th class="text-center">#</th>
+                    <th class="text-center">Order ID</th>
+                    <th class="text-center">Orderer</th>
+                    <th class="text-center">Receiver</th>
+                    <th class="text-center">Receiver Phone</th>
+                    <th class="text-center">Order Date</th>
+                    <th class="text-center">Ship Address</th>
+                    <th class="text-center">Total Price</th>
+                    <th class="text-center">See Detail</th>
+                  </tr>
+                </thead>
+                <tbody class="font-13">
+                  <tr *ngFor="let o of orders.orders">
+                    <td class="text-center">{{ o.item_number }}</td>
+                    <td class="text-center">{{ o.id }}</td>
+                    <td>{{ o.orderer }}</td>
+                    <td>{{ o.receiver }}</td>
+                    <td class="text-center">{{ o.receiver_phone }}</td>
+                    <td class="text-center">{{ o.order_date| date:'short' }}</td>
+                    <td>{{ o.ship_address }}</td>
+                    <td class="text-right">{{ o.total | currency:"$":'symbol-narrow':'.0'}}</td>
+                    <td class="text-center">
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"
+                        (click)="getOrderDetail(o.id)">
+                        <i class="fas fa-info-circle"></i></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+            <ul class="pagination  m-0 d-flex justify-content-end">
+              <li class="paginate_button page-item previous ">
+                <a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="0" (click)="searchPrevious()"
+                  tabindex="0" class="page-link">Previous</a>
+              </li>
+              <li class="paginate_button page-item active">
+                <a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0"
+                  class="page-link">{{ orders.page }}</a>
+              <li class="paginate_button page-item next">
+                <a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="4" (click)="searchNext()"
+                  tabindex="0" class="page-link">Next</a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Order Details</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th class="text-center align-middle">#</th>
+              <th class="text-center align-middle">Product Name</th>
+              <th class="text-center align-middle">Quantity</th>
+              <th class="text-center align-middle">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let od of orders_details">
+              <td class="text-center">{{ od.item_number }}</td>
+              <td>{{ od.product_name }}</td>
+              <td class="text-center">{{ od.quantity }}</td>
+              <td class="text-right">{{ od.price | currency:"$":'symbol-narrow':'.0'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Notification-->
+<div class="modal fade" id="warningModal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <!-- Modal body -->
+      <div class="modal-body text-center">
+        <i class="fas fa-exclamation-triangle mb-3" style="color: rgb(255, 207, 74); font-size: 60px;"></i>
+        <p class="text-center">{{message}}</p>
+      </div>
+    </div>
+  </div>
+</div>

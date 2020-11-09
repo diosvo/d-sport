@@ -3,13 +3,12 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const createError = require('http-errors');
 const compression = require('compression')
-const logger = require('morgan');
 const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 
 const {verifyAccessToken} = require('./config/jwt')
 
-/* Middleware */
+// Middleware
 const cors = require('cors');
 app.use(cors());
 app.use((req, res, next) => {
@@ -33,16 +32,19 @@ const ordersRoute = require('./routes/orders');
 const usersRoute = require('./routes/users');
 const authRoute = require('./routes/auth');
 const ordersDetailsRoute = require('./routes/orders_details');
+const statisticRoute = require('./routes/statistic');
+const classifyRoute = require('./routes/classify')
+const categoriesRoute = require('./routes/categories')
 
-/* Use Routes */
+// Use Route
 app.use('/api/products', productsRoute);
 app.use('/api/orders', ordersRoute);
 app.use('/api/users', usersRoute);
 app.use('/api/auth', authRoute);
 app.use('/api/orders_details', ordersDetailsRoute);
+app.use('/api/classify', classifyRoute);
+app.use('/api/categories', categoriesRoute);
 
-app.use(logger('dev'));
-app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(compression({level: 9}));

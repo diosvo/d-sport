@@ -2,8 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, NavigationExtras } from '@angular/router';
 
-import { environment } from 'src/environments/environment';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { ProductService } from './product.service';
 import { OrderService } from './order.service';
@@ -13,6 +12,7 @@ import { CartModelPublic, CartModelServer } from '../models/cart.model';
 
 import { ToastrService } from "ngx-toastr";
 import { NgxSpinnerService } from "ngx-spinner";
+import { ApiUrl } from '../api/api-url';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +21,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 export class CartService implements OnInit {
   isLoggedIn: Boolean
 
-  ngOnInit() {
-    this.authService.auth.subscribe(isLoggedIn => { this.isLoggedIn = isLoggedIn })
-  }
-
-  private SERVER_URL = environment.SERVER_URL
+  ngOnInit() {}
 
   /* Stored in Client's Local Storage */
   cartDataClient: CartModelPublic = {
@@ -49,7 +45,6 @@ export class CartService implements OnInit {
     ]
   }
 
-  /* OBSERVABLES FOR THE COMPONENT TO SUBSCRIBE */
   cartTotal$ = new BehaviorSubject<Number>(0)
   cartData$ = new BehaviorSubject<CartModelServer>(this.cartDataServer)
 
@@ -59,7 +54,9 @@ export class CartService implements OnInit {
     private router: Router,
     private toast: ToastrService,
     private authService: AuthService,
-    private spinner: NgxSpinnerService) { }
+    private spinner: NgxSpinnerService) { 
+      this.authService.auth.subscribe(isLoggedIn => { this.isLoggedIn = isLoggedIn })
+    }
 
   addProductToCart(id: number, quantity?: number) {
     this.productService.getSingleProduct(id).subscribe(prod => {
@@ -74,7 +71,7 @@ export class CartService implements OnInit {
         this.cartDataClient.prodsData[0].inCart = this.cartDataServer.data[0].numInCart;
 
         this.cartDataClient.total = this.cartDataServer.total;
-        localStorage.setItem('cart', JSON.stringify(this.cartDataClient));
+        this.setCart()
         this.cartData$.next({ ...this.cartDataServer });
 
         // DISPLAY A TOAST NOTIFICATION
@@ -104,7 +101,7 @@ export class CartService implements OnInit {
           this.cartDataClient.prodsData[index].inCart = this.cartDataServer.data[index].numInCart;
           this.total();
           this.cartDataClient.total = this.cartDataServer.total;
-          localStorage.setItem('cart', JSON.stringify(this.cartDataClient));
+          this.setCart()
 
           // TOAST NOTIFICATION
           this.toast.info(`${prod.title} quantity updated to the cart`, 'Product Updated', {
@@ -127,7 +124,7 @@ export class CartService implements OnInit {
             id: prod.id,
             inCart: quantity
           });
-          localStorage.setItem('cart', JSON.stringify(this.cartDataClient))
+          this.setCart()
 
           // TOAST NOTIFICATION
           this.toast.success(`${prod.title} added to the cart`, 'Product Added', {
@@ -141,7 +138,7 @@ export class CartService implements OnInit {
           // Total amount
           this.total();
           this.cartDataClient.total = this.cartDataServer.total;
-          localStorage.setItem('cart', JSON.stringify(this.cartDataClient))
+          this.setCart()
           this.cartData$.next({ ...this.cartDataServer });
         }
       }
@@ -233,6 +230,14 @@ export class CartService implements OnInit {
     this.cartData$.next({ ...this.cartDataServer });
   }
 
+  private setCart() {
+    localStorage.setItem('cart', JSON.stringify(this.cartDataClient))
+  }
+
+  private getCart() {
+    localStorage.getItem('cart')
+  }
+
   cartSubTotal(index): number {
     let subTotal = 0;
     const p = this.cartDataServer.data[index];
@@ -241,14 +246,21 @@ export class CartService implements OnInit {
     return subTotal;
   }
 
-  checkoutFromCart(userId: number) {
-    this.http.post(this.SERVER_URL + '/orders/payment', null).subscribe((res: { success: boolean }) => {
+  checkoutFromCart(userId: number, formData: any) {
+    const { email, lastname, firstname, address, phone, note } = formData
+    this.http.post(ApiUrl.OrderPayment, null).subscribe((res: { success: boolean }) => {
       console.clear();
 
       if (res.success) {
         this.resetServerData();
-        this.http.post(this.SERVER_URL + '/orders/new', {
+        this.http.post(ApiUrl.OrderNew, {
           userId: userId,
+          lastname: lastname,
+          firstname: firstname,
+          address: address,
+          phone: phone,
+          email: email,
+          note: note || null,
           products: this.cartDataClient.prodsData
         }).subscribe((data: OrderResponse) => {
           this.orderService.getSingleOrdered(data.order_id).then(prods => {

@@ -1,21 +1,19 @@
-<app-header
-  *ngIf="
+<app-header *ngIf="
     router.url !== '/admin' &&
     router.url !== '/admin/user' &&
     router.url !== '/admin/order' &&
-    router.url !== '/admin/product'
-  "
->
+    router.url !== '/admin/product' &&
+    router.url !== '/admin/statistic'
+  ">
 </app-header>
 <div>
   <router-outlet></router-outlet>
-</div>  
-<app-footer
-  *ngIf="
+</div>
+<app-footer *ngIf="
     router.url !== '/admin' &&
     router.url !== '/admin/user' &&
     router.url !== '/admin/order' &&
-    router.url !== '/admin/product'
-  "
->
+    router.url !== '/admin/product' &&
+    router.url !== '/admin/statistic'
+  ">
 </app-footer>

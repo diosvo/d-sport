@@ -1,9 +1,4 @@
-<ngx-spinner 
-bdColor="rgba(0,0,0,0.7)" 
-size="default" 
-color="#fff" 
-type="ball-spin-fade-rotating" 
-[fullScreen]="true">
+<ngx-spinner bdColor="rgba(0,0,0,0.7)" size="default" color="#fff" type="ball-spin-fade-rotating" [fullScreen]="true">
 </ngx-spinner>
 
 <section id="login" class="d-flex flex-column justify-content-center align-items-center">
@@ -37,8 +32,8 @@ type="ball-spin-fade-rotating"
             By logging in, you agree to D's <u>Privacy Policy</u> and <u>Terms of Use</u>.
         </p>
 
-        <button class="btn-login text-uppercase text-light font-11" style="font-family: Oswald, sans-serif"
-            type="submit" [disabled]="loading" [class.disable]="loginForm.invalid">login
+        <button class="btn-login text-uppercase text-light font-11" type="submit" [disabled]="loginForm.invalid"
+            [class.disable]="loginForm.invalid">login
         </button>
     </form>
     <div class="font-12 mt-3 mb-4">

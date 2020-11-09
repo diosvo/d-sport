@@ -6,65 +6,64 @@
 
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-            <input type="email" formControlName="email" class="form-control" id="username" placeholder="Email address"
+            <input type="email" formControlName="email" class="form-control" placeholder="Email address"
                 [ngClass]="{'is-invalid':email.errors && email.touched}">
             <div class="invalid-feedback mt-1 font-13" *ngIf="email.hasError('emailTaken')">
-                Email has already exist
+                Email has already exist.
             </div>
             <div class="invalid-feedback mt-1 font-13" *ngIf="email.hasError('required')">
-                Email is required
+                Email is required.
             </div>
         </div>
 
         <div class="form-group">
             <input type="password" formControlName="password" class="form-control" id="password" placeholder="Password"
-                minlength="6" [ngClass]="{'is-invalid': password.errors && password.touched}">
+                minlength="6" [ngClass]="{'is-invalid': password.errors && password.touched}" autocomplete>
             <div class="invalid-feedback mt-1 font-13" *ngIf="password.hasError('required')">
-                Password is required
+                Password is required.
             </div>
             <div class="invalid-feedback mt-1 font-13" *ngIf="password.hasError('minlength')">
-                Password must be at least 6 characters
+                Password must be at least 6 characters.
             </div>
         </div>
 
         <div class="form-group">
-            <input type="password" formControlName="cfpassword" class="form-control" id="cf-password"
-                placeholder="Confirm Password" [ngClass]="{'is-invalid': cfpassword.errors && cfpassword.touched}"
-                autocomplete>
+            <input type="password" formControlName="cfpassword" class="form-control" placeholder="Confirm Password"
+                [ngClass]="{'is-invalid': cfpassword.errors && cfpassword.touched}" autocomplete required>
             <div class="invalid-feedback mt-1 font-13" *ngIf="cfpassword.hasError('passwordMismatch')">
-                Password don't match
+                Password don't match.
             </div>
             <div class="invalid-feedback mt-1 font-13" *ngIf="cfpassword.hasError('required')">
-                Confirm password is required
+                Confirm password is required.
             </div>
         </div>
 
         <div class="form-group">
-            <input type="text" formControlName="firstname" class="form-control" id="firstname" placeholder="First Name"
+            <input type="text" formControlName="firstname" class="form-control" placeholder="First Name"
                 [ngClass]="{'is-invalid': registerForm.get('firstname').touched}">
             <div class="invalid-feedback mt-1 font-13" *ngIf="firstname.hasError('required')">
-                First name is required
+                First name is required.
             </div>
         </div>
 
         <div class="form-group">
-            <input type="text" formControlName="lastname" class="form-control" id="lastname" placeholder="Last Name"
+            <input type="text" formControlName="lastname" class="form-control" placeholder="Last Name"
                 [ngClass]="{'is-invalid': registerForm.get('lastname').touched}">
             <div class="invalid-feedback mt-1 font-13" *ngIf="lastname.hasError('required')">
-                Last name is required
+                Last name is required.
             </div>
         </div>
 
         <div class="form-group">
-            <input type="date" formControlName="dob" class="form-control" id="dob" placeholder="Date of Birth">
+            <input type="date" formControlName="dob" class="form-control">
         </div>
 
         <p class="font-12 text-secondary text-center px-1">
             By creating an account, you agree to D's <u>Privacy Policy</u> and <u>Terms of Use</u>.
         </p>
 
-        <button class="btn-register text-uppercase text-light font-11" style="font-family: Oswald, sans-serif"
-            type="submit" [disabled]="registerForm.invalid" [class.disable]="registerForm.invalid">register
+        <button class="btn-register text-uppercase text-light font-11" type="submit" [disabled]="registerForm.invalid"
+            [class.disable]="registerForm.invalid">register
         </button>
     </form>
 

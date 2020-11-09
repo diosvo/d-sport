@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { tap } from 'rxjs/operators';
+
+import { environment } from 'src/environments/environment';
 import { UserModelServer } from '../models/user.model';
+import { ApiUrl } from '../api/api-url';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class JwtService {
-
-  private SERVER_URL = environment.SERVER_URL
-
   constructor(private http: HttpClient) { }
 
   tokenStorage(accessToken: string, refreshToken: string) {
@@ -32,7 +31,7 @@ export class JwtService {
   }
 
   getNewAccessToken() {
-    return this.http.post<any>(this.SERVER_URL + '/auth/refresh-token', {
+    return this.http.post<any>(ApiUrl.RefreshToken, {
       headers: {
         'x-refresh-token': this.getRefreshToken()
       }

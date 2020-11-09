@@ -2,16 +2,8 @@
 <div>
   <ul class="navbar-nav sidebar font-4-all">
     <li class="logo d-flex justify-content-center align-items-center py-2">
-      <div
-        id="logo-brand"
-        class="font-weight-bold d-flex"
-        style="font-size: 2rem"
-      >
-        <div
-          routerLink="/"
-          class="text-light"
-          style="font-family: 'Roboto'; cursor: pointer"
-        >
+      <div id="logo-brand" class="font-weight-bold d-flex" style="font-size: 2rem">
+        <div routerLink="/" class="text-light" style="font-family: 'Roboto'; cursor: pointer">
           D.Sport Admin
         </div>
       </div>
@@ -20,102 +12,43 @@
     <li class="nav-item">
       <a class="nav-link" href="#" routerLink="/admin">
         <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Home</span>
+        <span>Dashboard</span>
       </a>
     </li>
     <hr class="sidebar-divider mt-1" />
     <div class="sidebar-heading">System</div>
     <li class="nav-item">
-      <a
-        class="nav-link"
-        href="#"
-        data-toggle="collapse"
-        data-target="#collapseTwo"
-      >
-        <i class="fas fa-fw fa-user"></i>
+      <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo">
+        <i class="fas fa-tasks"></i>
         <span>Management</span>
       </a>
       <div id="collapseTwo" class="collapse font-14">
         <div class="py-2 collapse-inner bg-gray">
-          <li>
-            <a
-              class="collapse-item text-decoration-none py-2 px-3 my-0 mx-2"
-              routerLink="/admin/user"
-            >
-            <i class="fas fa-user"></i>
-              User
-            </a>
-          </li>
-          <li>
-            <a
-              class="collapse-item text-decoration-none py-2 px-3 my-0 mx-2"
-              routerLink="/admin/product"
-            >
-              <i class="fas fa-tshirt mr-1"></i>
-              Product
-            </a>
-          </li>
-          <li>
-            <a
-              class="collapse-item text-decoration-none py-2 px-3 my-0 mx-2"
-              routerLink="/admin/order"
-            >
-              <i class="fa fa-list-ul mr-1"></i>
-              Order
-            </a>
-          </li>
-          <li>
-            <a
-              class="collapse-item text-decoration-none py-2 px-3 my-0 mx-2"
-              routerLink="/admin"
-            >
-            <i class="fas fa-chart-area"></i>
-            Statistics
-            </a>
-          </li>
-        </div>
-      </div>
-    </li>
-
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        href="#"
-        data-toggle="collapse"
-        data-target="#collapseThree"
-      >
-        <i class="fas fa-fw fa-folder"></i>
-        <span>Pages</span>
+    <li>
+      <a class="collapse-item text-decoration-none py-2 px-3 my-0 mx-2" routerLink="/admin/user">
+        <i class="fas fa-user"></i>
+        User
       </a>
-      <div id="collapseThree" class="collapse">
-        <div class="py-2 collapse-inner bg-gray font-14">
-          <li>
-            <a
-              class="collapse-item text-decoration-none py-2 px-3 my-0 mx-2"
-              href="#" routerLink="/login"
-            >
-              Sign in
-            </a>
-          </li>
-          <li>
-            <a
-              class="collapse-item text-decoration-none py-2 px-3 my-0 mx-2"
-              href="#" routerLink="/register"
-            >
-              Sign up
-            </a>
-          </li>
-          <li>
-            <a
-              class="collapse-item text-decoration-none py-2 px-3 my-0 mx-2"
-              href="#" routerLink="/login"
-            >
-              Forgot Password
-            </a>
-          </li>
-        </div>
-      </div>
     </li>
-    <hr class="sidebar-divider my-0" />
-  </ul>
+    <li>
+      <a class="collapse-item text-decoration-none py-2 px-3 my-0 mx-2" routerLink="/admin/product">
+        <i class="fas fa-tshirt mr-1"></i>
+        Product
+      </a>
+    </li>
+    <li>
+      <a class="collapse-item text-decoration-none py-2 px-3 my-0 mx-2" routerLink="/admin/order">
+        <i class="fa fa-list-ul mr-1"></i>
+        Order
+      </a>
+    </li>
+    <li>
+      <a class="collapse-item text-decoration-none py-2 px-3 my-0 mx-2" routerLink="/admin/statistic">
+        <i class="fas fa-chart-area"></i>
+        Statistics
+      </a>
+    </li>
+</div>
+</div>
+</ul>
 </div>

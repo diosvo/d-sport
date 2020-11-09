@@ -21,9 +21,9 @@ router.get('/', (req, res) => {
         ])
         .withFields(['o.id',
             'o.order_date',
-            'o.ship_address',
-            'o.receiver',
-            'o.receiver_phone',
+            'o.address',
+            'o.lastname',
+            'o.phone',
             'SUM(od.quantity*p.price) as total',
             'u.email as orderer'])
         .getAll()
@@ -38,49 +38,104 @@ router.get('/', (req, res) => {
         }).catch(err => console.log(err));
 });
 
-// router.get('/all', (req, res) => {
-//     database.table('orders as o')
-//         .join([
-//         {
-//             table: 'orders_details as od',
-//             on: 'o.id = od.order_id'
-//         }
-//     ])
-//         .withFields(['o.id',
-//             'o.user_id',
-//             'o.receiver',
-//             'o.receiver_phone',
-//             'o.order_date',
-//             'o.ship_address',
-//             'SUM(od.price*od.quantity) as total'
-//             ])
-//
-//         .getAll()
-//         .then(orders => {
-//             if (orders.length > 0) {
-//                 res.status(200).json({
-//                     orders: orders
-//                 })
-//             } else {
-//                 res.json({message: 'No orders found.'})
-//             }
-//         }).catch(err => console.log(err));
-// });
+// Get all order with pagination
+router.get('/page/:page/size/:size/keyword', function (req, res) {
+    let page = req.params.page;
+    let size = req.params.size;
+    let start = size * (page - 1);
+    let limit = size;
+    let totalRecord = 0;
+    let sql = '';
 
-router.get('/all', (req, res) => {
-    database.query('select o.*, SUM(od.quantity * od.price) as total from orders o inner join orders_details od on o.id = od.order_id group by o.id')
-        .then(orders => {
-            if (orders.length > 0) {
+    database.query('SELECT * FROM orders').then(result =>
+        totalRecord = result.length
+    );
+
+    sql = `SELECT ROW_NUMBER() OVER (ORDER BY o.id) AS item_number, o.*, SUM(od.quantity * od.price) AS total, CONCAT(u.firstName , ' ', u.lastname) AS orderer
+            FROM orders o 
+            INNER JOIN orders_details od ON o.id = od.order_id 
+            INNER JOIN users u ON o.user_id = u.id
+            GROUP BY o.id 
+            LIMIT ${start},${limit}`;
+    database.query(sql)
+        .then(data => {
+            if (data.length > 0) {
                 res.status(200).json({
-                    orders: orders
+                    count: totalRecord, //totalRecord
+                    totalPage: Math.ceil(totalRecord / size),
+                    page: parseInt(page),
+                    size: parseInt(size),
+                    orders: data,
                 })
             } else {
-                res.json({message: 'No orders found.'})
+                res.json({
+                    count: 0,
+                    totalPage: 0,
+                    page: parseInt(page),
+                    size: parseInt(size),
+                    orders: []
+                })
             }
-        }).catch(err => console.log(err));
+        })
+        .catch(err => console.log(err));
 });
 
-/* GET SINGLE ORDER */
+// Get all order with pagination and keyword
+router.get('/page/:page/size/:size/keyword/:keyword', function (req, res) {
+    let page = req.params.page;
+    let size = req.params.size;
+    let keyword = req.params.keyword;
+    let start = size * (page - 1);
+    let limit = size;
+    let totalRecord = 0;
+    let sql = '';
+
+    database.query('SELECT * FROM orders').then(result =>
+        totalRecord = result.length
+    );
+
+    if (keyword.trim() == "" || keyword == null || keyword == undefined) {
+        sql = `SELECT ROW_NUMBER() OVER (ORDER BY o.id) AS item_number, o.*, SUM(od.quantity * od.price) AS total, CONCAT(u.firstName , ' ', u.lastname) AS orderer
+                FROM orders o 
+                INNER JOIN orders_details od ON o.id = od.order_id 
+                INNER JOIN users u ON o.user_id = u.id
+                GROUP BY o.id 
+                LIMIT ${start},${limit}`;
+    } else {
+        sql = `SELECT ROW_NUMBER() OVER (ORDER BY o.id) AS item_number, o.*, SUM(od.quantity * od.price) AS total , CONCAT(u.firstName , ' ', u.lastname) AS orderer
+                FROM orders o 
+                INNER JOIN orders_details od ON o.id = od.order_id 
+                INNER JOIN users u ON o.user_id = u.id
+                WHERE o.id=${keyword}
+                GROUP BY o.id
+                LIMIT ${start},${limit}`;
+    }
+
+    database.query(sql)
+        .then(data => {
+            if (data.length > 0) {
+                res.status(200).json({
+                    count: totalRecord,
+                    totalPage: Math.ceil(totalRecord / size),
+                    page: parseInt(page),
+                    size: parseInt(size),
+                    orders: data,
+                })
+            } else {
+                res.json({
+                    count: 0,
+                    totalPage: 0,
+                    page: parseInt(page),
+                    size: parseInt(size),
+                    orders: [],
+                    // sql: sql
+                })
+            }
+        })
+        .catch(err => console.log(err));
+});
+
+// Get Single
 router.get('/:id', (req, res) => {
     const orderId = req.params.id;
 
@@ -119,15 +174,20 @@ router.get('/:id', (req, res) => {
         }).catch(err => console.log(err));
 });
 
-/* NEW ORDER */
+// New
 router.post('/new', (req, res) => {
-    const {userId, products} = req.body;
-    console.log(userId, products);
+    const {userId, email, lastname, firstname, address, phone, note, products} = req.body;
 
     if (userId !== null && userId > 0 && !isNaN(userId)) {
         database.table('orders')
             .insert({
-                user_id: userId
+                user_id: userId,
+                lastname: lastname,
+                firstname: firstname,
+                address: address,
+                phone: phone,
+                email: email,
+                note: note
             }).then(newOrderId => {
             if (newOrderId > 0) {
                 products.forEach(async (p) => {
@@ -177,7 +237,7 @@ router.post('/new', (req, res) => {
     }
 })
 
-/* PAYMET GATEWAY */
+// Payment Gateway
 router.post('/payment', (req, res) => {
     setTimeout(() => {
         res.status(200).json({success: true})

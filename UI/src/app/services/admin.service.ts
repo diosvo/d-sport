@@ -14,12 +14,23 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  /* Get users for admin-user page */
-  getUsers(numberOfResults = 10): Observable<ServerResponse> {
-    return this.http.get<ServerResponse>(this.SERVER_URL + '/users', {
-      params: {
-        limit: numberOfResults.toString()
-      }
-    })
+  getAllProduct(cPage: Number, size: Number, keyword: string): Observable<ServerResponse> {
+    return this.http.get<ServerResponse>(this.SERVER_URL + '/products/page/' + cPage + '/size/' + size + '/keyword/' + keyword)
+  }
+
+  getUsers(cPage: Number, size: Number, keyword: string): Observable<ServerResponse> {
+    return this.http.get<ServerResponse>(this.SERVER_URL + '/users/page/' + cPage + '/size/' + size + '/keyword/' + keyword)
+  }
+
+  deleteUser(userId){
+    return this.http.delete(this.SERVER_URL + '/users/' + userId)
+  }
+
+  createUser(user){
+    return this.http.post(this.SERVER_URL + '/users/create', { user })
+  }
+
+  updateUser(user){
+    return this.http.post(this.SERVER_URL + '/users/update', { user })
   }
 }

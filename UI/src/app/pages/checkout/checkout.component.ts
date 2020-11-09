@@ -26,11 +26,12 @@ export class CheckoutComponent implements OnInit {
 
   checkoutForm = this.fb.group(
     {
-      firstname: ["", [Validators.required]],
-      lastname: ["", [Validators.required]],
-      email: ["", [Validators.required]],
-      phone: ["", [Validators.required]],
-      address: ["", [Validators.required]],
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
+      email: ['', Validators.required],
+      phone: ['', [Validators.required, Validators.pattern("(0)[0-9 ]{9}")]],
+      address: ['', Validators.required],
+      note: ['', Validators.required]
     }
   );
 
@@ -44,7 +45,7 @@ export class CheckoutComponent implements OnInit {
   checkOut() {
     this.spinner.show();
     this.authService.user.subscribe((data: UserModelServer) => {
-      this.cartService.checkoutFromCart(data.id);
+      this.cartService.checkoutFromCart(data.id, this.checkoutForm.value)
     });
   }
 
@@ -66,6 +67,10 @@ export class CheckoutComponent implements OnInit {
 
   get phone() {
     return this.checkoutForm.get('phone')
+  }
+
+  get note() {
+    return this.checkoutForm.get('note')
   }
 
 }

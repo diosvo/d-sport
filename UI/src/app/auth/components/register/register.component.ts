@@ -13,15 +13,15 @@ import { JwtService } from 'src/app/services/jwt.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  
+
   registerForm = this.fb.group(
     {
-      email: ["", [Validators.required], [this.validation.emailValidate()]],
-      password: ["", [Validators.required]],
-      cfpassword: ["", [Validators.required]],
-      firstname: ["", [Validators.required]],
-      lastname: ["", [Validators.required]],
-      dob: [""],
+      email: ['', Validators.required, [this.validation.emailValidate()]],
+      password: ['', Validators.required],
+      cfpassword: ['', Validators.required],
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
+      dob: [''],
     },
     {
       validator: this.validation.passwordMatchValidator("password", "cfpassword")
