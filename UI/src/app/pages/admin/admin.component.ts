@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Role } from 'src/app/models/role.model.js';
+import { UserModelServer } from 'src/app/models/user.model.js';
+import { AuthService } from 'src/app/services/auth.service.js';
+import { JwtService } from 'src/app/services/jwt.service.js';
 import { StatisticService } from 'src/app/services/statistic.service';
-import {formatDate} from './utils.js';
+import { formatDate } from './utils.js';
 declare var google: any;
 
 @Component({
@@ -9,6 +13,8 @@ declare var google: any;
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
+  isLoggedIn: Boolean
+  currentUser: UserModelServer
 
   lstRevenueByYear: any = {
     data: []
@@ -22,16 +28,16 @@ export class AdminComponent implements OnInit {
     data: []
   };
 
-  numOrderSoldByDay:any ={
-    data:[]
+  numOrderSoldByDay: any = {
+    data: []
   };
 
-  numProductSoldByDay:any ={
-    data:[]
+  numProductSoldByDay: any = {
+    data: []
   };
 
-  revenueInDay:any ={
-    data:[]
+  revenueInDay: any = {
+    data: []
   };
 
   numOrder = 0;
@@ -40,33 +46,41 @@ export class AdminComponent implements OnInit {
 
   date = new Date();
 
-  constructor(private statisticService: StatisticService) { }
+  constructor(private statisticService: StatisticService,private token: JwtService, private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.isLoggedIn = this.token.isLoggedIn()
+    this.authService.user.subscribe(x => this.currentUser = x)
+
     this.getRevenueByYear();
     this.getOrderSoldByYear();
     this.getProductSoldByYear();
     this.getOrderSoldToDay();
     this.getProductSoldToDay();
     this.getRevenueToDay();
+
+    this.isAdmin
   }
 
-  getOrderSoldToDay(){
+  get isAdmin() {
+    return this.currentUser && this.currentUser.role === Role.Admin
+  }
+
+  getOrderSoldToDay() {
     this.statisticService.getOrderSoldByDay(formatDate(this.date)).subscribe(result => {
       var res: any = result;
       this.numOrder = res.data[0].num;
     }, error => console.error(error));
   }
 
-  getProductSoldToDay(){
+  getProductSoldToDay() {
     this.statisticService.getProductSoldByDay(formatDate(this.date)).subscribe(result => {
       var res: any = result;
       this.numProduct = res.data[0].num;
     }, error => console.error(error));
   }
-  
 
-  getRevenueToDay(){
+  getRevenueToDay() {
     this.statisticService.getRevenueInDay(formatDate(this.date)).subscribe(result => {
       var res: any = result;
       this.revenue = res.data[0].revenue;
@@ -164,5 +178,5 @@ export class AdminComponent implements OnInit {
 
     chart.draw(data, options);
   }
- 
+
 }

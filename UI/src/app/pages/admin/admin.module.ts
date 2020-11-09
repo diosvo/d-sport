@@ -13,7 +13,6 @@ import { AdminUserComponent } from './admin-user/admin-user.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminStatisticComponent } from './admin-statistic/admin-statistic.component';
 
-
 @NgModule({
   declarations: [AdminComponent, AdminProductComponent, AdminOrderComponent, AdminUserComponent, AdminStatisticComponent
   ],

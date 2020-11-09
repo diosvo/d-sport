@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from 'src/app/services/admin.service';
-import {formatDate} from '../utils.js';
+import { formatDate } from '../utils.js';
 declare var $: any;
 
 @Component({
@@ -15,7 +15,7 @@ export class AdminUserComponent implements OnInit {
     email: '',
     lastname: '',
     firstname: '',
-    dob:null,
+    dob: null,
     role: '',
     photoUrl: '',
   };
@@ -29,8 +29,8 @@ export class AdminUserComponent implements OnInit {
   isEdit: boolean = true;
   kw = '';
   userId = 0;
-  message ='';
-  
+  message = '';
+
   constructor(private adminService: AdminService) { }
 
   ngOnInit(): void {
@@ -43,20 +43,20 @@ export class AdminUserComponent implements OnInit {
     let size = 5;
     let keyword = this.kw;
 
-    this.adminService.getUsers(page,size,keyword).subscribe((user: any) => {
+    this.adminService.getUsers(page, size, keyword).subscribe((user: any) => {
       this.users = user;
     });
   }
-  
+
   searchPrevious() {
     if (this.users.page > 1) {
       let nextPage = this.users.page - 1;
-      
+
       let page = nextPage;
       let size = 5;
       let keyword = this.kw;
 
-      this.adminService.getUsers(page,size,keyword).subscribe((user: any) => {
+      this.adminService.getUsers(page, size, keyword).subscribe((user: any) => {
         this.users = user
       });
     } else {
@@ -71,11 +71,11 @@ export class AdminUserComponent implements OnInit {
       let page = nextPage;
       let size = 5;
       let keyword = this.kw;
-      this.adminService.getUsers(page,size,keyword).subscribe((user: any) => {
+      this.adminService.getUsers(page, size, keyword).subscribe((user: any) => {
         this.users = user
       });
     }
-    else{
+    else {
       this.showWarning("You're in the last page");
     }
   }
@@ -88,7 +88,7 @@ export class AdminUserComponent implements OnInit {
         email: '',
         lastname: '',
         firstname: '',
-        dob:null,
+        dob: null,
         role: '',
         photoUrl: '',
       };
@@ -102,9 +102,9 @@ export class AdminUserComponent implements OnInit {
 
 
   createUser() {
-    if(this.validateData()){
+    if (this.validateData()) {
       console.log(this.user.dob);
-      if(this.user.dob != null)
+      if (this.user.dob != null)
         this.user.dob = formatDate(this.user.dob);
       this.adminService.createUser(this.user).subscribe(result => {
         var res: any = result;
@@ -115,14 +115,14 @@ export class AdminUserComponent implements OnInit {
         }
       }, error => console.error(error));
     }
-    else{
+    else {
       this.showWarning("Please enter all of the required input");
     }
   }
 
   updateUser() {
-    if(this.validateData()){
-      if(this.user.dob != null)
+    if (this.validateData()) {
+      if (this.user.dob != null)
         this.user.dob = formatDate(this.user.dob);
       this.adminService.updateUser(this.user).subscribe(result => {
         var res: any = result;
@@ -133,10 +133,10 @@ export class AdminUserComponent implements OnInit {
         }
       }, error => console.error(error))
     }
-    else{
+    else {
       this.showWarning("Please enter all of the required input");
     }
-    
+
   }
 
   validateData() {
@@ -165,17 +165,17 @@ export class AdminUserComponent implements OnInit {
     this.userId = id;
   }
 
-  showMessage(message){
+  showMessage(message) {
     this.message = message;
     $("#successModal").modal("show");
-    setTimeout(function(){ $("#successModal").modal("hide"); }, 1500);
-    setTimeout(function(){ location.reload(); }, 1500);
+    setTimeout(function () { $("#successModal").modal("hide"); }, 1500);
+    setTimeout(function () { location.reload(); }, 1500);
   }
 
-  showWarning(message){
+  showWarning(message) {
     this.message = message;
     $("#warningModal").modal("show");
-    setTimeout(function(){ $("#warningModal").modal("hide"); }, 1500);
+    setTimeout(function () { $("#warningModal").modal("hide"); }, 1500);
   }
 
 }

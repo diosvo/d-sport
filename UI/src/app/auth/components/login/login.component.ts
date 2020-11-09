@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { first } from 'rxjs/operators';
 
 import { JwtService } from 'src/app/services/jwt.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -28,14 +27,19 @@ export class LoginComponent implements OnInit {
     private token: JwtService,
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute) { 
-      if (this.authService.userValue) this.router.navigate(['/profile'])
-    }
+    private route: ActivatedRoute) {
+    if (this.authService.userValue) this.router.navigate(['/profile'] || ['/admin'])
+  }
 
   ngOnInit(): void {
     let isLoggedIn = this.token.isLoggedIn()
     if (isLoggedIn) {
-      this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/profile';
+      if (Role.Customer) {
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/profile'
+      }
+      if (Role.Admin) {
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/admin'
+      }
     }
   }
 
@@ -54,7 +58,7 @@ export class LoginComponent implements OnInit {
     }, error => {
       this.loading = false
     })
-      
+
 
     this.loginForm.reset();
   }

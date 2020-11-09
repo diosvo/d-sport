@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const bcrypt = require('bcryptjs');
 const {database} = require('../config/helpers');
 
@@ -21,7 +21,7 @@ router.get('/page/:page/size/:size/keyword', function (req, res) {
         .then(data => {
             if (data.length > 0) {
                 res.status(200).json({
-                    count: totalRecord, //totalRecord
+                    count: totalRecord,
                     totalPage: Math.ceil(totalRecord/size),
                     page: parseInt(page),
                     size: parseInt(size),
@@ -119,55 +119,7 @@ router.get('/validate/:email', (req, res) => {
         .catch(err => res.json(err));
 });
 
-/* Update User Data */
-router.patch('/:userId', async (req, res) => {
-    // Get the User ID from the parameter
-    let userId = req.params.userId;
-
-    // Search User in Database if any
-    let user = await database.table('users').filter({id: userId}).get();
-    if (user) {
-
-        let userEmail = req.body.email;
-        let userPassword = req.body.password;
-        let userFirstName = req.body.fname;
-        let userLastName = req.body.lname;
-        let userUsername = req.body.username;
-        let age = req.body.age;
-
-        // Replace the user's information with the form data ( keep the data as is if no info is modified )
-        database.table('users').filter({id: userId}).update({
-            email: userEmail !== undefined ? userEmail : user.email,
-            password: userPassword !== undefined ? userPassword : user.password,
-            username: userUsername !== undefined ? userUsername : user.username,
-            fname: userFirstName !== undefined ? userFirstName : user.fname,
-            lname: userLastName !== undefined ? userLastName : user.lname,
-            age: age !== undefined ? age : user.age
-        }).then(result => res.json('User updated successfully')).catch(err => res.json(err));
-    }
-});
-
-/* === DELETE user === */
-router.delete('/:userId', (req,res)=>{
-    let user_id = req.params.userId;
-    let sql= `DELETE FROM users WHERE id=${user_id}`;
-    database.query(sql)
-        .then(result => {
-            if(result.affectedRows == 0){
-                res.json({
-                    success: false,
-                    message: `The user with the given ID ${user_id} was not found`
-                })
-            }else{
-                res.json({
-                    success: true,
-                    message: "User deleted successfully"
-                })
-            }
-        }).catch(err => console.log(err));
-});
-
-/* === CREATE user === */
+// Create
 router.post('/create', (req, res) => {
     let user = req.body.user;
     // Hash password
@@ -202,7 +154,7 @@ router.post('/create', (req, res) => {
         }).catch(err => console.log(err));
 })
 
-/* === UPDATE user === */
+// Update
 router.post('/update', (req, res) => {
     let user = req.body.user;
     // Hash password
@@ -247,4 +199,23 @@ router.post('/update', (req, res) => {
         }).catch(err => console.log(err));
 })
 
+// Delete
+router.delete('/:userId', (req,res)=>{
+    let user_id = req.params.userId;
+    let sql= `DELETE FROM users WHERE id=${user_id}`;
+    database.query(sql)
+        .then(result => {
+            if(result.affectedRows == 0){
+                res.json({
+                    success: false,
+                    message: `The user with the given ID ${user_id} was not found`
+                })
+            }else{
+                res.json({
+                    success: true,
+                    message: "User deleted successfully"
+                })
+            }
+        }).catch(err => console.log(err));
+});
 module.exports = router;

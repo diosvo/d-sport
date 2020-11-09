@@ -1,25 +1,28 @@
 .prod-img-container {
-    display              : grid;
-    grid-template-columns: auto auto;;
-    grid-column-gap      : .25rem;
-    grid-row-gap         : .25rem;
-  }
-.col-md-8 {
-    padding: 0;
+  display              : grid;
+  grid-template-columns: auto auto;
+  ;
+  grid-column-gap: .25rem;
+  grid-row-gap   : .25rem;
 }
-.modal-body .fas{
-  font-size: 60px;
+
+.col-md-8 {
+  padding: 0;
+}
+
+.modal-body .fas {
+  font-size    : 60px;
   margin-bottom: 1rem;
 }
 
-.success{
+.success {
   color: rgb(60, 216, 81);
 }
 
-.warning{
+.warning {
   color: rgb(255, 207, 74);
 }
 
-.input-required{
-  color:red;
+.input-required {
+  color: red;
 }

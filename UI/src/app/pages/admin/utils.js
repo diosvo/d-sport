@@ -11,14 +11,3 @@ exports.formatDate = function(date) {
 
     return [year, month, day].join('-');
   }
- 
-//** 
-//  exports.writeCsv = function(data){
-    
-//    // fastcsv.write(data, { headers: true})
-//             // .on("finish", function(){
-//             //     console.log("Write to data.csv successfully!");
-//             // })
-//             // .pipe(ws);
-// }
- //*/

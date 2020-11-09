@@ -176,7 +176,7 @@ router.get('/:id', (req, res) => {
 
 // New
 router.post('/new', (req, res) => {
-    const {userId, email, lastname, firstname, address, phone, products} = req.body;
+    const {userId, email, lastname, firstname, address, phone, note, products} = req.body;
 
     if (userId !== null && userId > 0 && !isNaN(userId)) {
         database.table('orders')
@@ -186,7 +186,8 @@ router.post('/new', (req, res) => {
                 firstname: firstname,
                 address: address,
                 phone: phone,
-                email: email
+                email: email,
+                note: note
             }).then(newOrderId => {
             if (newOrderId > 0) {
                 products.forEach(async (p) => {

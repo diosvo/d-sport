@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {database} = require('../config/helpers');
 
-/* GET revenue each month of the year => draw chart */
+/* GET Revenue each month of the year => draw chart */
 router.get('/revenue/:year', (req, res) => {
     const year = req.params.year;
     const sql = `WITH s AS(

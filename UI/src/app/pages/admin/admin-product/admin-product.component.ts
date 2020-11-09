@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+
 import { CategoryModelServer } from 'src/app/models/category.model';
 import { ClassifyModelServer } from 'src/app/models/classify.model';
+import { ServerResponse } from 'src/app/models/product.model';
+
+import { AdminService } from 'src/app/services/admin.service';
 import { ProductService } from 'src/app/services/product.service';
 
 declare var $: any;
@@ -12,9 +16,8 @@ declare var $: any;
 })
 export class AdminProductComponent implements OnInit {
 
-  categories: CategoryModelServer[] = [];
-
-  classify: ClassifyModelServer[] = [];
+  categories: CategoryModelServer[] = []
+  classify: ClassifyModelServer[] = []
 
   product: any = {
     title: '',
@@ -30,39 +33,37 @@ export class AdminProductComponent implements OnInit {
     category_id: '',
     classify_id: '',
     classify_name: '',
-  };
+  }
+
   products: any = {
     page: 1,
     size: 5,
     totalPage: 0,
     count: 0,
     products: []
-  };
-  isEdit: boolean = true;
-  kw = '';
+  }
 
-  productId = 0;
-  message = '';
+  isEdit: boolean = true
+  kw
 
-  constructor(private productService: ProductService) { }
+  productId = 0
+  message = ''
+
+  constructor(private adminService: AdminService, private productService: ProductService) { }
 
   ngOnInit(): void {
-    //display product
-
     this.searchProduct(1);
     this.getCategoryList();
     this.getClassifyList();
-
   };
 
   searchProduct(cPage) {
-    let page = cPage;
-    let size = 5;
-    let keyword = this.kw;
+    let page = cPage
+    let size = 5
+    let keyword = this.kw
 
-    this.productService.getAllProduct(page, size, keyword).subscribe((prod: any) => {
+    this.adminService.getAllProduct(page, size, keyword).subscribe((prod: any) => {
       this.products = prod
-      console.log(this.products);
     });
   }
 
@@ -114,19 +115,19 @@ export class AdminProductComponent implements OnInit {
     if (isNew) {
       this.isEdit = false;
       this.product = {
-        title: "",
-        image: "",
-        image_1: "",
-        image_2: "",
-        image_3: "",
-        description: "",
+        title: '',
+        image: '',
+        image_1: '',
+        image_2: '',
+        image_3: '',
+        description: '',
         price: 0,
         quantity: 0,
-        another_CatName: "",
-        categoryName: "",
-        category_id: "",
-        classify_id: "",
-        classify_name: "",
+        another_CatName: '',
+        categoryName: '',
+        category_id: '',
+        classify_id: '',
+        classify_name: '',
       };
     }
     else {
@@ -138,7 +139,7 @@ export class AdminProductComponent implements OnInit {
 
 
   createProduct() {
-    if(this.validateData()){
+    if (this.validateData()) {
       this.productService.createProduct(this.product).subscribe(result => {
         var res: any = result;
         if (res.success) {
@@ -148,13 +149,13 @@ export class AdminProductComponent implements OnInit {
         }
       }, error => console.error(error));
     }
-    else{
+    else {
       this.showWarning("Please enter all of the required input");
     }
   }
 
   updateProduct() {
-    if(this.validateData()){
+    if (this.validateData()) {
       this.productService.updateProduct(this.product).subscribe(result => {
         var res: any = result;
         if (res.success) {
@@ -164,10 +165,10 @@ export class AdminProductComponent implements OnInit {
         }
       }, error => console.error(error))
     }
-    else{
+    else {
       this.showWarning("Please enter all of the required input");
     }
-    
+
   }
 
   deleteProduct() {

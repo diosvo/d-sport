@@ -14,6 +14,10 @@ export class ApiUrl {
     public static AccessoriesPage = ApiUrl.BaseUrl + '/products/category/accessories'
     public static ProductDetails = ApiUrl.BaseUrl + '/products/'
 
+    // Relationship w/ Products
+    public static ClassifyList = ApiUrl.BaseUrl + '/classify'
+    public static CategoryList = ApiUrl.BaseUrl + '/categories'
+
     // Order
     public static SingleOrder = ApiUrl.BaseUrl + '/orders/'
     public static OrderPayment = ApiUrl.BaseUrl + '/orders/payment'

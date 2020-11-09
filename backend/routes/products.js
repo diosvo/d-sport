@@ -3,18 +3,18 @@ const router = express.Router();
 const {database} = require('../config/helpers');
 
 router.get('/', function (req, res) {
-    let page = (req.query.page !== undefined && req.query.page !== 0) ? req.query.page : 1; // set the current page number
-    const limit = (req.query.limit !== undefined && req.query.limit !== 0) ? req.query.limit : 12; // set the limit of items per page
+    let page = (req.query.page !== undefined && req.query.page !== 0) ? req.query.page : 1;
+    const limit = (req.query.limit !== undefined && req.query.limit !== 0) ? req.query.limit : 50;
 
     let startValue;
     let endValue;
 
     if (page > 0) {
-        startValue = (page * limit) - limit; // 0,12,24,36,..
+        startValue = (page * limit) - limit;
         endValue = page * limit;
     } else {
         startValue = 0;
-        endValue = 12;
+        endValue = 50;
     }
 
     database.table('products as p')
@@ -246,7 +246,7 @@ router.get('/page/:page/size/:size/keyword/:keyword', function (req, res) {
     database.query('SELECT * FROM products').then(result =>
         totalRecord = result.length
     );
-    if(keyword.trim()=="" || keyword==null || keyword==undefined){
+    if(keyword.trim() == "" || keyword == null || keyword == undefined){
         sql = `SELECT ROW_NUMBER() OVER (ORDER BY p.title) AS item_number, p.*, c.title as category_name, cl.name as classify_name 
                 FROM products p
                 INNER JOIN categories c ON p.category_id = c.id 
@@ -264,7 +264,6 @@ router.get('/page/:page/size/:size/keyword/:keyword', function (req, res) {
     database.query(sql)
         .then(prods => {
             if (prods.length > 0) {
-                // tinh lai totalRecord, vi no phu phuoc vao danh sach sp dc tim thay
                 totalRecord = prods.length;
                 res.status(200).json({
                     count: totalRecord, //totalRecord
@@ -280,7 +279,6 @@ router.get('/page/:page/size/:size/keyword/:keyword', function (req, res) {
                     page: parseInt(page),
                     size: parseInt(size),
                     products: []
-                    //sql: sql
                 })
             }
         })

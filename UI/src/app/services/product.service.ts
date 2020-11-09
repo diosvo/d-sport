@@ -16,16 +16,16 @@ export class ProductService {
 
   private SERVER_URL = environment.SERVER_URL
 
-  constructor(private http: HttpClient) { }
+  constructor(private _http: HttpClient) { }
 
   // Get All product for admin page
   getAllProduct(cPage: Number, size: Number, keyword: string): Observable<ServerResponse> {
-    return this.http.get<ServerResponse>(this.SERVER_URL + '/products/page/' + cPage + '/size/' + size + '/keyword/' + keyword)
+    return this._http.get<ServerResponse>(this.SERVER_URL + '/products/page/' + cPage + '/size/' + size + '/keyword/' + keyword)
   }
 
   // Page: Home
   getHomeProducts(numberOfResults = 20): Observable<ServerResponse> {
-    return this.http.get<ServerResponse>(ApiUrl.HomePage, {
+    return this._http.get<ServerResponse>(ApiUrl.HomePage, {
       params: {
         limit: numberOfResults.toString()
       }
@@ -34,7 +34,7 @@ export class ProductService {
 
   // Page: Men
   getMenProducts(numberOfResults = 20): Observable<ServerResponse> {
-    return this.http.get<ServerResponse>(ApiUrl.ClassifyPage + '/men', {
+    return this._http.get<ServerResponse>(ApiUrl.ClassifyPage + '/men', {
       params: {
         limit: numberOfResults.toString()
       }
@@ -43,7 +43,7 @@ export class ProductService {
 
   // Page: Kids
   getKidsProducts(numberOfResults = 20): Observable<ServerResponse> {
-    return this.http.get<ServerResponse>(ApiUrl.ClassifyPage + '/kids', {
+    return this._http.get<ServerResponse>(ApiUrl.ClassifyPage + '/kids', {
       params: {
         limit: numberOfResults.toString()
       }
@@ -52,36 +52,36 @@ export class ProductService {
 
   // Page: Accessories
   getAccessoriesProducts(): Observable<ServerResponse> {
-    return this.http.get<ServerResponse>(ApiUrl.AccessoriesPage)
+    return this._http.get<ServerResponse>(ApiUrl.AccessoriesPage)
   }
 
   // Product details
   getSingleProduct(id: Number): Observable<ProductModelServer> {
-    return this.http.get<ProductModelServer>(ApiUrl.ProductDetails + id)
+    return this._http.get<ProductModelServer>(ApiUrl.ProductDetails + id)
   }
 
   // Get products from ClassifyID + CategoryID 
   getProdFromClassifyIdCategoryId(ClassId: Number, CateId: Number): Observable<ServerResponse> {
-    return this.http.get<ServerResponse>(this.SERVER_URL + '/products/classify/' + ClassId + '/category/' + CateId)
+    return this._http.get<ServerResponse>(this.SERVER_URL + '/products/classify/' + ClassId + '/category/' + CateId)
   }
 
   getCategoryList(): Observable<CategoryServerResponse> {
-    return this.http.get<CategoryServerResponse>(this.SERVER_URL + '/categories')
+    return this._http.get<CategoryServerResponse>(ApiUrl.CategoryList)
   }
 
   getClassifyList(): Observable<ClassifyServerResponse> {
-    return this.http.get<ClassifyServerResponse>(this.SERVER_URL + '/classify')
+    return this._http.get<ClassifyServerResponse>(ApiUrl.ClassifyList)
   }
 
-  createProduct(product){
-    return this.http.post(this.SERVER_URL + '/products/create', product)
+  createProduct(product) {
+    return this._http.post(this.SERVER_URL + '/products/create', product)
   }
 
-  updateProduct(product){
-    return this.http.post(this.SERVER_URL + '/products/update', product)
+  updateProduct(product) {
+    return this._http.post(this.SERVER_URL + '/products/update', product)
   }
 
-  deleteProduct(productId){
-    return this.http.delete(this.SERVER_URL + '/products/' + productId)
+  deleteProduct(productId) {
+    return this._http.delete(this.SERVER_URL + '/products/' + productId)
   }
 }
