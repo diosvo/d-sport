@@ -15,7 +15,6 @@ export class HeaderComponent implements OnInit {
 
   isLoggedIn: Boolean
   cartData: CartModelServer
-  cartTotal: Number
 
   constructor(public cartService: CartService,
     private authService: AuthService,
@@ -29,9 +28,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.auth.subscribe(isLoggedIn => { this.isLoggedIn = isLoggedIn })
-    this.cartService.cartTotal$.subscribe(total => this.cartTotal = total)
-    this.cartService.cartData$.subscribe(data => { this.cartData = data })
+    this.authService.auth.subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn)
+    this.cartService.cartData$.subscribe(data => this.cartData = data)
   }
 
 

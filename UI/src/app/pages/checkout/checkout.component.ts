@@ -29,7 +29,7 @@ export class CheckoutComponent implements OnInit {
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       email: ['', Validators.required],
-      phone: ['', Validators.required],
+      phone: ['', [Validators.required, Validators.pattern("(0)[0-9 ]{9}")]],
       address: ['', Validators.required],
       note: ['', Validators.required]
     }

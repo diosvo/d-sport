@@ -45,9 +45,6 @@ export class CartService implements OnInit {
     ]
   }
 
-  // private cartSubject: BehaviorSubject<CartModelServer>;
-  // public cart: Observable<CartModelServer>
-
   cartTotal$ = new BehaviorSubject<Number>(0)
   cartData$ = new BehaviorSubject<CartModelServer>(this.cartDataServer)
 
