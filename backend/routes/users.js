@@ -228,7 +228,7 @@ router.post('/update', (req, res) => {
                     firstname = "${user.firstname}",
                     dob = "${user.dob}",
                     role = "${user.role}",
-                    photoUrl = ${photoUrl}
+                    photoUrl = "${user.photoUrl}"
                 WHERE id =${user.id}`;
     }
     database.query(sql)
@@ -236,12 +236,12 @@ router.post('/update', (req, res) => {
             if(result.changedRows > 0){
                 res.json({
                     success: true,
-                    message: "Product updated successfully"
+                    message: "User updated successfully"
                 })
             }else{
                 res.json({
                     success: true,
-                    message: "Product updated with no change"
+                    message: "User updated with no change"
                 })
             }
         }).catch(err => console.log(err));

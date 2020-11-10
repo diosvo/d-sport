@@ -96,6 +96,7 @@ export class AdminUserComponent implements OnInit {
     else {
       this.isEdit = true;
       this.user = index;
+      this.user.dob = formatDate(this.user.dob);
     }
     $('#myModal').modal("show");
   }
@@ -103,7 +104,6 @@ export class AdminUserComponent implements OnInit {
 
   createUser() {
     if(this.validateData()){
-      console.log(this.user.dob);
       if(this.user.dob != null)
         this.user.dob = formatDate(this.user.dob);
       this.adminService.createUser(this.user).subscribe(result => {
@@ -121,6 +121,7 @@ export class AdminUserComponent implements OnInit {
   }
 
   updateUser() {
+    console.log(this.user);
     if(this.validateData()){
       if(this.user.dob != null)
         this.user.dob = formatDate(this.user.dob);

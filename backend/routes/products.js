@@ -92,7 +92,6 @@ router.get('/page/:page/size/:size/keyword', function (req, res) {
                     page: parseInt(page),
                     size: parseInt(size),
                     products: []
-                    //sql: sql
                 })
             }
         })
